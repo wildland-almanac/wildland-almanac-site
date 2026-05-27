@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Wildland Almanac — an open 30 m record of California wildland ecosystems</title>
+<title>The Wildland Almanac — an open 30 m record of forests, shrublands &amp; grasslands</title>
 <style>
   :root{
     --ink:#1b1b1b;
@@ -129,6 +129,26 @@
   .btn.ghost:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
   .btn .arrow{font-family:var(--mono);font-size:13px;opacity:.8}
 
+  /* ---------- scope / what it covers ---------- */
+  .scope{padding:8px 0 14px}
+  .scope-frame{
+    border:1px solid var(--line);
+    border-left:3px solid var(--accent);
+    border-radius:5px;
+    background:var(--panel);
+    padding:20px 22px 16px;
+  }
+  .scope-frame h2{
+    font-family:var(--serif);font-size:19px;font-weight:600;
+    margin:0 0 10px;color:var(--ink);
+  }
+  .scope-frame p{margin:0 0 12px;max-width:780px;color:var(--ink-soft)}
+  .scope-frame p strong{color:var(--ink)}
+  .scope-frame .scope-note{
+    font-size:14px;color:var(--muted);margin-bottom:0;
+    border-top:1px solid var(--line);padding-top:12px;
+  }
+
   /* ---------- figure / navigation diagram ---------- */
   .figure-section{padding:38px 0 30px}
   .figure-frame{
@@ -190,6 +210,18 @@
     font-family:var(--mono);font-size:13px;color:var(--link);margin-top:10px;
     display:inline-block;
   }
+  /* full-width feedback / report tile — retained class, used inside grid now */
+  .feedback-card{
+    background:var(--accent-soft);
+    border-color:var(--line-strong);
+  }
+  .feedback-card:hover{border-color:var(--accent)}
+
+  /* in-use tile accent — same shape as others, slight visual lift */
+  .inuse-card{
+    border-color:var(--line-strong);
+  }
+  .inuse-card:hover{border-color:var(--accent)}
 
   /* ---------- footer ---------- */
   footer{
@@ -223,7 +255,7 @@
   "@type": "Dataset",
   "name": "The Wildland Almanac — California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
-  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "description": "A 30 m Landsat-derived data cube of managed and unmanaged forests, shrublands, and grasslands across California, water years 1985-2025. Covers the vegetated, non-irrigated land surface from backcountry to wildland-urban interface, including managed forests, plantations, and recently disturbed stands; does not cover open water, urbanized land, or intensively managed cropland. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
   "sameAs": "https://source.coop/wildland-almanac/california",
   "version": "v2026.1",
@@ -275,6 +307,7 @@
   <div class="wrap">
     <div class="brandmark"><span class="the">The</span>Wildland Almanac</div>
     <nav class="nav">
+      <a href="inuse.html">In Use</a>
       <a href="data.html">The Data</a>
       <a href="use.html">Use It</a>
       <a href="about.html#methods">Methods</a>
@@ -288,7 +321,7 @@
 <section class="masthead">
   <div class="wrap">
     <h1 class="title">The Wildland Almanac</h1>
-    <p class="tagline">An open, university-developed 30&nbsp;m record of how wildland ecosystems change — vegetation, carbon, water, fuels, fire hazard, and disturbance. California is released now; the contiguous U.S. follows.</p>
+    <p class="tagline">An open, university-developed 30&nbsp;m record of how managed and unmanaged forests, shrublands, and grasslands change — vegetation, carbon, water, fuels, fire hazard, and disturbance. California is released now; the contiguous U.S. follows.</p>
     <div class="specs">
       <span><b>California</b>&nbsp;released</span>
       <span><b>30&nbsp;m</b></span>
@@ -303,19 +336,28 @@
 <!-- intro prose + theory of change -->
 <section class="intro">
   <div class="wrap">
-    <p><strong>The Wildland Almanac is a reconciled record of how wildland ecosystems change over time.</strong> Derived from the Landsat archive at 30&nbsp;m resolution, it brings nineteen biophysical properties — spanning vegetation structure, carbon, water balance, fuels and fire behavior, disturbance, and drought vulnerability — into a single, internally consistent datacube. Because the layers are reconciled together rather than stitched from separate single-purpose products, tradeoffs between carbon, water, fire, and habitat can be read in one place. <strong>California is released now</strong>, covering water years 1985–2025; coverage of the contiguous U.S. follows.</p>
+    <p><strong>The Wildland Almanac is a reconciled record of how managed and unmanaged forests, shrublands, and grasslands change over time.</strong> It is derived from the Landsat archive at 30&nbsp;m resolution and brings nineteen biophysical properties — vegetation structure, carbon, water balance, fuels and fire behavior, disturbance, and drought vulnerability — into one internally consistent datacube. The layers are reconciled together rather than stitched from separate single-purpose products, so the tradeoffs between carbon, water, fire, and habitat can be read in one place. <strong>California is released now</strong>, covering water years 1985–2025; the contiguous U.S. follows.</p>
 
-    <p>But a dataset is only as good as the decisions it improves. We built the Almanac around a clear conviction about <strong>how better information actually becomes a better decision</strong> — made by a real person, on real ground.</p>
+    <p>Managing wildlands for fire, water, carbon, and habitat is enormous and enduring work, and much of it is already done well — by skilled GIS analysts and planners in agencies, tribes, NGOs, and conservancies who bring deep experience and local knowledge to it. <strong>We meet that work where it already happens.</strong> The Almanac streams directly into the tools and workflows these analysts already use, and makes their work faster and better grounded. Better data and better models matter, but on their own they tend to stall before they reach a decision; the data has to arrive where the decision is actually made.</p>
 
-    <p>Managing wildlands for fire, water, carbon, and habitat is enormous, durable work, and a great deal of it is already being done well — by skilled GIS analysts and planners in agencies, tribes, NGOs, and conservancies who bring deep experience, hard-won intuition, local credibility, and institutional knowledge to the task. <strong>Our theory of change is to meet that work where it already happens</strong> — to drop directly into the tools and workflows already producing these decisions, and to make them faster, better-grounded, and better-supported. We think lasting impact needs a clear path and a specific audience, not capability in search of one.</p>
+    <p>That decision is made by the analyst. Software will take on more of the work over time, and we mean to help build it — but the highest-value step today is to <strong>amplify the analysts who already do this work</strong>: to give them a deeper, more consistent evidence base to reason from, and to build steadily from there. That is what the Almanac is for.</p>
 
-    <p>Technology has a real and growing role here, and we mean to be part of it. But the tools are not yet reliable enough to plan on their own. The highest-value step today is to <strong>amplify the analysts who already do this work</strong> — to give them a deeper, more consistent evidence base to reason from, and to build steadily toward more from there. That is what the Almanac is for.</p>
-
-    <p style="font-size:15px;color:var(--muted)">Open under CC&nbsp;BY · cloud-native (COG&nbsp;+&nbsp;STAC), built to stream directly into ArcGIS, QGIS, and Earth Engine · developed from UC&nbsp;Irvine Earth System Science research · updated every year.</p>
+    <p style="font-size:15px;color:var(--muted)">Open under CC&nbsp;BY · cloud-native (COG&nbsp;+&nbsp;STAC), built to stream directly into ArcGIS, QGIS, and other places where geospatial work is done · developed from UC&nbsp;Irvine Earth System Science research · updated every year.</p>
 
     <div class="cta-row">
       <a class="btn primary" href="https://source.coop/wildland-almanac">Get the data <span class="arrow">↗</span></a>
       <a class="btn ghost" href="use.html">Bring it into your tools <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- scope / what it covers -->
+<section class="scope">
+  <div class="wrap">
+    <div class="scope-frame">
+      <h2>What it covers</h2>
+      <p>The Almanac maps the vegetated, non-irrigated land surface of the contiguous U.S. — <strong>managed and unmanaged forests, shrublands, and grasslands</strong>, from the backcountry to the wildland&ndash;urban interface. It includes intermix and interface areas, managed forests and plantations, and stands recently thinned, cut, or burned.</p>
+      <p>The data are produced wall&#8209;to&#8209;wall and then masked to where Landsat&#8209;derived properties are reliable. <strong>It does not cover</strong> open water, urbanized land, or intensively managed cropland.</p>
     </div>
   </div>
 </section>
@@ -325,7 +367,7 @@
   <div class="wrap">
     <div class="figure-frame">
       <div class="figure-head">
-        <span class="fignum">Figure 1 — Our theory of change</span>
+        <span class="fignum">Figure 1 — How the Almanac reaches decisions</span>
         <span class="fighint">Click any region to explore</span>
       </div>
 
@@ -428,53 +470,64 @@
       </svg>
 
       <p class="figcaption">
-        <b>The mechanism, end to end.</b> The Almanac lives once — documented here at WildlandAlmanac.org, served from the data store on Source Cooperative — and streams through clean, cloud-native pipes into the tools analysts already use. There, skilled analysts and planners turn a stronger evidence base into real decisions on the ground. Their work, in turn, sharpens the record. Better inputs → amplified expertise → better decisions → feedback that improves the record: the loop is the point, and the analyst is at its center, not bypassed.
+        <b>The mechanism, end to end.</b> The Almanac lives once — documented here at WildlandAlmanac.org, served from the data store on Source Cooperative — and streams through clean, cloud-native pipes into the tools analysts already use. Skilled analysts and planners turn that stronger evidence base into decisions on the ground, and what they learn feeds back to improve the record. The analyst is at the center of the loop, not bypassed by it.
       </p>
     </div>
   </div>
 </section>
 
-<!-- explore: 4 inner pages -->
+<!-- explore: 6 inner pages -->
 <section class="explore">
   <div class="wrap">
     <h2>Explore</h2>
-    <p class="sub">Four ways into the Almanac, depending on what you came for.</p>
+    <p class="sub">Six ways into the Almanac, depending on what you came for.</p>
+
     <div class="cards">
+      <a class="card-link inuse-card" id="inuse" href="inuse.html">
+        <span class="k">01 · Who's using it &amp; what it reveals</span>
+        <h3>In Use &amp; Findings</h3>
+        <p>The organizations currently using Almanac layers in planning and treatment-evaluation work, and the post-2012 patterns the multi-property record makes visible at the state scale.</p>
+        <span class="go">See who's using it →</span>
+      </a>
       <a class="card-link" id="data" href="data.html">
-        <span class="k">01 · What's in it</span>
+        <span class="k">02 · What's in it</span>
         <h3>The Data</h3>
         <p>The nineteen properties, the six theme groups, spatial and temporal coverage, the California and CONUS tiers, license, and how to cite it.</p>
         <span class="go">Browse the data →</span>
       </a>
       <a class="card-link" id="use" href="use.html">
-        <span class="k">02 · How to use it</span>
+        <span class="k">03 · How to use it</span>
         <h3>Bring It Into Your Tools</h3>
-        <p>Step-by-step guides for streaming the data into ArcGIS&nbsp;Pro, QGIS, Earth Engine, and Felt — no bulk downloads. Start here if you want to get to work.</p>
+        <p>Step-by-step guides for streaming the data into ArcGIS&nbsp;Pro, QGIS, and other tools where geospatial work is done — no bulk downloads. Start here if you want to get to work.</p>
         <span class="go">See the how-to guides →</span>
       </a>
       <a class="card-link" id="methods" href="about.html#methods">
-        <span class="k">03 · How it was made</span>
+        <span class="k">04 · How it was made</span>
         <h3>Methods &amp; Validation</h3>
         <p>How each property is derived from the Landsat record, how the layers are reconciled into one consistent cube, and how the results were validated.</p>
         <span class="go">Read the methods →</span>
       </a>
       <a class="card-link" id="about" href="about.html">
-        <span class="k">04 · Who &amp; where it's going</span>
+        <span class="k">05 · Who &amp; where it's going</span>
         <h3>About &amp; Roadmap</h3>
         <p>Provenance and the people behind the data, the annual-update commitment, collaborators, and the forward-looking direction — benchmarking and prediction.</p>
         <span class="go">About the data →</span>
       </a>
+      <a class="card-link feedback-card" href="https://github.com/wildland-almanac/wildland-almanac/issues/new/choose">
+        <span class="k">06 · Help improve the next revision</span>
+        <h3>Report a Data Issue</h3>
+        <p>Spot something wrong — a misclassified stand, a value that looks off, coverage that seems incomplete? Report it on GitHub. Reports are reviewed and folded into the next scheduled revision, released every 6–12&nbsp;months.</p>
+        <span class="go">Report an issue on GitHub ↗</span>
+      </a>
     </div>
   </div>
 </section>
-
-<!-- footer -->
 <footer>
   <div class="wrap">
     <div class="cols">
       <div>
         <h4>The Wildland Almanac</h4>
-        <p>An open geospatial data resource for mapping wildland ecosystem conditions and change — California released now, the contiguous United States to follow. Developed from UC&nbsp;Irvine Earth System Science research in collaboration with university scientists. Released under CC&nbsp;BY.</p>
+        <p>An open geospatial record of how managed and unmanaged forests, shrublands, and grasslands change — California released now, the contiguous United States to follow. Developed by M.&nbsp;L.&nbsp;Goulden, Department of Earth System Science, University of California, Irvine, in collaboration with university scientists. Released under CC&nbsp;BY.</p>
       </div>
       <div>
         <h4>Links</h4>
@@ -482,7 +535,7 @@
         <p><a href="use.html">How-to guides</a></p>
         <p><a href="about.html#methods">Methods &amp; validation</a></p>
         <p><a href="about.html">About &amp; roadmap</a></p>
-        <p><a href="mailto:mgoulden@uci.edu">Contact &amp; feedback</a></p>
+        <p><a href="https://github.com/wildland-almanac/wildland-almanac/issues/new/choose">Report a data issue ↗</a></p>
       </div>
       <div>
         <h4>Cite as</h4>
