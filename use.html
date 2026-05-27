@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use It — The Wildland Almanac</title>
+<style>
+  :root{
+    --ink:#1b1b1b;
+    --ink-soft:#3a3a3a;
+    --muted:#6a6a6a;
+    --line:#d8d6d0;
+    --line-strong:#bdbab2;
+    --paper:#fbfaf7;
+    --panel:#ffffff;
+    --accent:#2f5d3a;
+    --accent-soft:#eef2ec;
+    --link:#1a4f78;
+    --code-bg:#f4f2ec;
+    --code-ink:#24351f;
+    --maxw:980px;
+    --mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* top bar (shared with homepage) */
+  .topbar{border-bottom:1px solid var(--line);background:var(--panel)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brandmark{font-family:var(--serif);font-size:18px;color:var(--ink)}
+  .brandmark a{color:inherit}
+  .brandmark .the{color:var(--muted);font-style:italic;margin-right:4px}
+  .nav a{color:var(--ink-soft);font-size:14px;margin-left:22px}
+  .nav a:hover{color:var(--accent)}
+  .nav a.here{color:var(--accent);font-weight:600}
+  @media(max-width:640px){.nav a{margin-left:14px;font-size:13px}.topbar .wrap{height:52px}}
+
+  /* breadcrumb + page head */
+  .crumb{font-family:var(--mono);font-size:12px;color:var(--muted);padding:18px 0 0}
+  .crumb a{color:var(--muted)}
+  .pagehead{padding:10px 0 26px;border-bottom:1px solid var(--line)}
+  h1{font-family:var(--serif);font-weight:600;font-size:32px;line-height:1.12;margin:6px 0 10px;letter-spacing:-.2px}
+  .lede{font-size:17px;color:var(--ink-soft);max-width:720px;margin:0}
+
+  /* draft note */
+  .draft-note{background:#fff7e6;border:1px solid #e8d8a8;color:#6b5615;font-size:13px;border-radius:4px;padding:10px 14px;margin:18px 0 0;font-family:var(--mono)}
+
+  /* TL;DR / pick-your-path */
+  .picker{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0 8px}
+  @media(max-width:720px){.picker{grid-template-columns:1fr}}
+  .pick{border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:15px 16px;display:block;color:inherit}
+  .pick:hover{border-color:var(--accent);text-decoration:none}
+  .pick .lvl{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .pick h3{font-size:15.5px;margin:6px 0 4px;color:var(--ink)}
+  .pick p{margin:0;font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+
+  /* sections */
+  section.block{padding:34px 0;border-bottom:1px solid var(--line)}
+  section.block:last-of-type{border-bottom:none}
+  h2{font-family:var(--serif);font-size:23px;font-weight:600;margin:0 0 6px}
+  h2 .tag{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:400;margin-left:10px;text-transform:uppercase;letter-spacing:.07em}
+  .sec-lede{color:var(--ink-soft);max-width:740px;margin:0 0 18px}
+  h3.step{font-size:16px;margin:22px 0 6px;color:var(--ink)}
+  p{max-width:740px}
+  p.tight{margin:0 0 10px}
+  .muted{color:var(--muted)}
+
+  /* code blocks */
+  pre{background:var(--code-bg);border:1px solid var(--line);border-radius:5px;
+    padding:13px 15px;overflow-x:auto;font-family:var(--mono);font-size:13px;
+    color:var(--code-ink);line-height:1.5;margin:10px 0;max-width:100%}
+  code{font-family:var(--mono);font-size:.92em;background:var(--code-bg);
+    padding:1px 5px;border-radius:3px;color:var(--code-ink)}
+  pre code{background:none;padding:0}
+  .comment{color:#7a8a72}
+
+  /* callout */
+  .note{background:var(--accent-soft);border-left:3px solid var(--accent);
+    padding:12px 16px;border-radius:0 4px 4px 0;font-size:14px;color:var(--ink-soft);
+    margin:16px 0;max-width:740px}
+  .note b{color:var(--ink)}
+  .warn{background:#fbf3ee;border-left:3px solid #b5663a;}
+
+  /* two-uri table */
+  .uri-table{border:1px solid var(--line-strong);border-radius:5px;overflow:hidden;margin:14px 0;font-size:13.5px}
+  .uri-table .row{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid var(--line)}
+  .uri-table .row:last-child{border-bottom:none}
+  .uri-table .lab{background:var(--code-bg);padding:11px 14px;font-weight:600;border-right:1px solid var(--line);color:var(--ink-soft)}
+  .uri-table .val{padding:11px 14px;font-family:var(--mono);font-size:12px;word-break:break-all;color:var(--code-ink)}
+  @media(max-width:640px){.uri-table .row{grid-template-columns:1fr}.uri-table .lab{border-right:none;border-bottom:1px solid var(--line)}}
+
+  footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 40px;font-size:13.5px;color:var(--muted);margin-top:8px}
+  footer a{color:var(--link)}
+  footer .row{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Dataset",
+  "name": "The Wildland Almanac — California",
+  "alternateName": "Wildland Almanac CA (v2026.1)",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "url": "https://wildlandalmanac.org/",
+  "sameAs": "https://source.coop/wildland-almanac/california",
+  "version": "v2026.1",
+  "keywords": ["wildland","ecosystem","California","Landsat","remote sensing","vegetation","fire hazard","biomass","hydrology","disturbance","canopy height","30m","time series","Cloud-Optimized GeoTIFF","STAC"],
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "The Wildland Almanac, University of California, Irvine",
+    "url": "https://wildlandalmanac.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Source Cooperative",
+    "url": "https://source.coop/wildland-almanac/california"
+  },
+  "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "name": "Source Cooperative",
+    "url": "https://source.coop/wildland-almanac/california"
+  },
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "California, USA",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "32.5 -124.5 42.1 -114.1"
+    }
+  },
+  "temporalCoverage": "1985-10-01/2025-09-30",
+  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
+  "distribution": {
+    "@type": "DataDownload",
+    "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
+    "contentUrl": "https://data.source.coop/wildland-almanac/california/v2026.1/"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
+    <nav class="nav">
+      <a href="data.html">The Data</a>
+      <a href="#" class="here">Use It</a>
+      <a href="about.html#methods">Methods</a>
+      <a href="about.html">About</a>
+      <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="crumb"><a href="index.html">Home</a> / Use It</p>
+</div>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>Bring it into your tools</h1>
+    <p class="lede">The data are Cloud-Optimized GeoTIFFs (COGs) on Source Cooperative. You can stream them directly into ArcGIS Pro, QGIS, Earth Engine, or any GDAL-based tool — reading only the pixels you need, with no download. When you do want files on disk, every layer is a public URL or a one-line bulk copy.</p>
+    <p class="draft-note">DRAFT — preview build. Example paths point at the <code>wildland-almanac/california</code> repository on Source Cooperative. Verify the live path on the Source file-detail page before relying on these URLs.</p>
+  </div>
+</div>
+
+<!-- pick your path -->
+<div class="wrap">
+  <div class="picker">
+    <a class="pick" href="#stream">
+      <span class="lvl">Most common</span>
+      <h3>Stream it →</h3>
+      <p>Read rasters directly from the cloud in ArcGIS Pro, QGIS, or code. No download.</p>
+    </a>
+    <a class="pick" href="#download">
+      <span class="lvl">Simple</span>
+      <h3>Download one file →</h3>
+      <p>Every file has a public HTTPS URL. Fetch it with a browser, curl, or wget.</p>
+    </a>
+    <a class="pick" href="#bulk">
+      <span class="lvl">At scale</span>
+      <h3>Bulk download →</h3>
+      <p>Pull a whole layer or the entire dataset with the AWS CLI — no account needed.</p>
+    </a>
+  </div>
+</div>
+
+<!-- how files are organized -->
+<section class="block">
+  <div class="wrap">
+    <h2>How the data are organized <span class="tag">read this first</span></h2>
+    <p class="sec-lede">The Almanac is published as two dataset roots — California and CONUS — each containing versioned releases. A version is a directory level (<code>v2026.1</code>), not part of the filename. The README and documentation live at each dataset root and describe the release.</p>
+    <pre><span class="comment"># Source organization → dataset root → version → property → file</span>
+source.coop/wildland-almanac/
+└── california/        <span class="comment"># dataset root</span>
+    ├── README.md                       <span class="comment"># start here</span>
+    ├── WildlandAlmanac_CA_Documentation.pdf
+    └── v2026.1/                         <span class="comment"># a release</span>
+        ├── Carbon_AGB/
+        │   ├── WildlandAlmanac_CA_Carbon_AGB_1985.tif
+        │   ├── … (water years 1985–2025)
+        │   └── WildlandAlmanac_CA_Carbon_AGB_2025.tif
+        ├── Veg_TreeFrac/
+        └── … (19 properties)</pre>
+    <p class="tight">Filenames follow <code>WildlandAlmanac_CA_{Property}_{WaterYear}.tif</code>. Substitute the property name and four-digit water year for any other file. Newer releases (<code>v2027.1</code>, …) add as parallel version directories; the older ones stay put so published links keep working.</p>
+    <div class="note warn"><b>Read the documentation before quantitative work.</b> Several layers use specific scaling conventions — vegetation fractions are ×10,000, canopy height is in cm, the Fire_LCP file is an 8-band FARSITE raster with its own no-data convention. The <a href="https://source.coop/wildland-almanac/california">documentation PDF</a> at the dataset root is the binding reference.</div>
+  </div>
+</section>
+
+<!-- STREAM -->
+<section class="block" id="stream">
+  <div class="wrap">
+    <h2>1 · Stream it <span class="tag">most common — no download</span></h2>
+    <p class="sec-lede">Because the files are COGs, GIS tools can read them straight from cloud storage over HTTP, transferring only the bytes needed for your current view and zoom. The URI form differs between ArcGIS Pro and the open-source / GDAL stack — both point at the same underlying file.</p>
+
+    <div class="uri-table">
+      <div class="row">
+        <div class="lab">ArcGIS Pro</div>
+        <div class="val">s3://us-west-2.opendata.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif</div>
+      </div>
+      <div class="row">
+        <div class="lab">QGIS · GDAL · rasterio · terra</div>
+        <div class="val">/vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif</div>
+      </div>
+    </div>
+    <p class="tight muted">On any Source file-detail page, the <b>Cloud URI</b> is the S3 form (for ArcGIS) and the <b>Source URL</b> is the HTTPS form — prepend <code>/vsicurl/</code> to the latter for GDAL-based tools.</p>
+
+    <h3 class="step">ArcGIS Pro</h3>
+    <p class="tight">Add Data → From Path → paste the <code>s3://</code> URI above. The raster streams in; no download, no credentials.</p>
+
+    <h3 class="step">QGIS</h3>
+    <p class="tight">Layer → Add Layer → Add Raster Layer → set Source type to a protocol/HTTP source and paste the <code>/vsicurl/https://…</code> URI.</p>
+
+    <h3 class="step">Python (rasterio)</h3>
+    <pre>import rasterio
+
+url = ("/vsicurl/https://data.source.coop/wildland-almanac/"
+       "california/v2026.1/Carbon_AGB/"
+       "WildlandAlmanac_CA_Carbon_AGB_2025.tif")
+
+with rasterio.open(url) as src:
+    <span class="comment"># windowed read — only the bytes you need are fetched</span>
+    window = src.window(*src.bounds)  <span class="comment"># or a sub-bbox</span>
+    agb = src.read(1, window=window)
+    print(src.crs, src.res, agb.shape)</pre>
+
+    <h3 class="step">R (terra)</h3>
+    <pre>library(terra)
+
+url <- paste0("/vsicurl/https://data.source.coop/wildland-almanac/",
+              "california/v2026.1/Carbon_AGB/",
+              "WildlandAlmanac_CA_Carbon_AGB_2025.tif")
+
+agb <- rast(url)
+agb            <span class="comment"># prints extent, CRS (EPSG:5070), resolution</span>
+plot(agb)</pre>
+
+    <div class="note"><b>Projection.</b> All layers are EPSG:5070 (NAD83 / CONUS Albers), 30 m, co-registered to sub-pixel precision — treat the 19 properties as a single stack. No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention).</div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="block" id="download">
+  <div class="wrap">
+    <h2>2 · Download one file <span class="tag">simple · HTTPS</span></h2>
+    <p class="sec-lede">Every file has a public HTTPS URL. No credentials needed. Use a browser, <code>curl</code>, <code>wget</code>, or PowerShell <code>Invoke-WebRequest</code>.</p>
+    <pre><span class="comment"># curl / wget</span>
+curl -O https://data.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif
+
+<span class="comment"># Windows PowerShell</span>
+Invoke-WebRequest -Uri "https://data.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif" -OutFile "Carbon_AGB_2025.tif"</pre>
+  </div>
+</section>
+
+<!-- BULK -->
+<section class="block" id="bulk">
+  <div class="wrap">
+    <h2>3 · Bulk download <span class="tag">at scale · AWS CLI</span></h2>
+    <p class="sec-lede">For multiple files or whole layer directories, the AWS CLI is fastest. No AWS account or credentials are required — pass <code>--no-sign-request</code>. The CLI is available for Windows, Mac, and Linux at <a href="https://aws.amazon.com/cli/">aws.amazon.com/cli</a>.</p>
+    <pre><span class="comment"># one file</span>
+aws s3 cp \
+  s3://us-west-2.opendata.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif . \
+  --no-sign-request
+
+<span class="comment"># one layer directory (all water years)</span>
+aws s3 sync \
+  s3://us-west-2.opendata.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/ \
+  ./Carbon_AGB/ --no-sign-request
+
+<span class="comment"># an entire release</span>
+aws s3 sync \
+  s3://us-west-2.opendata.source.coop/wildland-almanac/california/v2026.1/ \
+  ./wildland-almanac-ca-v2026.1/ --no-sign-request</pre>
+    <div class="note"><b>A note on scale.</b> The full California release is large (hundreds of GB across all 19 layers × 41 years; CONUS will be multiple TB). For most uses, streaming a windowed read is faster and lighter than bulk download. Reach for the CLI when you genuinely need whole layers offline.</div>
+  </div>
+</section>
+
+<!-- feedback -->
+<section class="block">
+  <div class="wrap">
+    <h2>Stuck, or found something off?</h2>
+    <p class="sec-lede">The data are offered with no promise of technical support, but notes on errors and use cases are genuinely valuable and shape future releases. Email <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div>The Wildland Almanac · open under CC&nbsp;BY · developed from UC&nbsp;Irvine Earth System Science research</div>
+      <div><a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a> · <a href="index.html">Home</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

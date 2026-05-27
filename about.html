@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About &amp; Roadmap — The Wildland Almanac</title>
+<style>
+  :root{
+    --ink:#1b1b1b; --ink-soft:#3a3a3a; --muted:#6a6a6a;
+    --line:#d8d6d0; --line-strong:#bdbab2;
+    --paper:#fbfaf7; --panel:#ffffff;
+    --accent:#2f5d3a; --accent-soft:#eef2ec;
+    --link:#1a4f78; --code-bg:#f4f2ec; --code-ink:#24351f;
+    --maxw:980px;
+    --mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  .topbar{border-bottom:1px solid var(--line);background:var(--panel)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brandmark{font-family:var(--serif);font-size:18px;color:var(--ink)}
+  .brandmark a{color:inherit}
+  .brandmark .the{color:var(--muted);font-style:italic;margin-right:4px}
+  .nav a{color:var(--ink-soft);font-size:14px;margin-left:22px}
+  .nav a:hover{color:var(--accent)}
+  .nav a.here{color:var(--accent);font-weight:600}
+  @media(max-width:640px){.nav a{margin-left:14px;font-size:13px}.topbar .wrap{height:52px}}
+
+  .crumb{font-family:var(--mono);font-size:12px;color:var(--muted);padding:18px 0 0}
+  .crumb a{color:var(--muted)}
+  .pagehead{padding:10px 0 24px;border-bottom:1px solid var(--line)}
+  h1{font-family:var(--serif);font-weight:600;font-size:32px;line-height:1.12;margin:6px 0 10px;letter-spacing:-.2px}
+  .lede{font-size:17px;color:var(--ink-soft);max-width:740px;margin:0}
+  .draft-note{background:#fff7e6;border:1px solid #e8d8a8;color:#6b5615;font-size:13px;border-radius:4px;padding:10px 14px;margin:18px 0 0;font-family:var(--mono)}
+
+  section.block{padding:30px 0;border-bottom:1px solid var(--line)}
+  section.block:last-of-type{border-bottom:none}
+  h2{font-family:var(--serif);font-size:23px;font-weight:600;margin:0 0 8px}
+  h3{font-size:16px;margin:20px 0 4px}
+  .sec-lede{color:var(--ink-soft);max-width:740px;margin:0 0 14px}
+  p{max-width:740px;color:var(--ink-soft)}
+  p strong{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--code-bg);padding:1px 5px;border-radius:3px;color:var(--code-ink)}
+
+  /* method summary cards */
+  .methods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:640px){.methods{grid-template-columns:1fr}}
+  .mcard{border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:15px 17px}
+  .mcard h3{margin:0 0 5px;font-size:15px;color:var(--ink)}
+  .mcard p{margin:0;font-size:14px;line-height:1.5}
+
+  /* roadmap timeline */
+  .roadmap{margin-top:10px}
+  .phase{border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:16px 18px;margin:12px 0;position:relative}
+  .phase .when{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+  .phase .when.now{color:var(--accent)}
+  .phase h3{margin:5px 0 6px;font-size:16.5px;color:var(--ink)}
+  .phase ul{margin:0;padding-left:18px}
+  .phase li{font-size:14px;color:var(--ink-soft);margin:4px 0;line-height:1.5}
+  .phase .frame{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:8px}
+
+  /* comparables list */
+  .compare{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line-strong);border-radius:5px;overflow:hidden;margin-top:8px}
+  .compare .r{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid var(--line)}
+  .compare .r:last-child{border-bottom:none}
+  .compare .n{background:var(--code-bg);padding:11px 14px;font-weight:600;font-size:14px;border-right:1px solid var(--line);color:var(--ink-soft)}
+  .compare .d{padding:11px 14px;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+  @media(max-width:640px){.compare .r{grid-template-columns:1fr}.compare .n{border-right:none;border-bottom:1px solid var(--line)}}
+
+  .note{background:var(--accent-soft);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 4px 4px 0;font-size:14px;color:var(--ink-soft);margin:16px 0;max-width:740px}
+  .note b{color:var(--ink)}
+
+  footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 40px;font-size:13.5px;color:var(--muted);margin-top:8px}
+  footer a{color:var(--link)}
+  footer .row{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Dataset",
+  "name": "The Wildland Almanac — California",
+  "alternateName": "Wildland Almanac CA (v2026.1)",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "url": "https://wildlandalmanac.org/",
+  "sameAs": "https://source.coop/wildland-almanac/california",
+  "version": "v2026.1",
+  "keywords": ["wildland","ecosystem","California","Landsat","remote sensing","vegetation","fire hazard","biomass","hydrology","disturbance","canopy height","30m","time series","Cloud-Optimized GeoTIFF","STAC"],
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "The Wildland Almanac, University of California, Irvine",
+    "url": "https://wildlandalmanac.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Source Cooperative",
+    "url": "https://source.coop/wildland-almanac/california"
+  },
+  "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "name": "Source Cooperative",
+    "url": "https://source.coop/wildland-almanac/california"
+  },
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "California, USA",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "32.5 -124.5 42.1 -114.1"
+    }
+  },
+  "temporalCoverage": "1985-10-01/2025-09-30",
+  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
+  "distribution": {
+    "@type": "DataDownload",
+    "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
+    "contentUrl": "https://data.source.coop/wildland-almanac/california/v2026.1/"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
+    <nav class="nav">
+      <a href="data.html">The Data</a>
+      <a href="use.html">Use It</a>
+      <a href="#methods">Methods</a>
+      <a href="#" class="here">About</a>
+      <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="crumb"><a href="index.html">Home</a> / About &amp; Roadmap</p>
+</div>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>About &amp; roadmap</h1>
+    <p class="lede">The Wildland Almanac is an open, university-developed record of ecosystem change — built to be a durable public reference, updated every year, and extended over time toward CONUS coverage, benchmarking against established models, and forward-looking prediction.</p>
+    <p class="draft-note">DRAFT — roadmap items beyond the current release describe direction and intent, not committed dates. Near-term items are concrete; forward-looking items are clearly marked as exploratory.</p>
+  </div>
+</div>
+
+<!-- what it is / provenance -->
+<section class="block">
+  <div class="wrap">
+    <h2>What it is</h2>
+    <p>The Wildland Almanac is a reconciled, multi-decade record of wildland ecosystem condition and change, derived from the Landsat archive at 30&nbsp;m resolution. Nineteen biophysical properties — vegetation structure, carbon, water balance, fuels and fire behavior, disturbance, and drought vulnerability — are produced through a single, internally consistent pipeline so they can be read together as one stack rather than stitched from separate single-purpose products. California is the first full release; coverage of the contiguous United States is planned.</p>
+    <p>It is a <strong>data resource, not a software platform</strong>. The data live in one canonical place on Source Cooperative; this site documents what the properties mean, how to bring them into the tools you already use, and how they were made.</p>
+
+    <h3>Provenance</h3>
+    <p>Developed from <strong>UC&nbsp;Irvine Earth System Science research</strong> in collaboration with university scientists, and processed on UC&nbsp;Irvine computing infrastructure. The data are a University of California product, released openly under <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY</a>. Contact and feedback: <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a>.</p>
+    <p style="font-size:14px;color:var(--muted)">This dataset family was previously distributed under the name CECS (Center for Ecosystem Climate Solutions). Earlier publications referencing CECS refer to the same data.</p>
+  </div>
+</section>
+
+<!-- methods summary -->
+<section class="block" id="methods">
+  <div class="wrap">
+    <h2>How it's made</h2>
+    <p class="sec-lede">All properties are derived from the Landsat record and a consistent set of training and reference data. The emphasis is on <strong>temporal and cross-property consistency</strong> — values that can be compared across years and across properties within a single release. Full methodology, per-layer, is in the documentation at the dataset root.</p>
+    <div class="methods">
+      <div class="mcard">
+        <h3>Vegetation &amp; structure</h3>
+        <p>Fractional cover and canopy height mapped with gradient-boosted models (XGBoost) on synthetic Landsat imagery built from COLD, trained on RAP, USFS, and ALS-derived (Allred et al. 2025) reference data.</p>
+      </div>
+      <div class="mcard">
+        <h3>Hydrology</h3>
+        <p>Evapotranspiration, soil moisture, and runoff from regressions on AmeriFlux flux-tower observations, monthly Landsat, and PRISM meteorology, run through a monthly water balance.</p>
+      </div>
+      <div class="mcard">
+        <h3>Fire</h3>
+        <p>Annual FARSITE-format landscape files assembled from LANDFIRE topography and predicted fuels/canopy variables, run through FlamMap under fixed weather to give relative, fuels-driven hazard.</p>
+      </div>
+      <div class="mcard">
+        <h3>Carbon &amp; disturbance</h3>
+        <p>Biomass from an independently produced hybrid of field plots and remote sensing, co-registered into the stack; productivity from NIRv and flux towers; disturbance severity from COLD-identified events.</p>
+      </div>
+    </div>
+    <div class="note"><b>Reconciliation is the point.</b> Because the layers share inputs and a single pipeline — disturbance is computed as deltas in the cover and biomass layers, and all properties are co-registered to one grid — the properties are mutually consistent. That is what lets a single pixel's carbon, water, fire, and disturbance be read together.</div>
+    <p><a href="https://source.coop/wildland-almanac/california">Read the full methodology in the documentation →</a></p>
+  </div>
+</section>
+
+<!-- update commitment -->
+<section class="block">
+  <div class="wrap">
+    <h2>Updated every year</h2>
+    <p class="sec-lede">Each annual release is a <strong>complete reprocessing of the full 1985-onward time series</strong> under one consistent code base, published as a new version directory (<code>v2026.1</code>, <code>v2027.1</code>, …). Water-year&nbsp;N data are released early in year&nbsp;N+1; older versions stay in place so published links and citations keep resolving.</p>
+    <div class="note"><b>Why full reprocessing.</b> As methods improve, a given year's values can change between versions. Reprocessing the whole series each time keeps every release internally consistent — at the cost that you should use one version end-to-end and not splice years across versions. See <a href="data.html#disturb">The Data</a> for the analysis implications.</div>
+  </div>
+</section>
+
+<!-- roadmap -->
+<section class="block">
+  <div class="wrap">
+    <h2>Roadmap</h2>
+    <p class="sec-lede">The Almanac grows along two axes: <strong>coverage</strong> (more geography, more years, more properties) and <strong>capability</strong> (from a retrospective record toward benchmarking and prediction). The same architecture carries all of it — new outputs flow through the same pipes into the same tools.</p>
+
+    <div class="roadmap">
+      <div class="phase">
+        <span class="when now">Now · v2026.1</span>
+        <h3>California, released</h3>
+        <ul>
+          <li>All 19 properties, water years 1985–2025, statewide at 30&nbsp;m, on Source Cooperative.</li>
+          <li>Cloud-native (COG&nbsp;+&nbsp;STAC); streams directly into ArcGIS Pro, QGIS, and GDAL-based tools.</li>
+          <li>Open under CC&nbsp;BY, with full documentation at the dataset root.</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <span class="when">Near term</span>
+        <h3>Integration &amp; CONUS</h3>
+        <ul>
+          <li>Worked integration guides and hosted layers for the Esri ecosystem (ArcGIS Online, Living Atlas) and demos for QGIS, Earth Engine, and Felt.</li>
+          <li>A streaming viewer for browsing the layers without any local setup.</li>
+          <li>CONUS coverage, beginning with decadal snapshots and extending toward the full record — the 1990 baseline is a particular emphasis, as most national products lack one.</li>
+        </ul>
+        <p class="frame">Concrete and in progress — pacing depends on coordination and review cycles.</p>
+      </div>
+
+      <div class="phase">
+        <span class="when">Direction · exploratory</span>
+        <h3>Benchmarking against established models</h3>
+        <ul>
+          <li>Use the historical record to evaluate how widely-used forest and fire models (e.g. FVS, LANDIS) reproduce observed change — initialize from an early year, compare projections to what actually happened.</li>
+          <li>Publish the comparison openly, as reference content the field can build on.</li>
+        </ul>
+        <p class="frame">A direction the multi-decade record uniquely enables — not yet a released result.</p>
+      </div>
+
+      <div class="phase">
+        <span class="when">Direction · exploratory</span>
+        <h3>Forward-looking prediction</h3>
+        <ul>
+          <li>Explore prediction of ecosystem trajectories built on the reconciled record — empirical what-ifs first, then physics-informed and machine-learning approaches.</li>
+          <li>Any predictive outputs would flow through the same pipes and be documented and validated like every other layer.</li>
+        </ul>
+        <p class="frame">An aspiration the data positions well, contingent on collaboration and support. Stated as intent, not promise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- comparables / where it sits -->
+<section class="block">
+  <div class="wrap">
+    <h2>Where it sits</h2>
+    <p class="sec-lede">The Wildland Almanac belongs to the family of open, public-good geospatial data resources — not commercial platforms. The closest reference points, and what each is known for:</p>
+    <div class="compare">
+      <div class="r"><div class="n">Hansen GFC</div><div class="d">The canonical global forest-change record; published openly and adopted across conservation and agency work. The nearest analog in spirit.</div></div>
+      <div class="r"><div class="n">NLCD</div><div class="d">The institutionally mature template — a federally-homed, periodically-updated land-cover product embedded in agency workflows.</div></div>
+      <div class="r"><div class="n">HydroSHEDS</div><div class="d">A well-documented substrate-plus-guidance resource in hydrology, widely used and durably maintained.</div></div>
+      <div class="r"><div class="n">LandTrendr</div><div class="d">A methodology-and-data approach to change detection, diffused into the field through Earth Engine and academic adoption.</div></div>
+    </div>
+    <p style="margin-top:14px">What distinguishes the Almanac within this family is the <strong>reconciliation of many properties into one consistent stack</strong>, the multi-decade depth, and the intent to pair the record with open benchmarking and, eventually, prediction.</p>
+  </div>
+</section>
+
+<!-- support / get involved -->
+<section class="block">
+  <div class="wrap">
+    <h2>Supporting the work</h2>
+    <p>The Almanac is built and openly shared to support decision-making and scientific discovery. Sustaining a multi-decade public-good dataset — annual updates, a durable institutional home, expansion to CONUS — is an ongoing effort. Researchers, agencies, and funders interested in the data, in collaboration, or in supporting continued updates are warmly invited to get in touch: <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a>.</p>
+    <p>Feedback from users — errors, use cases, requests for additional properties — is genuinely valuable and materially shapes future releases.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div>The Wildland Almanac · open under CC&nbsp;BY · developed from UC&nbsp;Irvine Earth System Science research</div>
+      <div><a href="data.html">The Data</a> · <a href="use.html">Use It</a> · <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a> · <a href="index.html">Home</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

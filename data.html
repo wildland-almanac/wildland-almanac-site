@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Data — The Wildland Almanac</title>
+<style>
+  :root{
+    --ink:#1b1b1b; --ink-soft:#3a3a3a; --muted:#6a6a6a;
+    --line:#d8d6d0; --line-strong:#bdbab2;
+    --paper:#fbfaf7; --panel:#ffffff;
+    --accent:#2f5d3a; --accent-soft:#eef2ec;
+    --link:#1a4f78; --code-bg:#f4f2ec; --code-ink:#24351f;
+    --maxw:980px;
+    --mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  .topbar{border-bottom:1px solid var(--line);background:var(--panel)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brandmark{font-family:var(--serif);font-size:18px;color:var(--ink)}
+  .brandmark a{color:inherit}
+  .brandmark .the{color:var(--muted);font-style:italic;margin-right:4px}
+  .nav a{color:var(--ink-soft);font-size:14px;margin-left:22px}
+  .nav a:hover{color:var(--accent)}
+  .nav a.here{color:var(--accent);font-weight:600}
+  @media(max-width:640px){.nav a{margin-left:14px;font-size:13px}.topbar .wrap{height:52px}}
+
+  .crumb{font-family:var(--mono);font-size:12px;color:var(--muted);padding:18px 0 0}
+  .crumb a{color:var(--muted)}
+  .pagehead{padding:10px 0 24px;border-bottom:1px solid var(--line)}
+  h1{font-family:var(--serif);font-weight:600;font-size:32px;line-height:1.12;margin:6px 0 10px;letter-spacing:-.2px}
+  .lede{font-size:17px;color:var(--ink-soft);max-width:740px;margin:0}
+  .draft-note{background:#fff7e6;border:1px solid #e8d8a8;color:#6b5615;font-size:13px;border-radius:4px;padding:10px 14px;margin:18px 0 0;font-family:var(--mono)}
+
+  /* spec strip */
+  .specs{display:flex;flex-wrap:wrap;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;background:var(--panel);font-family:var(--mono);font-size:13px;width:max-content;max-width:100%;margin:20px 0 0}
+  .specs span{padding:7px 14px;border-right:1px solid var(--line);color:var(--ink-soft);white-space:nowrap}
+  .specs span:last-child{border-right:none}
+  .specs b{color:var(--ink);font-weight:600}
+  @media(max-width:640px){.specs{width:100%}.specs span{flex:1 1 auto;text-align:center}}
+
+  /* coverage / tiers */
+  section.block{padding:30px 0;border-bottom:1px solid var(--line)}
+  h2{font-family:var(--serif);font-size:23px;font-weight:600;margin:0 0 6px}
+  .sec-lede{color:var(--ink-soft);max-width:740px;margin:0 0 16px}
+  p{max-width:740px}
+  .tiers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media(max-width:640px){.tiers{grid-template-columns:1fr}}
+  .tier{border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:16px 18px}
+  .tier h3{font-size:16px;margin:0 0 4px}
+  .tier .status{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+  .tier .status.live{color:var(--accent)}
+  .tier p{font-size:14px;color:var(--ink-soft);margin:8px 0 0}
+
+  /* theme index */
+  .index{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .index a{font-size:13px;border:1px solid var(--line);border-radius:20px;padding:5px 13px;color:var(--ink-soft);background:var(--panel)}
+  .index a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+
+  /* theme blocks + layer tables */
+  .theme{padding:26px 0;border-bottom:1px solid var(--line)}
+  .theme:last-of-type{border-bottom:none}
+  .theme h2{display:flex;align-items:baseline;gap:12px}
+  .theme h2 .count{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:400}
+  .layer{border:1px solid var(--line);border-radius:5px;background:var(--panel);margin:12px 0;overflow:hidden}
+  .layer .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;padding:12px 16px;background:var(--code-bg);border-bottom:1px solid var(--line)}
+  .layer .id{font-family:var(--mono);font-size:13.5px;font-weight:600;color:var(--code-ink)}
+  .layer .units{font-size:12.5px;color:var(--muted)}
+  .layer .units b{color:var(--ink-soft);font-weight:600}
+  .layer .body{padding:12px 16px;font-size:14px;color:var(--ink-soft);line-height:1.5}
+  .layer .meta{font-size:12.5px;color:var(--muted);margin-top:8px}
+  .layer .meta b{color:var(--ink-soft)}
+
+  .note{background:var(--accent-soft);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 4px 4px 0;font-size:14px;color:var(--ink-soft);margin:14px 0;max-width:760px}
+  .note.warn{background:#fbf3ee;border-left-color:#b5663a}
+  .note b{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--code-bg);padding:1px 5px;border-radius:3px;color:var(--code-ink)}
+  .cite{font-family:var(--mono);font-size:12.5px;background:var(--code-bg);border:1px solid var(--line);border-radius:4px;padding:11px 13px;color:var(--ink-soft);line-height:1.5;max-width:760px;margin-top:8px}
+
+  footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 40px;font-size:13.5px;color:var(--muted);margin-top:8px}
+  footer a{color:var(--link)}
+  footer .row{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Dataset",
+  "name": "The Wildland Almanac — California",
+  "alternateName": "Wildland Almanac CA (v2026.1)",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "url": "https://wildlandalmanac.org/",
+  "sameAs": "https://source.coop/wildland-almanac/california",
+  "version": "v2026.1",
+  "keywords": ["wildland","ecosystem","California","Landsat","remote sensing","vegetation","fire hazard","biomass","hydrology","disturbance","canopy height","30m","time series","Cloud-Optimized GeoTIFF","STAC"],
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "The Wildland Almanac, University of California, Irvine",
+    "url": "https://wildlandalmanac.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Source Cooperative",
+    "url": "https://source.coop/wildland-almanac/california"
+  },
+  "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "name": "Source Cooperative",
+    "url": "https://source.coop/wildland-almanac/california"
+  },
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "California, USA",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "32.5 -124.5 42.1 -114.1"
+    }
+  },
+  "temporalCoverage": "1985-10-01/2025-09-30",
+  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
+  "distribution": {
+    "@type": "DataDownload",
+    "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
+    "contentUrl": "https://data.source.coop/wildland-almanac/california/v2026.1/"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
+    <nav class="nav">
+      <a href="#" class="here">The Data</a>
+      <a href="use.html">Use It</a>
+      <a href="about.html#methods">Methods</a>
+      <a href="about.html">About</a>
+      <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="crumb"><a href="index.html">Home</a> / The Data</p>
+</div>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>The data</h1>
+    <p class="lede">Nineteen biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30&nbsp;m. The layers are reconciled together — derived through a single consistent pipeline — so tradeoffs between vegetation, carbon, water, fire, and disturbance can be read from one internally consistent stack.</p>
+    <div class="specs">
+      <span><b>19</b>&nbsp;properties</span>
+      <span><b>6</b>&nbsp;themes</span>
+      <span><b>41</b>&nbsp;water years</span>
+      <span>1985–2025</span>
+      <span><b>30&nbsp;m</b></span>
+      <span>EPSG:5070</span>
+      <span>COG</span>
+    </div>
+    <p class="draft-note">DRAFT — layer specifications below are drawn from the California documentation (v2026.1). Always confirm against the documentation PDF at the dataset root before quantitative use.</p>
+  </div>
+</div>
+
+<!-- coverage and tiers -->
+<section class="block">
+  <div class="wrap">
+    <h2>Coverage</h2>
+    <p class="sec-lede">The Almanac is published as two dataset roots. California is the first full release; CONUS follows. Each annual version (<code>v2026.1</code>, <code>v2027.1</code>, …) is a complete reprocessing of the full time series under one code base.</p>
+    <div class="tiers">
+      <div class="tier">
+        <span class="status live">Released · v2026.1</span>
+        <h3>Wildland Almanac — California</h3>
+        <p>All 19 layers, water years 1985–2025, statewide at 30&nbsp;m. The full stack, openly available now. <a href="use.html">How to access →</a></p>
+      </div>
+      <div class="tier">
+        <span class="status">Planned</span>
+        <h3>Wildland Almanac — CONUS</h3>
+        <p>Conterminous U.S. coverage, extending the same properties and methodology nationally. In preparation; decadal snapshots first, then fuller coverage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- how to read these -->
+<section class="block">
+  <div class="wrap">
+    <h2>How to read the layer specs</h2>
+    <p class="sec-lede">Each layer below lists its <b>units</b> (how encoded values map to physical quantities), its <b>period</b> (temporal aggregation), and notes on method and intended use. Most layers are single-band <code>int16</code> with a no-data value of <code>−9999</code>; the one exception is Fire_LCP (see below). Water years run October–September.</p>
+    <div class="index">
+      <a href="#veg">Vegetation &amp; structure (5)</a>
+      <a href="#hydro">Hydrology (5)</a>
+      <a href="#fire">Fire hazard (3)</a>
+      <a href="#carbon">Carbon (2)</a>
+      <a href="#dieoff">Dieoff risk (1)</a>
+      <a href="#disturb">Disturbance (3)</a>
+    </div>
+  </div>
+</section>
+
+<!-- VEGETATION -->
+<section class="theme" id="veg">
+  <div class="wrap">
+    <h2>Vegetation cover &amp; structure <span class="count">5 layers</span></h2>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Veg_TreeFrac · Veg_ShrubFrac · Veg_HerbFrac · Veg_BareFrac</span>
+        <span class="units"><b>units</b> fractional cover ×10,000 &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
+      </div>
+      <div class="body">
+        Fractional cover of tree, shrub, herbaceous, and bare. The four layers sum to 10,000 at each valid pixel — a Veg_TreeFrac of 9,000 means trees account for 90% of cover. All cover is viewed from above; lower strata hidden beneath the canopy are not counted.
+        <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat imagery (COLD), trained on RAP and USFS data.</div>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Veg_CanopyHt</span>
+        <span class="units"><b>units</b> cm (÷100 → m) &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
+      </div>
+      <div class="body">
+        Annual tree canopy height. Related canopy-height information is also embedded as a band within Fire_LCP, rescaled to LCP units.
+        <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat, trained on the ALS canopy-height model of Allred et al. (2025).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HYDROLOGY -->
+<section class="theme" id="hydro">
+  <div class="wrap">
+    <h2>Hydrology <span class="count">5 layers</span></h2>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">WaterFlux_AETmax</span>
+        <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, water year</span>
+      </div>
+      <div class="body">
+        Maximum possible annual evapotranspiration given the observed vegetation structure, assuming no drought limitation. Depends on structure, not year-to-year precipitation, so its series is more stable than AETrealized — useful for isolating the hydrologic effect of vegetation change (management, fire, regrowth).
+        <div class="meta"><b>Method:</b> regressions on AmeriFlux observations, monthly Landsat, PRISM meteorology.</div>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">WaterFlux_AETrealized</span>
+        <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, water year</span>
+      </div>
+      <div class="body">
+        Best estimate of evapotranspiration that actually occurred, accounting for both vegetation structure and precipitation availability. Always ≤ AETmax; equal in wet years, lower in dry years. Comparable to independent observations such as gauged runoff.
+        <div class="meta"><b>Method:</b> as AETmax, with precipitation-limited monthly water balance.</div>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">WaterFlux_Soilmoisture</span>
+        <span class="units"><b>units</b> mm water-equivalent, full rooting zone &nbsp;·&nbsp; <b>period</b> end of water year (Sep)</span>
+      </div>
+      <div class="body">
+        End-of-water-year soil moisture, from the same monthly water balance that produces AETrealized and Runoff. Useful for diagnosing plant-available water and the controls on water yield.
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">WaterFlux_Runoff</span>
+        <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, water year</span>
+      </div>
+      <div class="body">
+        Best estimate of annual discharge (surface runoff plus subsurface percolation), as precipitation minus AETrealized within a monthly water balance. Comparable to gauged runoff.
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">WaterFlux_PminusETmax_SPI0</span>
+        <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, precip fixed at long-term mean (SPI-48 = 0)</span>
+      </div>
+      <div class="body">
+        Annual discharge predicted for an average-precipitation year (48-month SPI = 0), computed from AETmax and the long-term-mean precipitation with no net soil-moisture change. Because precipitation is held constant, the layer isolates how vegetation density alone affects water yield.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIRE -->
+<section class="theme" id="fire">
+  <div class="wrap">
+    <h2>Fire hazard <span class="count">3 layers</span></h2>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Fire_LCP</span>
+        <span class="units"><b>units</b> 8-band Int32, FARSITE v.4 LCP format &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
+      </div>
+      <div class="body">
+        Multi-band landscape file for fire-behavior models such as FlamMap. The eight bands follow the FARSITE v.4 LCP specification: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1–3 are from LANDFIRE; band 4 from LightGBM; bands 5–8 from XGBoost/LightGBM predictions.
+        <div class="meta"><b>Canopy cover, height, base height, and bulk density are distributed only as bands within Fire_LCP.</b></div>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Fire_FlamMap_FL</span>
+        <span class="units"><b>units</b> meters ×100 &nbsp;·&nbsp; <b>period</b> annual fuels; weather held constant</span>
+      </div>
+      <div class="body">
+        Predicted flame length from FlamMap using each year's Fire_LCP, with run conditions held fixed (20&nbsp;mph uphill wind, Scott&amp;Reinhardt crown method, set fuel moistures). Because weather is constant, this is a <b>relative</b> indicator of hazard driven by topography and mapped fuels — not an absolute prediction for any specific weather scenario.
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Fire_FlamMap_ROS</span>
+        <span class="units"><b>units</b> (m/min) ×100 &nbsp;·&nbsp; <b>period</b> annual fuels; weather held constant</span>
+      </div>
+      <div class="body">
+        Predicted rate of spread from the same FlamMap runs as Fire_FlamMap_FL; the same relative-hazard interpretation applies.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARBON -->
+<section class="theme" id="carbon">
+  <div class="wrap">
+    <h2>Carbon <span class="count">2 layers</span></h2>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Carbon_AGB</span>
+        <span class="units"><b>units</b> metric tons / hectare (total mass, not C) &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
+      </div>
+      <div class="body">
+        Aboveground live biomass, mainly tree. An independently produced hybrid biomass product — combining field-plot observations and remote sensing — co-registered into the Almanac stack. Useful for nature-based-solutions accounting and biomass-dynamics tracking.
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Carbon_GPP</span>
+        <span class="units"><b>units</b> g&nbsp;C / m² / yr &nbsp;·&nbsp; <b>period</b> annual sum, water year</span>
+      </div>
+      <div class="body">
+        Annual gross primary production (mass of carbon). Derived from NIRv and flux-tower regressions. Useful for productivity patterns and the climatic/vegetation controls on carbon uptake.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIEOFF -->
+<section class="theme" id="dieoff">
+  <div class="wrap">
+    <h2>Forest dieoff risk <span class="count">1 layer</span></h2>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Vulner_TreeDieoff_SPI-2</span>
+        <span class="units"><b>units</b> unitless index, 0–20,000 &nbsp;·&nbsp; <b>period</b> annual</span>
+      </div>
+      <div class="body">
+        Vulnerability of tree canopy to severe drought — the product of Veg_TreeFrac and the AETmax/precipitation ratio for a 48-month SPI of −2 (a severe drought analogous to the southern Sierra Nevada in 2012–2015). Read as a <b>relative</b> index: below ~1,000 is low risk; above ~5,000 is progressively greater. Values are not directly interpretable in physical terms.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISTURBANCE -->
+<section class="theme" id="disturb">
+  <div class="wrap">
+    <h2>Disturbance severity <span class="count">3 layers</span></h2>
+    <p class="sec-lede" style="margin-bottom:8px">Observed event-based loss at pixels identified as disturbed by COLD. Pixels with no disturbance in a given year are encoded as <code>0</code>; <code>−9999</code> marks pixels outside the study area, masked, or where the pre/post reference is unavailable. Available for water years 1986–2024 — the first and last years of the series cannot be computed.</p>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Disturbance_TreeFrac</span>
+        <span class="units"><b>units</b> Δ fraction ×10,000 (positive = loss) &nbsp;·&nbsp; <b>period</b> event delta</span>
+      </div>
+      <div class="body">
+        Annual loss of tree fractional cover at disturbed pixels. A value of 3,000 means a loss of 30 percentage points of absolute tree cover (e.g. 40% → 10%). Timing reflects a detection-lag correction — early-season detections are reattributed to the prior year — so some events may be attributed to a slightly earlier year than first flagged.
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Disturbance_ShrubFrac</span>
+        <span class="units"><b>units</b> Δ fraction ×10,000 (positive = loss) &nbsp;·&nbsp; <b>period</b> event delta</span>
+      </div>
+      <div class="body">
+        Annual loss of shrub fractional cover at disturbed pixels. Encoding and caveats as for Disturbance_TreeFrac.
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Disturbance_AGB</span>
+        <span class="units"><b>units</b> Δ tons/ha ×10 (positive = loss) &nbsp;·&nbsp; <b>period</b> event delta</span>
+      </div>
+      <div class="body">
+        Annual loss of aboveground biomass at disturbed pixels, as the change in Carbon_AGB across pre- and post-disturbance years.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- usage cautions -->
+<section class="block">
+  <div class="wrap">
+    <h2>Before you analyze</h2>
+    <div class="note warn"><b>Use one release end-to-end.</b> Every annual version reprocesses the full 1985-onward series under one code base, so values for a given year may differ between versions. Do not splice years from different versions in a time-series analysis.</div>
+    <div class="note"><b>Masking.</b> Layers are masked to exclude political boundaries, urban land, water, agriculture, and pixels lacking sufficient data. The mask may be imperfect. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
+    <div class="note"><b>No-data and recent years.</b> No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention). Some recent water years are less constrained — WY2023 reflects extreme California snowpack, and WY2025 is subject to refinement in future releases. For year-specific work, compare against nearby years.</div>
+  </div>
+</section>
+
+<!-- license + citation -->
+<section class="block">
+  <div class="wrap">
+    <h2>License &amp; citation</h2>
+    <p class="sec-lede">Released under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 (CC&nbsp;BY)</a>. Free to use, share, and adapt with attribution. Access or use implies consent to the University of California terms in the documentation. Offered as is, with no promise of technical support — feedback to <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a> is welcome and shapes future releases.</p>
+    <div class="cite">Goulden, M.L. (2026). The Wildland Almanac — California (Version v2026.1). Source&nbsp;Cooperative. DOI:&nbsp;[to be assigned]. Released under CC&nbsp;BY.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div>The Wildland Almanac · open under CC&nbsp;BY · developed from UC&nbsp;Irvine Earth System Science research</div>
+      <div><a href="use.html">Use It</a> · <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a> · <a href="index.html">Home</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

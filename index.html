@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Wildland Almanac — an open 30 m record of California wildland ecosystems</title>
+<style>
+  :root{
+    --ink:#1b1b1b;
+    --ink-soft:#3a3a3a;
+    --muted:#6a6a6a;
+    --line:#d8d6d0;
+    --line-strong:#bdbab2;
+    --paper:#fbfaf7;
+    --panel:#ffffff;
+    --accent:#2f5d3a;          /* muted forest green, used sparingly */
+    --accent-soft:#eef2ec;
+    --link:#1a4f78;            /* utilitarian blue, like a docs site */
+    --code-bg:#f4f2ec;
+    --maxw:980px;
+    --mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.55;
+  }
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--line);
+    background:var(--panel);
+  }
+  .topbar .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:58px;
+  }
+  .brandmark{
+    font-family:var(--serif);
+    font-size:18px;
+    letter-spacing:.2px;
+    color:var(--ink);
+  }
+  .brandmark .the{color:var(--muted);font-style:italic;margin-right:4px}
+  .nav a{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin-left:22px;
+  }
+  .nav a:hover{color:var(--accent)}
+  @media(max-width:640px){
+    .nav a{margin-left:14px;font-size:13px}
+    .topbar .wrap{height:52px}
+  }
+
+  /* ---------- hero / masthead ---------- */
+  .masthead{
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#fff, var(--paper));
+    padding:46px 0 38px;
+  }
+  h1.title{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:38px;
+    line-height:1.1;
+    margin:0 0 10px;
+    letter-spacing:-.2px;
+  }
+  .tagline{
+    font-size:18px;
+    color:var(--ink-soft);
+    margin:0 0 22px;
+    max-width:680px;
+  }
+  /* spec strip */
+  .specs{
+    display:flex;flex-wrap:wrap;gap:0;
+    border:1px solid var(--line-strong);
+    border-radius:4px;
+    overflow:hidden;
+    background:var(--panel);
+    font-family:var(--mono);
+    font-size:13px;
+    width:max-content;
+    max-width:100%;
+  }
+  .specs span{
+    padding:7px 14px;
+    border-right:1px solid var(--line);
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .specs span:last-child{border-right:none}
+  .specs b{color:var(--ink);font-weight:600}
+  @media(max-width:640px){
+    h1.title{font-size:29px}
+    .tagline{font-size:16px}
+    .specs{width:100%}
+    .specs span{flex:1 1 auto;text-align:center}
+  }
+
+  /* ---------- intro prose + CTAs ---------- */
+  .intro{padding:34px 0 8px}
+  .intro p{margin:0 0 16px;max-width:760px;color:var(--ink-soft)}
+  .intro p strong{color:var(--ink)}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 18px;border-radius:4px;
+    font-size:15px;font-weight:600;
+    border:1px solid var(--line-strong);
+  }
+  .btn.primary{
+    background:var(--accent);color:#fff;border-color:var(--accent);
+  }
+  .btn.primary:hover{background:#264c30;text-decoration:none}
+  .btn.ghost{background:var(--panel);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .btn .arrow{font-family:var(--mono);font-size:13px;opacity:.8}
+
+  /* ---------- figure / navigation diagram ---------- */
+  .figure-section{padding:38px 0 30px}
+  .figure-frame{
+    border:1px solid var(--line-strong);
+    border-radius:6px;
+    background:var(--panel);
+    padding:22px 22px 14px;
+  }
+  .figure-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:6px;
+  }
+  .figure-head .fignum{
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.08em;
+  }
+  .figure-head .fighint{font-size:13px;color:var(--muted)}
+  .diagram{width:100%;height:auto;display:block}
+  /* clickable regions */
+  .hot{cursor:pointer}
+  .hot rect, .hot .card{transition:fill .12s ease, stroke .12s ease}
+  .hot:hover .card{fill:var(--accent-soft);stroke:var(--accent)}
+  .hot:hover text{fill:var(--accent)}
+  .diagram text{font-family:var(--sans)}
+  .figcaption{
+    font-size:13.5px;color:var(--muted);
+    margin-top:12px;line-height:1.5;
+    border-top:1px solid var(--line);padding-top:12px;
+  }
+  .figcaption b{color:var(--ink-soft)}
+
+  /* ---------- explore cards ---------- */
+  .explore{padding:14px 0 46px}
+  .explore h2{
+    font-family:var(--serif);font-size:22px;font-weight:600;
+    margin:0 0 4px;
+  }
+  .explore .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+  .cards{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+  }
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .card-link{
+    display:block;border:1px solid var(--line);border-radius:5px;
+    background:var(--panel);padding:18px 18px 16px;
+    color:inherit;
+  }
+  .card-link:hover{border-color:var(--accent);text-decoration:none;
+    box-shadow:0 1px 0 var(--line)}
+  .card-link .k{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.09em;
+  }
+  .card-link h3{
+    font-size:17px;margin:6px 0 6px;color:var(--ink);font-weight:600;
+  }
+  .card-link p{margin:0;font-size:14px;color:var(--ink-soft);line-height:1.5}
+  .card-link .go{
+    font-family:var(--mono);font-size:13px;color:var(--link);margin-top:10px;
+    display:inline-block;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    background:var(--panel);
+    padding:30px 0 40px;
+    font-size:13.5px;color:var(--muted);
+  }
+  footer .cols{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between}
+  footer h4{
+    font-size:12px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--ink-soft);margin:0 0 8px;font-weight:600;
+  }
+  footer p{margin:0 0 6px;max-width:420px;line-height:1.5}
+  .cite{
+    font-family:var(--mono);font-size:12px;background:var(--code-bg);
+    border:1px solid var(--line);border-radius:4px;
+    padding:10px 12px;color:var(--ink-soft);margin-top:8px;line-height:1.5;
+    word-break:break-word;
+  }
+  .draft-note{
+    background:#fff7e6;border:1px solid #e8d8a8;color:#6b5615;
+    font-size:13px;border-radius:4px;padding:10px 14px;margin:0 0 0;
+    font-family:var(--mono);
+  }
+  .draft-wrap{padding-top:18px}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Dataset",
+  "name": "The Wildland Almanac — California",
+  "alternateName": "Wildland Almanac CA (v2026.1)",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "url": "https://wildlandalmanac.org/",
+  "sameAs": "https://source.coop/wildland-almanac/california",
+  "version": "v2026.1",
+  "keywords": ["wildland","ecosystem","California","Landsat","remote sensing","vegetation","fire hazard","biomass","hydrology","disturbance","canopy height","30m","time series","Cloud-Optimized GeoTIFF","STAC"],
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "The Wildland Almanac, University of California, Irvine",
+    "url": "https://wildlandalmanac.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Source Cooperative",
+    "url": "https://source.coop/wildland-almanac/california"
+  },
+  "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "name": "Source Cooperative",
+    "url": "https://source.coop/wildland-almanac/california"
+  },
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "California, USA",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "32.5 -124.5 42.1 -114.1"
+    }
+  },
+  "temporalCoverage": "1985-10-01/2025-09-30",
+  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
+  "distribution": {
+    "@type": "DataDownload",
+    "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
+    "contentUrl": "https://data.source.coop/wildland-almanac/california/v2026.1/"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- DRAFT banner: remove before publishing -->
+<div class="wrap draft-wrap">
+  <p class="draft-note">DRAFT — preview build. The California release on Source Cooperative is live; the documentation PDF is the binding reference for quantitative use.</p>
+</div>
+
+<!-- top bar -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandmark"><span class="the">The</span>Wildland Almanac</div>
+    <nav class="nav">
+      <a href="data.html">The Data</a>
+      <a href="use.html">Use It</a>
+      <a href="about.html#methods">Methods</a>
+      <a href="about.html">About</a>
+      <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
+    </nav>
+  </div>
+</header>
+
+<!-- masthead -->
+<section class="masthead">
+  <div class="wrap">
+    <h1 class="title">The Wildland Almanac</h1>
+    <p class="tagline">An open, university-developed 30&nbsp;m record of how wildland ecosystems change — vegetation, carbon, water, fuels, fire hazard, and disturbance. California is released now; the contiguous U.S. follows.</p>
+    <div class="specs">
+      <span><b>California</b>&nbsp;released</span>
+      <span><b>30&nbsp;m</b></span>
+      <span><b>41</b>&nbsp;years</span>
+      <span><b>19</b>&nbsp;properties</span>
+      <span><b>CC&nbsp;BY</b></span>
+      <span>updated&nbsp;annually</span>
+    </div>
+  </div>
+</section>
+
+<!-- intro prose + theory of change -->
+<section class="intro">
+  <div class="wrap">
+    <p><strong>The Wildland Almanac is a reconciled record of how wildland ecosystems change over time.</strong> Derived from the Landsat archive at 30&nbsp;m resolution, it brings nineteen biophysical properties — spanning vegetation structure, carbon, water balance, fuels and fire behavior, disturbance, and drought vulnerability — into a single, internally consistent datacube. Because the layers are reconciled together rather than stitched from separate single-purpose products, tradeoffs between carbon, water, fire, and habitat can be read in one place. <strong>California is released now</strong>, covering water years 1985–2025; coverage of the contiguous U.S. follows.</p>
+
+    <p>But a dataset is only as good as the decisions it improves. We built the Almanac around a clear conviction about <strong>how better information actually becomes a better decision</strong> — made by a real person, on real ground.</p>
+
+    <p>Managing wildlands for fire, water, carbon, and habitat is enormous, durable work, and a great deal of it is already being done well — by skilled GIS analysts and planners in agencies, tribes, NGOs, and conservancies who bring deep experience, hard-won intuition, local credibility, and institutional knowledge to the task. <strong>Our theory of change is to meet that work where it already happens</strong> — to drop directly into the tools and workflows already producing these decisions, and to make them faster, better-grounded, and better-supported. We think lasting impact needs a clear path and a specific audience, not capability in search of one.</p>
+
+    <p>Technology has a real and growing role here, and we mean to be part of it. But the tools are not yet reliable enough to plan on their own. The highest-value step today is to <strong>amplify the analysts who already do this work</strong> — to give them a deeper, more consistent evidence base to reason from, and to build steadily toward more from there. That is what the Almanac is for.</p>
+
+    <p style="font-size:15px;color:var(--muted)">Open under CC&nbsp;BY · cloud-native (COG&nbsp;+&nbsp;STAC), built to stream directly into ArcGIS, QGIS, and Earth Engine · developed from UC&nbsp;Irvine Earth System Science research · updated every year.</p>
+
+    <div class="cta-row">
+      <a class="btn primary" href="https://source.coop/wildland-almanac">Get the data <span class="arrow">↗</span></a>
+      <a class="btn ghost" href="use.html">Bring it into your tools <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- figure-as-navigation -->
+<section class="figure-section">
+  <div class="wrap">
+    <div class="figure-frame">
+      <div class="figure-head">
+        <span class="fignum">Figure 1 — Our theory of change</span>
+        <span class="fighint">Click any region to explore</span>
+      </div>
+
+      <svg class="diagram" viewBox="0 0 920 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of the Wildland Almanac: a hub of website plus data store at top, feeding GIS analysts and the tools they use, which return feedback in a loop">
+        <defs>
+          <marker id="arrow" markerWidth="9" markerHeight="9" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#8a8780"></path>
+          </marker>
+          <marker id="arrowStart" markerWidth="9" markerHeight="9" refX="0.5" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M6,0 L0,3 L6,6 Z" fill="#8a8780"></path>
+          </marker>
+          <marker id="arrowG" markerWidth="9" markerHeight="9" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#2f5d3a"></path>
+          </marker>
+        </defs>
+
+        <!-- ============================================================
+             TOP APEX: the hub — one box split by a dashed line.
+             Left half = the homepage (WildlandAlmanac.org)
+             Right half = the data store (Source Cooperative)
+             Narrow + centered so the whole figure reads as a triangle.
+             ============================================================ -->
+        <!-- merged outer container -->
+        <rect class="card" x="290" y="40" width="340" height="96" rx="7" fill="#ffffff" stroke="#bdbab2" stroke-width="1.6"></rect>
+        <text x="460" y="30" text-anchor="middle" font-size="12.5" fill="#6a6a6a" font-style="italic">The Wildland Almanac — the hub</text>
+
+        <!-- left half: the homepage -->
+        <a class="hot" href="about.html#methods" aria-label="WildlandAlmanac.org — documentation, methods, and how to use the data">
+          <rect class="card" x="290" y="40" width="170" height="96" rx="7" fill="#ffffff" stroke="transparent" stroke-width="1.4"></rect>
+          <text x="375" y="68" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1b1b1b">The homepage</text>
+          <text x="375" y="87" text-anchor="middle" font-size="10.5" fill="#6a6a6a" font-family="ui-monospace, Menlo, monospace">WildlandAlmanac.org</text>
+          <text x="375" y="106" text-anchor="middle" font-size="10.5" fill="#3a3a3a">methods · how-to</text>
+          <text x="375" y="121" text-anchor="middle" font-size="10.5" fill="#3a3a3a">validation · roadmap</text>
+        </a>
+
+        <!-- dashed divider -->
+        <line x1="460" y1="50" x2="460" y2="126" stroke="#bdbab2" stroke-width="1.4" stroke-dasharray="4 4"></line>
+
+        <!-- right half: the data store -->
+        <a class="hot" href="https://source.coop/wildland-almanac" aria-label="The data on Source Cooperative">
+          <rect class="card" x="460" y="40" width="170" height="96" rx="7" fill="#ffffff" stroke="transparent" stroke-width="1.4"></rect>
+          <text x="545" y="68" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1b1b1b">The data store</text>
+          <text x="545" y="87" text-anchor="middle" font-size="10.5" fill="#6a6a6a" font-family="ui-monospace, Menlo, monospace">source.coop</text>
+          <text x="545" y="106" text-anchor="middle" font-size="10.5" fill="#3a3a3a">COG + STAC</text>
+          <text x="545" y="121" text-anchor="middle" font-size="10.5" fill="#3a3a3a">open · cloud-native</text>
+        </a>
+
+        <!-- ============================================================
+             BOTTOM ROW: two wider boxes pushed to the outer edges,
+             so the silhouette is a downward triangle.
+             Left = analysts. Right = tools.
+             ============================================================ -->
+
+        <!-- LOWER LEFT: analysts -->
+        <a class="hot" href="about.html" aria-label="GIS analysts and planners who use the data">
+          <rect class="card" x="70" y="300" width="320" height="150" rx="7" fill="#ffffff" stroke="#bdbab2" stroke-width="1.6"></rect>
+          <text x="230" y="328" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1b">GIS analysts &amp; planners</text>
+          <text x="230" y="354" text-anchor="middle" font-size="12" fill="#3a3a3a">agencies · NGOs · conservancies</text>
+          <text x="230" y="374" text-anchor="middle" font-size="12" fill="#3a3a3a">regional capacity centers · tribes</text>
+          <text x="230" y="402" text-anchor="middle" font-size="11.5" fill="#6a6a6a" font-style="italic">characterize · project · act · monitor</text>
+        </a>
+
+        <!-- LOWER RIGHT: tools -->
+        <a class="hot" href="use.html" aria-label="How to bring the data into widely used GIS tools">
+          <rect class="card" x="530" y="300" width="320" height="150" rx="7" fill="#ffffff" stroke="#bdbab2" stroke-width="1.6"></rect>
+          <text x="690" y="328" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1b">Widely used tools</text>
+          <text x="690" y="354" text-anchor="middle" font-size="12" fill="#3a3a3a">ArcGIS · AGOL · Living Atlas</text>
+          <text x="690" y="374" text-anchor="middle" font-size="12" fill="#3a3a3a">QGIS · Google Earth Engine</text>
+          <text x="690" y="394" text-anchor="middle" font-size="12" fill="#3a3a3a">Felt · Planscape · state portals</text>
+          <text x="690" y="424" text-anchor="middle" font-size="11" fill="#6a6a6a" font-family="ui-monospace, Menlo, monospace">how-to guides →</text>
+        </a>
+
+        <!-- ============================================================
+             SIDE CONNECTORS — straight, solid, 45° from vertical.
+             At 45° each line runs corner-to-corner, center to center.
+             Right: data store → tools.   Left: analysts → homepage.
+             Mirror images sweeping inward toward the apex.
+             ============================================================ -->
+
+        <!-- data store down-right into tools (45°) -->
+        <path d="M545,136 L709,300"
+              fill="none" stroke="#8a8780" stroke-width="1.8" marker-end="url(#arrow)"></path>
+        <text x="612" y="206" text-anchor="middle" font-size="11.5" fill="#6a6a6a" transform="rotate(45 612 206)">data streams out</text>
+
+        <!-- analysts up-right into homepage (45°) -->
+        <path d="M230,300 L394,136"
+              fill="none" stroke="#8a8780" stroke-width="1.8" marker-end="url(#arrow)"></path>
+        <text x="297" y="206" text-anchor="middle" font-size="11.5" fill="#6a6a6a" transform="rotate(-45 297 206)">feedback improves the record</text>
+
+        <!-- bottom: double-headed arrow between analysts and tools (the planning work) -->
+        <path d="M390,375 L530,375" fill="none" stroke="#8a8780" stroke-width="1.8"
+              marker-start="url(#arrowStart)" marker-end="url(#arrow)"></path>
+        <text x="460" y="366" text-anchor="middle" font-size="11.5" fill="#6a6a6a">planning</text>
+        <text x="460" y="396" text-anchor="middle" font-size="10.5" fill="#8a8780" font-style="italic">two-way</text>
+
+        <!-- caption inside svg bottom -->
+        <text x="460" y="478" text-anchor="middle" font-size="12.5" fill="#8a8780" font-family="ui-monospace, Menlo, monospace">
+          characterize → project → act → monitor → feed back
+        </text>
+      </svg>
+
+      <p class="figcaption">
+        <b>The mechanism, end to end.</b> The Almanac lives once — documented here at WildlandAlmanac.org, served from the data store on Source Cooperative — and streams through clean, cloud-native pipes into the tools analysts already use. There, skilled analysts and planners turn a stronger evidence base into real decisions on the ground. Their work, in turn, sharpens the record. Better inputs → amplified expertise → better decisions → feedback that improves the record: the loop is the point, and the analyst is at its center, not bypassed.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- explore: 4 inner pages -->
+<section class="explore">
+  <div class="wrap">
+    <h2>Explore</h2>
+    <p class="sub">Four ways into the Almanac, depending on what you came for.</p>
+    <div class="cards">
+      <a class="card-link" id="data" href="data.html">
+        <span class="k">01 · What's in it</span>
+        <h3>The Data</h3>
+        <p>The nineteen properties, the six theme groups, spatial and temporal coverage, the California and CONUS tiers, license, and how to cite it.</p>
+        <span class="go">Browse the data →</span>
+      </a>
+      <a class="card-link" id="use" href="use.html">
+        <span class="k">02 · How to use it</span>
+        <h3>Bring It Into Your Tools</h3>
+        <p>Step-by-step guides for streaming the data into ArcGIS&nbsp;Pro, QGIS, Earth Engine, and Felt — no bulk downloads. Start here if you want to get to work.</p>
+        <span class="go">See the how-to guides →</span>
+      </a>
+      <a class="card-link" id="methods" href="about.html#methods">
+        <span class="k">03 · How it was made</span>
+        <h3>Methods &amp; Validation</h3>
+        <p>How each property is derived from the Landsat record, how the layers are reconciled into one consistent cube, and how the results were validated.</p>
+        <span class="go">Read the methods →</span>
+      </a>
+      <a class="card-link" id="about" href="about.html">
+        <span class="k">04 · Who &amp; where it's going</span>
+        <h3>About &amp; Roadmap</h3>
+        <p>Provenance and the people behind the data, the annual-update commitment, collaborators, and the forward-looking direction — benchmarking and prediction.</p>
+        <span class="go">About the data →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>The Wildland Almanac</h4>
+        <p>An open geospatial data resource for mapping wildland ecosystem conditions and change — California released now, the contiguous United States to follow. Developed from UC&nbsp;Irvine Earth System Science research in collaboration with university scientists. Released under CC&nbsp;BY.</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <p><a href="https://source.coop/wildland-almanac">Data on Source Cooperative ↗</a></p>
+        <p><a href="use.html">How-to guides</a></p>
+        <p><a href="about.html#methods">Methods &amp; validation</a></p>
+        <p><a href="about.html">About &amp; roadmap</a></p>
+        <p><a href="mailto:mgoulden@uci.edu">Contact &amp; feedback</a></p>
+      </div>
+      <div>
+        <h4>Cite as</h4>
+        <div class="cite">Goulden, M.L. (2026). The Wildland Almanac — California (Version v2026.1). Source&nbsp;Cooperative. DOI:&nbsp;[to be assigned]. Released under CC&nbsp;BY.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
