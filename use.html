@@ -98,6 +98,43 @@
   footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 40px;font-size:13.5px;color:var(--muted);margin-top:8px}
   footer a{color:var(--link)}
   footer .row{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
+  /* ---------- figure / navigation diagram ---------- */
+  .figure-section{padding:38px 0 30px}
+  .figure-frame{
+    border:1px solid var(--line-strong);
+    border-radius:6px;
+    background:var(--panel);
+    padding:22px 22px 14px;
+  }
+  .figure-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:6px;
+  }
+  .figure-head .fignum{
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.08em;
+  }
+  .figure-head .fighint{font-size:13px;color:var(--muted)}
+  .diagram{width:100%;height:auto;display:block}
+  /* clickable regions */
+  .hot{cursor:pointer}
+  .hot rect, .hot .card{transition:fill .12s ease, stroke .12s ease}
+  .hot:hover .card{fill:var(--accent-soft);stroke:var(--accent)}
+  .hot:hover text{fill:var(--accent)}
+  .diagram text{font-family:var(--sans)}
+  .figcaption{
+    font-size:13.5px;color:var(--muted);
+    margin-top:12px;line-height:1.5;
+    border-top:1px solid var(--line);padding-top:12px;
+  }
+  .figcaption b{color:var(--ink-soft)}
+
+  /* ---------- cloud-native opener (Use page) ---------- */
+  .cloudnative{padding:30px 0 8px}
+  .cloudnative h2{font-family:var(--serif);font-size:23px;font-weight:600;margin:0 0 8px;color:var(--ink)}
+  .cloudnative p{max-width:760px;color:var(--ink-soft);margin:0 0 14px}
+  .cloudnative p strong{color:var(--ink)}
+  .cloudnative .eye{background:var(--accent-soft);border-radius:5px;padding:14px 18px;margin:0 0 18px;max-width:760px;font-size:15px}
 </style>
 <script type="application/ld+json">
 {
@@ -168,10 +205,131 @@
 <div class="pagehead">
   <div class="wrap">
     <h1>Bring it into your tools</h1>
-    <p class="lede">The data are Cloud-Optimized GeoTIFFs (COGs) on Source Cooperative. You can stream them directly into ArcGIS Pro, QGIS, Earth Engine, or any GDAL-based tool — reading only the pixels you need, with no download. When you do want files on disk, every layer is a public URL or a one-line bulk copy.</p>
-    <p class="draft-note">DRAFT — preview build. Example paths point at the <code>wildland-almanac/california</code> repository on Source Cooperative. Verify the live path on the Source file-detail page before relying on these URLs.</p>
+    <p class="lede">Three ways to get the Almanac into your work — stream it directly from the cloud, grab a single file, or pull data in bulk. Most people will want the first, and it's likely easier than you expect.</p>
   </div>
 </div>
+
+<!-- cloud-native opener -->
+<section class="cloudnative">
+  <div class="wrap">
+    <h2>The cloud-native workflow</h2>
+    <p class="eye"><strong>You may not need to download anything.</strong> You still have the option to download the full files onto a drive and work with them the way you're accustomed to — but there are quicker options now. You can stream the files directly into your existing software, work with the data, and save your outputs just as you're used to. The files live in the cloud, and modern GIS tools can read them <em>in place</em> — pulling only the specific areas and pixels you need over the network, without ever copying the whole file.</p>
+
+    <p>For a 19-property, 41-year dataset, that's the difference between downloading and managing hundreds of gigabytes on disk, or pointing your software at a URL and getting started immediately. This is what "cloud-native geospatial" means in practice, and it changes what's worth attempting. Instead of deciding up front which layers and years to download, you can explore the whole record interactively, pull just what a given analysis needs, and keep your work pointed at the single authoritative copy on Source Cooperative. The same approach scales from a quick look at one watershed to a statewide computation.</p>
+<!-- figure-as-navigation -->
+<section class="figure-section">
+  <div class="wrap">
+    <div class="figure-frame">
+      <div class="figure-head">
+        <span class="fignum">Figure — A cloud-native workflow</span>
+        <span class="fighint">one source · streamed into your tools · improved by feedback</span>
+      </div>
+
+      <svg class="diagram" viewBox="0 0 920 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of the Wildland Almanac: a hub of website plus data warehouse at top, feeding GIS analysts and the tools they use, which return feedback in a loop">
+        <defs>
+          <marker id="arrow" markerWidth="9" markerHeight="9" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#8a8780"></path>
+          </marker>
+          <marker id="arrowStart" markerWidth="9" markerHeight="9" refX="0.5" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M6,0 L0,3 L6,6 Z" fill="#8a8780"></path>
+          </marker>
+          <marker id="arrowG" markerWidth="9" markerHeight="9" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#2f5d3a"></path>
+          </marker>
+        </defs>
+
+        <!-- ============================================================
+             TOP APEX: the hub — one box split by a dashed line.
+             Left half = the homepage (WildlandAlmanac.org)
+             Right half = the data store (Source Cooperative)
+             Narrow + centered so the whole figure reads as a triangle.
+             ============================================================ -->
+        <!-- merged outer container -->
+        <rect class="card" x="290" y="40" width="340" height="96" rx="7" fill="#ffffff" stroke="#bdbab2" stroke-width="1.6"></rect>
+        <text x="460" y="30" text-anchor="middle" font-size="12.5" fill="#6a6a6a" font-style="italic">The Wildland Almanac — the hub</text>
+
+        <!-- left half: the homepage -->
+        <a class="hot" href="about.html#methods" aria-label="WildlandAlmanac.org — documentation, methods, and how to use the data">
+          <rect class="card" x="290" y="40" width="170" height="96" rx="7" fill="#ffffff" stroke="transparent" stroke-width="1.4"></rect>
+          <text x="375" y="68" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1b1b1b">The homepage</text>
+          <text x="375" y="87" text-anchor="middle" font-size="10.5" fill="#6a6a6a" font-family="ui-monospace, Menlo, monospace">WildlandAlmanac.org</text>
+          <text x="375" y="106" text-anchor="middle" font-size="10.5" fill="#3a3a3a">methods · how-to</text>
+          <text x="375" y="121" text-anchor="middle" font-size="10.5" fill="#3a3a3a">validation · roadmap</text>
+        </a>
+
+        <!-- dashed divider -->
+        <line x1="460" y1="50" x2="460" y2="126" stroke="#bdbab2" stroke-width="1.4" stroke-dasharray="4 4"></line>
+
+        <!-- right half: the data store -->
+        <a class="hot" href="https://source.coop/wildland-almanac" aria-label="The data on Source Cooperative">
+          <rect class="card" x="460" y="40" width="170" height="96" rx="7" fill="#ffffff" stroke="transparent" stroke-width="1.4"></rect>
+          <text x="545" y="68" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1b1b1b">The data warehouse</text>
+          <text x="545" y="87" text-anchor="middle" font-size="9.5" fill="#6a6a6a" font-family="ui-monospace, Menlo, monospace">source.coop/wildland-almanac</text>
+          <text x="545" y="106" text-anchor="middle" font-size="10.5" fill="#3a3a3a">COG + STAC</text>
+          <text x="545" y="121" text-anchor="middle" font-size="10.5" fill="#3a3a3a">open · cloud-native</text>
+        </a>
+
+        <!-- ============================================================
+             BOTTOM ROW: two wider boxes pushed to the outer edges,
+             so the silhouette is a downward triangle.
+             Left = analysts. Right = tools.
+             ============================================================ -->
+
+        <!-- LOWER LEFT: analysts -->
+        <a class="hot" href="about.html" aria-label="GIS analysts and planners who use the data">
+          <rect class="card" x="70" y="300" width="320" height="150" rx="7" fill="#ffffff" stroke="#bdbab2" stroke-width="1.6"></rect>
+          <text x="230" y="328" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1b">GIS analysts &amp; planners</text>
+          <text x="230" y="354" text-anchor="middle" font-size="12" fill="#3a3a3a">agencies · NGOs · conservancies</text>
+          <text x="230" y="374" text-anchor="middle" font-size="12" fill="#3a3a3a">regional capacity centers · tribes</text>
+          <text x="230" y="402" text-anchor="middle" font-size="11.5" fill="#6a6a6a" font-style="italic">characterize · project · act · monitor</text>
+        </a>
+
+        <!-- LOWER RIGHT: tools -->
+        <a class="hot" href="use.html" aria-label="How to bring the data into widely used GIS tools">
+          <rect class="card" x="530" y="300" width="320" height="150" rx="7" fill="#ffffff" stroke="#bdbab2" stroke-width="1.6"></rect>
+          <text x="690" y="328" text-anchor="middle" font-size="15" font-weight="700" fill="#1b1b1b">Widely used tools</text>
+          <text x="690" y="354" text-anchor="middle" font-size="12" fill="#3a3a3a">ArcGIS · AGOL · Living Atlas</text>
+          <text x="690" y="374" text-anchor="middle" font-size="12" fill="#3a3a3a">QGIS · Python · Google Earth Engine</text>
+          <text x="690" y="394" text-anchor="middle" font-size="12" fill="#3a3a3a">Planscape · state portals</text>
+          <text x="690" y="424" text-anchor="middle" font-size="11" fill="#6a6a6a" font-family="ui-monospace, Menlo, monospace">how-to guides →</text>
+        </a>
+
+        <!-- ============================================================
+             SIDE CONNECTORS — straight, solid, 45° from vertical.
+             At 45° each line runs corner-to-corner, center to center.
+             Right: data store → tools.   Left: analysts → homepage.
+             Mirror images sweeping inward toward the apex.
+             ============================================================ -->
+
+        <!-- data store down-right into tools (45°) -->
+        <path d="M545,136 L709,300"
+              fill="none" stroke="#8a8780" stroke-width="1.8" marker-end="url(#arrow)"></path>
+        <text x="628" y="190" text-anchor="middle" font-size="11.5" fill="#6a6a6a" transform="rotate(45 628 190)">data streams out</text>
+
+        <!-- analysts up-right into homepage (45°) -->
+        <path d="M230,300 L394,136"
+              fill="none" stroke="#8a8780" stroke-width="1.8" marker-end="url(#arrow)"></path>
+        <text x="297" y="206" text-anchor="middle" font-size="11.5" fill="#6a6a6a" transform="rotate(-45 297 206)">feedback improves the record</text>
+
+        <!-- bottom: double-headed arrow between analysts and tools (the planning work) -->
+        <path d="M390,375 L530,375" fill="none" stroke="#8a8780" stroke-width="1.8"
+              marker-start="url(#arrowStart)" marker-end="url(#arrow)"></path>
+        <text x="460" y="368" text-anchor="middle" font-size="11.5" fill="#6a6a6a">iterative planning</text>
+
+        <!-- caption inside svg bottom -->
+        <text x="460" y="478" text-anchor="middle" font-size="12.5" fill="#8a8780" font-family="ui-monospace, Menlo, monospace">
+          characterize → project → act → monitor → feed back
+        </text>
+      </svg>
+
+      <p class="figcaption"><b>One source, streamed into the tools you already use.</b> The Almanac lives in one place on Source Cooperative as Cloud-Optimized GeoTIFFs, described by a STAC catalog so tools can discover and stream it. Analysts pull only the layers, years, and area they need — directly into ArcGIS&nbsp;Pro, QGIS, Python, AGOL, or wherever they work — and what they learn in use, including reports of data issues, feeds back into each annual release. Both the work and the data improve over time.</p>
+    </div>
+  </div>
+</section>
+
+    <p>The rest of this page shows how to hook up the pipes — streaming into ArcGIS&nbsp;Pro and the open-source stack, grabbing a single file, or pulling data in bulk. If you've never streamed cloud rasters before, start with <a href="#stream">Stream it</a>; it's less work than downloading, not more.</p>
+  </div>
+</section>
 
 <!-- pick your path -->
 <div class="wrap">
@@ -198,7 +356,7 @@
 <section class="block">
   <div class="wrap">
     <h2>How the data are organized <span class="tag">read this first</span></h2>
-    <p class="sec-lede">The Almanac is published as two dataset roots — California and CONUS — each containing versioned releases. A version is a directory level (<code>v2026.1</code>), not part of the filename. The README and documentation live at each dataset root and describe the release.</p>
+    <p class="sec-lede">The Almanac is published as two datasets at <code>source.coop/wildland-almanac</code> — California and CONUS (initially just California) — each containing versioned releases (initially just <code>v2026.1</code>). A version is a directory level, not part of the filename. The README and documentation live at each dataset root and describe the release. You can browse the directory organization directly on the Source website, and preview any layer in your browser — for example, scroll to the bottom of the <a href="https://source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif">2025 aboveground-biomass file detail page</a> to see it rendered.</p>
     <pre><span class="comment"># Source organization → dataset root → version → property → file</span>
 source.coop/wildland-almanac/
 └── california/        <span class="comment"># dataset root</span>
@@ -211,7 +369,7 @@ source.coop/wildland-almanac/
         │   └── WildlandAlmanac_CA_Carbon_AGB_2025.tif
         ├── Veg_TreeFrac/
         └── … (19 properties)</pre>
-    <p class="tight">Filenames follow <code>WildlandAlmanac_CA_{Property}_{WaterYear}.tif</code>. Substitute the property name and four-digit water year for any other file. Newer releases (<code>v2027.1</code>, …) add as parallel version directories; the older ones stay put so published links keep working.</p>
+    <p class="tight">Filenames follow <code>WildlandAlmanac_CA_{Property}_{WaterYear}.tif</code>. Substitute the property name and four-digit water year for any other file. Newer releases (<code>v2027.1</code>, …) add as parallel version directories; the older ones stay put, so published links keep working and you can always return to the exact dataset you used if you need to replicate your work in the future.</p>
     <div class="note warn"><b>Read the documentation before quantitative work.</b> Several layers use specific scaling conventions — vegetation fractions are ×10,000, canopy height is in cm, the Fire_LCP file is an 8-band FARSITE raster with its own no-data convention. The <a href="https://source.coop/wildland-almanac/california">documentation PDF</a> at the dataset root is the binding reference.</div>
   </div>
 </section>
@@ -278,8 +436,23 @@ curl -O https://data.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/
 
 <span class="comment"># Windows PowerShell</span>
 Invoke-WebRequest -Uri "https://data.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif" -OutFile "Carbon_AGB_2025.tif"</pre>
-  </div>
-</section>
+
+    <h3 style="margin-top:24px">Clip to an area — without downloading the whole file</h3>
+    <p class="sec-lede">You usually don't need the entire layer. Because the files are COGs, GDAL can read one straight from the cloud and write out just your area of interest, fetching only the bytes for that window over the network. This is the same partial-read mechanism the streaming section uses — here it writes a small clipped GeoTIFF to disk instead of reading into memory.</p>
+    <pre><span class="comment"># Clip a lat/long box (W S E N) and write a small local GeoTIFF.</span>
+<span class="comment"># GDAL reads only the tiles overlapping the box over HTTP — the source file is never fully downloaded.</span>
+gdalwarp \
+  -te -120.5 37.0 -119.0 38.2 -te_srs EPSG:4326 \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif \
+  Carbon_AGB_2025_clip.tif
+
+<span class="comment"># If you already have coordinates in the data's projection (EPSG:5070, meters),</span>
+<span class="comment"># gdal_translate -projwin is simpler (note order: xmin ymax xmax ymin):</span>
+gdal_translate \
+  -projwin -2000000 2000000 -1900000 1900000 \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif \
+  Carbon_AGB_2025_clip.tif</pre>
+    <div class="note"><b>Why this matters at scale.</b> A clip fetches only the tiles overlapping your box, so pulling one county out of a multi-gigabyte CONUS layer transfers only a few megabytes — no full download, no account. The output stays in the source projection (EPSG:5070); add <code>-t_srs EPSG:4326</code> to <code>gdalwarp</code> if you need the clip reprojected to lat/long.</div>
 
 <!-- BULK -->
 <section class="block" id="bulk">
@@ -307,8 +480,8 @@ aws s3 sync \
 <!-- feedback -->
 <section class="block">
   <div class="wrap">
-    <h2>Stuck, or found something off?</h2>
-    <p class="sec-lede">The data are offered with no promise of technical support, but notes on errors and use cases are genuinely valuable and shape future releases. Email <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a>.</p>
+    <h2>Spot a problem, or have a use case?</h2>
+    <p class="sec-lede">We don't have time to offer much technical support at the moment, but notes on errors and use cases are genuinely valuable and shape future releases. Email <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a>.</p>
   </div>
 </section>
 

@@ -158,7 +158,7 @@
 <div class="pagehead">
   <div class="wrap">
     <h1>The data</h1>
-    <p class="lede">Nineteen biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30&nbsp;m. The layers are reconciled together — derived through a single consistent pipeline — so tradeoffs between vegetation, carbon, water, fire, and disturbance can be read from one internally consistent stack.</p>
+    <p class="lede">Nineteen biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30&nbsp;m. The layers are derived with a single, cross-consistent pipeline to produce an internally consistent data cube — so you can analyze both change over time and the tradeoffs between vegetation, carbon, water, fire, and disturbance. Further details are in the <a href="https://data.source.coop/wildland-almanac/california/v2026.1/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> on Source Cooperative.</p>
     <div class="specs">
       <span><b>19</b>&nbsp;properties</span>
       <span><b>6</b>&nbsp;themes</span>
@@ -168,7 +168,6 @@
       <span>EPSG:5070</span>
       <span>COG</span>
     </div>
-    <p class="draft-note">DRAFT — layer specifications below are drawn from the California documentation (v2026.1). Always confirm against the documentation PDF at the dataset root before quantitative use.</p>
   </div>
 </div>
 
@@ -176,7 +175,7 @@
 <section class="block">
   <div class="wrap">
     <h2>Coverage</h2>
-    <p class="sec-lede">The Almanac is published as two dataset roots. California is the first full release; CONUS follows. Each annual version (<code>v2026.1</code>, <code>v2027.1</code>, …) is a complete reprocessing of the full time series under one code base.</p>
+    <p class="sec-lede">The Almanac is published as two dataset roots. California is the first full release; CONUS follows. Each annual version (<code>v2026.1</code>, <code>v2027.1</code>, …) is a complete reprocessing of the full time series under one code base. The same code produces both California and CONUS, and the California data are a cutout of the CONUS product.</p>
     <div class="tiers">
       <div class="tier">
         <span class="status live">Released · v2026.1</span>
@@ -184,9 +183,9 @@
         <p>All 19 layers, water years 1985–2025, statewide at 30&nbsp;m. The full stack, openly available now. <a href="use.html">How to access →</a></p>
       </div>
       <div class="tier">
-        <span class="status">Planned</span>
+        <span class="status">Coming soon · v2026.1</span>
         <h3>Wildland Almanac — CONUS</h3>
-        <p>Conterminous U.S. coverage, extending the same properties and methodology nationally. In preparation; decadal snapshots first, then fuller coverage.</p>
+        <p>Conterminous U.S. coverage, applying the same code nationally. In near-final preparation as of May&nbsp;2026; data will be released on Source Cooperative in mid&nbsp;2026 for 1990, 2000, 2010, 2020, and 2025.</p>
       </div>
     </div>
   </div>
@@ -196,7 +195,7 @@
 <section class="block">
   <div class="wrap">
     <h2>How to read the layer specs</h2>
-    <p class="sec-lede">Each layer below lists its <b>units</b> (how encoded values map to physical quantities), its <b>period</b> (temporal aggregation), and notes on method and intended use. Most layers are single-band <code>int16</code> with a no-data value of <code>−9999</code>; the one exception is Fire_LCP (see below). Water years run October–September.</p>
+    <p class="sec-lede">Units, period (temporal aggregation), and notes on method and intended use are listed for each of the 19 properties below. Most layers are single-band <code>int16</code> with a no-data value of <code>−9999</code>; the one exception is Fire_LCP (see below). Water years run October–September.</p>
     <div class="index">
       <a href="#veg">Vegetation &amp; structure (5)</a>
       <a href="#hydro">Hydrology (5)</a>
@@ -220,7 +219,7 @@
       </div>
       <div class="body">
         Fractional cover of tree, shrub, herbaceous, and bare. The four layers sum to 10,000 at each valid pixel — a Veg_TreeFrac of 9,000 means trees account for 90% of cover. All cover is viewed from above; lower strata hidden beneath the canopy are not counted.
-        <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat imagery (COLD), trained on RAP and USFS data.</div>
+        <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat imagery (<a href="https://github.com/GERSL">COLD / CCDC</a>), trained on <a href="https://rangelands.app/">RAP</a> and <a href="https://data.fs.usda.gov/geodata/rastergateway/treecanopycover/">USFS</a> data.</div>
       </div>
     </div>
 
@@ -231,7 +230,7 @@
       </div>
       <div class="body">
         Annual tree canopy height. Related canopy-height information is also embedded as a band within Fire_LCP, rescaled to LCP units.
-        <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat, trained on the ALS canopy-height model of Allred et al. (2025).</div>
+        <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat, trained on the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS canopy-height data</a> of Allred et al. (2025).</div>
       </div>
     </div>
   </div>
@@ -249,7 +248,7 @@
       </div>
       <div class="body">
         Maximum possible annual evapotranspiration given the observed vegetation structure, assuming no drought limitation. Depends on structure, not year-to-year precipitation, so its series is more stable than AETrealized — useful for isolating the hydrologic effect of vegetation change (management, fire, regrowth).
-        <div class="meta"><b>Method:</b> regressions on AmeriFlux observations, monthly Landsat, PRISM meteorology.</div>
+        <div class="meta"><b>Method:</b> regressions on <a href="https://ameriflux.lbl.gov/">AmeriFlux</a> observations, monthly Landsat, and <a href="https://prism.oregonstate.edu/">PRISM</a> meteorology.</div>
       </div>
     </div>
 
@@ -307,7 +306,7 @@
         <span class="units"><b>units</b> 8-band Int32, FARSITE v.4 LCP format &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
       </div>
       <div class="body">
-        Multi-band landscape file for fire-behavior models such as FlamMap. The eight bands follow the FARSITE v.4 LCP specification: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1–3 are from LANDFIRE; band 4 from LightGBM; bands 5–8 from XGBoost/LightGBM predictions.
+        Multi-band landscape file for fire-behavior models such as FlamMap. The eight bands follow the FARSITE v.4 LCP specification: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1–3 are reprojected directly from <a href="https://landfire.gov/fuel">LANDFIRE</a>; band 4 is from LightGBM; bands 5–8 from XGBoost/LightGBM predictions drawing on LANDFIRE and on internally processed observations such as the canopy cover described above.
         <div class="meta"><b>Canopy cover, height, base height, and bulk density are distributed only as bands within Fire_LCP.</b></div>
       </div>
     </div>
@@ -318,7 +317,7 @@
         <span class="units"><b>units</b> meters ×100 &nbsp;·&nbsp; <b>period</b> annual fuels; weather held constant</span>
       </div>
       <div class="body">
-        Predicted flame length from FlamMap using each year's Fire_LCP, with run conditions held fixed (20&nbsp;mph uphill wind, Scott&amp;Reinhardt crown method, set fuel moistures). Because weather is constant, this is a <b>relative</b> indicator of hazard driven by topography and mapped fuels — not an absolute prediction for any specific weather scenario.
+        Predicted flame length from FlamMap using each year's Fire_LCP, with run conditions held fixed (20&nbsp;mph uphill wind, Scott&amp;Reinhardt crown method, set dry fuel moistures). Because weather is constant, this is a <b>relative</b> indicator of hazard driven by topography and mapped fuels — not an absolute prediction for any specific weather scenario.
       </div>
     </div>
 
@@ -345,7 +344,7 @@
         <span class="units"><b>units</b> metric tons / hectare (total mass, not C) &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
       </div>
       <div class="body">
-        Aboveground live biomass, mainly tree. An independently produced hybrid biomass product — combining field-plot observations and remote sensing — co-registered into the Almanac stack. Useful for nature-based-solutions accounting and biomass-dynamics tracking.
+        Aboveground live biomass, mainly tree. A hybrid biomass product — combining <a href="https://research.fs.usda.gov/products/dataandtools/fia-datamart">FIA plot observations</a> and internally processed observations such as the canopy height described above — co-registered into the Almanac stack. Useful for nature-based-solutions accounting and biomass-dynamics tracking.
       </div>
     </div>
 
@@ -355,7 +354,7 @@
         <span class="units"><b>units</b> g&nbsp;C / m² / yr &nbsp;·&nbsp; <b>period</b> annual sum, water year</span>
       </div>
       <div class="body">
-        Annual gross primary production (mass of carbon). Derived from NIRv and flux-tower regressions. Useful for productivity patterns and the climatic/vegetation controls on carbon uptake.
+        Annual gross primary production (mass of carbon). Derived from NIRv, flux-tower regressions, and PRISM datasets. Useful for productivity patterns and the climatic/vegetation controls on carbon uptake.
       </div>
     </div>
   </div>
@@ -372,7 +371,7 @@
         <span class="units"><b>units</b> unitless index, 0–20,000 &nbsp;·&nbsp; <b>period</b> annual</span>
       </div>
       <div class="body">
-        Vulnerability of tree canopy to severe drought — the product of Veg_TreeFrac and the AETmax/precipitation ratio for a 48-month SPI of −2 (a severe drought analogous to the southern Sierra Nevada in 2012–2015). Read as a <b>relative</b> index: below ~1,000 is low risk; above ~5,000 is progressively greater. Values are not directly interpretable in physical terms.
+        Vulnerability of tree canopy to severe drought — the product of Veg_TreeFrac and the AETmax/precipitation ratio for a 48-month SPI of −2 (a severe drought). Read as a <b>relative</b> index: below ~1,000 is low risk; above ~5,000 is progressively greater. Units are not quantitatively interpretable in physical terms.
       </div>
     </div>
   </div>
@@ -390,7 +389,7 @@
         <span class="units"><b>units</b> Δ fraction ×10,000 (positive = loss) &nbsp;·&nbsp; <b>period</b> event delta</span>
       </div>
       <div class="body">
-        Annual loss of tree fractional cover at disturbed pixels. A value of 3,000 means a loss of 30 percentage points of absolute tree cover (e.g. 40% → 10%). Timing reflects a detection-lag correction — early-season detections are reattributed to the prior year — so some events may be attributed to a slightly earlier year than first flagged.
+        Annual loss of tree fractional cover at disturbed pixels. A value of 3,000 means a loss of 30 percentage points of absolute tree cover (e.g. 40% → 10%). Timing reflects a detection-lag correction — early-season detections are reattributed to the prior year — and some events may be attributed to a slightly different year.
       </div>
     </div>
 
@@ -410,7 +409,7 @@
         <span class="units"><b>units</b> Δ tons/ha ×10 (positive = loss) &nbsp;·&nbsp; <b>period</b> event delta</span>
       </div>
       <div class="body">
-        Annual loss of aboveground biomass at disturbed pixels, as the change in Carbon_AGB across pre- and post-disturbance years.
+        Annual loss of aboveground biomass at disturbed pixels, as the change in Carbon_AGB across pre- and post-disturbance years. Caveats as for Disturbance_TreeFrac.
       </div>
     </div>
   </div>
@@ -427,10 +426,11 @@
 </section>
 
 <!-- license + citation -->
-<section class="block">
+<section class="block" id="license">
   <div class="wrap">
     <h2>License &amp; citation</h2>
-    <p class="sec-lede">Released under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 (CC&nbsp;BY)</a>. Free to use, share, and adapt with attribution. Access or use implies consent to the University of California terms in the documentation. Offered as is, with no promise of technical support — feedback to <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a> is welcome and shapes future releases.</p>
+    <p class="sec-lede">Released under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 (CC&nbsp;BY)</a>. Free to use, share, and adapt with attribution. Offered as is, with no promise of technical support — feedback to <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a> is welcome and shapes future releases.</p>
+    <div class="note warn"><b>University of California disclaimer.</b> These data are a University of California product, provided &ldquo;as is&rdquo; with no warranty; the user assumes all risk of use. Use of the data implies consent to the full University of California disclaimer, reproduced in §6 of the <a href="https://data.source.coop/wildland-almanac/california/v2026.1/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>.</div>
     <div class="cite">Goulden, M.L. (2026). The Wildland Almanac — California (Version v2026.1). Source&nbsp;Cooperative. DOI:&nbsp;[to be assigned]. Released under CC&nbsp;BY.</div>
   </div>
 </section>
