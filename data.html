@@ -317,7 +317,7 @@
         <span class="units"><b>units</b> meters ×100 &nbsp;·&nbsp; <b>period</b> annual fuels; weather held constant</span>
       </div>
       <div class="body">
-        Predicted flame length from FlamMap using each year's Fire_LCP, with run conditions held fixed (20&nbsp;mph uphill wind, Scott&amp;Reinhardt crown method, set dry fuel moistures). Because weather is constant, this is a <b>relative</b> indicator of hazard driven by topography and mapped fuels — not an absolute prediction for any specific weather scenario.
+        Predicted flame length from FlamMap using each year's Fire_LCP, with run conditions held fixed (20&nbsp;mph uphill wind, Scott&amp;Reinhardt crown method, set fuel moistures). Because weather is constant, this is a <b>relative</b> indicator of hazard driven by topography and mapped fuels — not an absolute prediction for any specific weather scenario.
       </div>
     </div>
 
@@ -389,7 +389,7 @@
         <span class="units"><b>units</b> Δ fraction ×10,000 (positive = loss) &nbsp;·&nbsp; <b>period</b> event delta</span>
       </div>
       <div class="body">
-        Annual loss of tree fractional cover at disturbed pixels. A value of 3,000 means a loss of 30 percentage points of absolute tree cover (e.g. 40% → 10%). Timing reflects a detection-lag correction — early-season detections are reattributed to the prior year — and some events may be attributed to a slightly different year.
+        Annual loss of tree fractional cover at disturbed pixels. A value of 3,000 means a loss of 30 percentage points of absolute tree cover (e.g. 40% → 10%). Disturbance timing for a few pixels may be attributed to a slightly different year than the actual occurrence — more often, but not always, the following year.
       </div>
     </div>
 
@@ -420,7 +420,7 @@
   <div class="wrap">
     <h2>Before you analyze</h2>
     <div class="note warn"><b>Use one release end-to-end.</b> Every annual version reprocesses the full 1985-onward series under one code base, so values for a given year may differ between versions. Do not splice years from different versions in a time-series analysis.</div>
-    <div class="note"><b>Masking.</b> Layers are masked to exclude political boundaries, urban land, water, agriculture, and pixels lacking sufficient data. The mask may be imperfect. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
+    <div class="note"><b>Masking.</b> Layers are masked by political boundaries, ecozones, urban land, water, agriculture, and pixels lacking sufficient data. The mask may be imperfect. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
     <div class="note"><b>No-data and recent years.</b> No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention). Some recent water years are less constrained — WY2023 reflects extreme California snowpack, and WY2025 is subject to refinement in future releases. For year-specific work, compare against nearby years.</div>
   </div>
 </section>
