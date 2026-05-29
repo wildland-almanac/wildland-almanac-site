@@ -188,10 +188,8 @@
   <div class="wrap">
     <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
     <nav class="nav">
-      <a href="inuse.html">In Use</a>
       <a href="data.html">The Data</a>
       <a href="#" class="here">Use It</a>
-      <a href="about.html#methods">Methods</a>
       <a href="about.html">About</a>
       <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
     </nav>
@@ -249,12 +247,12 @@
         <text x="460" y="30" text-anchor="middle" font-size="12.5" fill="#6a6a6a" font-style="italic">The Wildland Almanac — the hub</text>
 
         <!-- left half: the homepage -->
-        <a class="hot" href="about.html#methods" aria-label="WildlandAlmanac.org — documentation, methods, and how to use the data">
+        <a class="hot" href="about.html" aria-label="WildlandAlmanac.org — overview, methods, and project context">
           <rect class="card" x="290" y="40" width="170" height="96" rx="7" fill="#ffffff" stroke="transparent" stroke-width="1.4"></rect>
           <text x="375" y="68" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1b1b1b">The homepage</text>
           <text x="375" y="87" text-anchor="middle" font-size="10.5" fill="#6a6a6a" font-family="ui-monospace, Menlo, monospace">WildlandAlmanac.org</text>
-          <text x="375" y="106" text-anchor="middle" font-size="10.5" fill="#3a3a3a">methods · how-to</text>
-          <text x="375" y="121" text-anchor="middle" font-size="10.5" fill="#3a3a3a">validation · roadmap</text>
+          <text x="375" y="106" text-anchor="middle" font-size="10.5" fill="#3a3a3a">overview · how-to</text>
+          <text x="375" y="121" text-anchor="middle" font-size="10.5" fill="#3a3a3a">methods · project context</text>
         </a>
 
         <!-- dashed divider -->
@@ -473,7 +471,7 @@ aws s3 sync \
 aws s3 sync \
   s3://us-west-2.opendata.source.coop/wildland-almanac/california/v2026.1/ \
   ./wildland-almanac-ca-v2026.1/ --no-sign-request</pre>
-    <div class="note"><b>A note on scale.</b> The full California release is large (hundreds of GB across all 19 layers × 41 years; CONUS will be multiple TB). For most uses, streaming a windowed read is faster and lighter than bulk download. Reach for the CLI when you genuinely need whole layers offline.</div>
+    <div class="note"><b>A note on scale.</b> The full California release is large (hundreds of GB across all 19 properties × 41 years; CONUS will be multiple TB). For most uses, streaming a windowed read is faster and lighter than bulk download. Reach for the CLI when you genuinely need whole layers offline.</div>
   </div>
 </section>
 
