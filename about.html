@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About — The Wildland Almanac</title>
+<title>About - The Wildland Almanac</title>
 <style>
   :root{
     --ink:#1b1b1b; --ink-soft:#3a3a3a; --muted:#6a6a6a;
@@ -85,7 +84,7 @@
 {
   "@context": "https://schema.org/",
   "@type": "Dataset",
-  "name": "The Wildland Almanac — California",
+  "name": "The Wildland Almanac - California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
   "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
@@ -155,28 +154,25 @@
 <section class="block">
   <div class="wrap">
     <h2>How the data are produced</h2>
-    <p>The Wildland Almanac is built from the full Landsat archive through a unified pipeline of roughly thirty programs &mdash; written mostly in MATLAB and R &mdash; that run sequentially under one code base. The pipeline is built to be re-run end-to-end for each annual update, which is what makes it possible to reprocess the entire 1985-onward time series consistently with every release rather than splicing new years onto old. Production runs on UCI&rsquo;s <a href="https://rcic.uci.edu/hpc3/">HPC3 cluster</a> and consumes approximately one million core-hours annually and 800&nbsp;TB of storage.</p>
-    <p>The methodological backbone is straightforward: Landsat observations are processed through the <a href="https://github.com/GERSL">COLD</a> change-detection package to identify disturbances and to synthesize gap-free imagery for each pixel and year; those synthetic images are combined with the best available training data (the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS-derived canopy-height model</a> of Allred et al. for height; FIA plots for biomass; AmeriFlux towers for water and carbon fluxes; and so on); and the resulting properties are estimated with gradient-boosted machine learning (XGBoost and LightGBM) or regressions. Per-layer detail on the training data and methods for each property is in <a href="data.html">The Data</a> and in the <a href="https://data.source.coop/wildland-almanac/california/v2026.1/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>.</p>
+    <p>The Wildland Almanac is built from the full Landsat archive through a unified pipeline of roughly thirty programs - written mostly in MATLAB and R - that run sequentially under one code base. The pipeline is built to be re-run end-to-end for each annual update, which is what makes it possible to reprocess the entire 1985-onward time series consistently with every release rather than splicing new years onto old. Production runs on UCI&rsquo;s <a href="https://rcic.uci.edu/hpc3/">HPC3 cluster</a> and consumes approximately one million core-hours annually and 800&nbsp;TB of storage.</p>
+    <p>The methodological backbone is straightforward: Landsat observations are processed through the <a href="https://github.com/GERSL">COLD</a> change-detection package to identify disturbances and to synthesize gap-free imagery for each pixel and year; those synthetic images are combined with top-tier training data (the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS-derived canopy-height model</a> of Allred et al. for height; FIA plots for biomass; AmeriFlux towers for water and carbon fluxes; and so on); and the resulting properties are estimated with gradient-boosted machine learning (XGBoost and LightGBM) or regressions. Additional information on training data and methods for each property is in <a href="data.html">The Data</a> and in the <a href="https://data.source.coop/wildland-almanac/california/v2026.1/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>.</p>
   </div>
 </section>
 
 <section class="block">
   <div class="wrap">
     <h2>How did this get started?</h2>
-    <p>The Wildland Almanac is a spinoff from the Center for Ecosystem Climate Solutions (CECS), a four-year (2019&ndash;2023) research program at the University of California, Irvine. CECS was supported by California&rsquo;s Strategic Growth Council Climate Change Research Program, with funds from California Climate Investments. It involved more than twenty scientists across the UC system and produced both peer-reviewed publications and a suite of data products that informed California land-management decisions.</p>
-    <p>CECS was the prototype phase. It identified the data needs of land managers and how they think, worked out many of the methods, the approach to reconciling multiple ecosystem properties on one consistent footing, and the practical questions of how to produce, maintain, and share data at this scale. <strong>Roger Bales</strong>, <strong>John Battles</strong>, <strong>Jim Randerson</strong>, and <strong>Jon Wang</strong> made foundational contributions to that work alongside the project lead. All five remain involved in the current effort.</p>
-    <p>CECS ended in 2023. It was a university research program rather than a sustaining infrastructure: there was no follow-on funding mechanism or structural commitment to keep updating and distributing the data. The Wildland Almanac is the deliberate continuation of one piece of that work &mdash; the annual data line &mdash; on a footing built for ongoing maintenance. The goal is a durable, openly available, regularly updated dataset that planners, managers, and researchers can actually rely on, separate from the academic-grant cycle that produced it.</p>
-    <div class="note"><b>Naming.</b> Earlier work referencing CECS &mdash; published papers, the CECS Data Atlas, the Carbon Vulnerability Tool, the Fire Progression Tool, agency collaborations &mdash; shares the same project lineage. The Wildland Almanac is the renamed and refocused continuation of the data product line, not a separate dataset.</div>
+    <p>The Wildland Almanac is a spinoff from the Center for Ecosystem Climate Solutions (CECS), a four-year (2019-2023) research program at the University of California, Irvine. CECS was supported by California's Strategic Growth Council Climate Change Research Program, with funds from California Climate Investments. It involved more than twenty scientists across the UC system and other universities, and produced both peer-reviewed publications and data products to inform California land-management strategies.</p>
+    <p>CECS was the prototype phase. It identified the data needs of land managers and the questions they ask, worked out many of the methods, the approach to reconciling multiple ecosystem properties on one consistent footing, and the practical questions of how to produce data at this scale. <strong>Michael Goulden</strong>, <strong>Roger Bales</strong>, <strong>John Battles</strong>, <strong>Jim Randerson</strong>, and <strong>Jon Wang</strong> made foundational contributions to that work and remain close collaborators.</p>
+    <p>CECS ended in 2023. It was a university research program rather than sustained infrastructure: there was no structural mechanism to keep updating and distributing the data. The Wildland Almanac represents a structure and commitment to update and expand these datasets. The goal is a durable, openly available, regularly updated dataset that planners, managers, and researchers can rely on, separate from the academic-grant cycle that produced it.</p>
   </div>
 </section>
 
 <section class="block">
   <div class="wrap">
     <h2>People and contact</h2>
-    <p>The Wildland Almanac is led by <strong>Michael L. Goulden</strong> in the Department of Earth System Science at the University of California, Irvine. Roger Bales (UC Merced), John Battles (UC Berkeley), Jim Randerson (UC Irvine), and Jon Wang (University of Utah) are continuing collaborators whose foundational contributions to the CECS approach underlie the current data.</p>
-    <p>For questions about the data, errors, or use cases, please file a <a href="https://github.com/wildland-almanac/wildland-almanac-site/issues">GitHub issue</a>; issues are tracked and folded into future releases. For questions about the project itself &mdash; collaboration, institutional partnerships, press &mdash; please reach out by email.</p>
+    <p>The Wildland Almanac is led by Michael L. Goulden in the Department of Earth System Science at the University of California, Irvine. For questions about the data, errors, or use cases, please file a <a href="https://github.com/wildland-almanac/wildland-almanac-site/issues">GitHub issue</a>; issues are tracked and folded into future releases. The data are offered with no promise of technical support. Reports of errors and notes on real-world use are welcome and shape future releases.</p>
     <p style="margin-top:14px"><strong>Contact:</strong> <a href="mailto:mgoulden@uci.edu">mgoulden@uci.edu</a><br>Department of Earth System Science, University of California, Irvine</p>
-    <p style="font-size:13.5px;color:var(--muted);margin-top:18px">The data are offered with no promise of technical support. Reports of errors and notes on real-world use are welcome and shape future releases.</p>
   </div>
 </section>
 
