@@ -155,7 +155,7 @@
 <div class="pagehead">
   <div class="wrap">
     <h1>The data</h1>
-    <p class="lede">Nineteen biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30 m. The layers are derived with a single, cross-consistent pipeline to produce an internally consistent data cube. Further details are in the <a href="https://data.source.coop/wildland-almanac/california/v2026.1/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> on Source Cooperative.</p>
+    <p class="lede">Nineteen biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30 m. The layers are derived with a single, cross-consistent pipeline to produce an internally consistent data cube. Further details are in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> on Source Cooperative.</p>
     <div class="specs">
       <span><b>19</b>&nbsp;properties</span>
       <span><b>6</b>&nbsp;themes</span>
@@ -303,7 +303,7 @@
         <span class="units"><b>units</b> 8-band Int32, FARSITE v.4 LCP format &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
       </div>
       <div class="body">
-        Multi-band landscape file for fire-behavior models such as FlamMap. The eight bands follow the FARSITE v.4 LCP specification: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1-3 are reprojected directly from <a href="https://landfire.gov/fuel">LANDFIRE</a>; band 4 is from LightGBM; bands 5-8 from XGBoost/LightGBM predictions drawing on LANDFIRE and on internally processed observations such as the canopy cover described above.
+        Multi-band landscape file for fire-behavior models such as <a href="https://research.fs.usda.gov/firelab/projects/flammap">FlamMap</a>. The eight bands follow the FARSITE v.4 LCP specification: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1-3 are reprojected directly from <a href="https://landfire.gov/fuel">LANDFIRE</a>; band 4 is from LightGBM; bands 5-8 from XGBoost/LightGBM predictions drawing on LANDFIRE and on internally processed observations such as the canopy cover described above.
       </div>
     </div>
 
