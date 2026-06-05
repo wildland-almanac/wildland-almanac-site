@@ -287,7 +287,7 @@
   "@type": "Dataset",
   "name": "The Wildland Almanac - California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
-  "description": "A 30 m Landsat-derived data cube of managed and unmanaged forests, shrublands, and grasslands across California, water years 1985-2025. Covers the vegetated, non-irrigated land surface from backcountry to wildland-urban interface, including managed forests, plantations, and recently disturbed stands; does not cover open water, urbanized land, or intensively managed cropland. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "description": "A 30 m Landsat-derived data cube of managed and unmanaged forests, shrublands, and grasslands across California, water years 1985-2025. Covers the vegetated, non-irrigated land surface from backcountry to wildland-urban interface, including managed forests, plantations, and recently disturbed stands; does not cover open water, urbanized land, or intensively managed cropland. Eighteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
   "sameAs": "https://source.coop/wildland-almanac/california",
   "version": "v2026.1",
@@ -347,12 +347,12 @@
 <section class="masthead">
   <div class="wrap">
     <h1 class="title">The Wildland Almanac</h1>
-    <p class="tagline">An open, up-to-date set of 30&nbsp;m rasters for managed and unmanaged forests, shrublands, and grasslands - 41+&nbsp;years of annual vegetation, carbon, water, fuels, fire hazard, and disturbance. It maps both near-current (2025) conditions and change over time (1985–2025). California is released now; the contiguous U.S. follows in mid&nbsp;2026.</p>
+    <p class="tagline">An open, up-to-date set of 30&nbsp;m rasters for managed and unmanaged forests, shrublands, and grasslands - 41+&nbsp;years of annual vegetation, carbon, water, fuels, fire hazard, and disturbance. It maps both near-current (2025) conditions and change over time (1985–2025). California is released as annual layers (1985–2025); the contiguous U.S. is now released as decadal snapshots (1990–2025).</p>
     <div class="specs">
-      <span><b>California</b>&nbsp;released</span>
+      <span><b>CA + CONUS</b>&nbsp;released</span>
       <span><b>30&nbsp;m</b></span>
       <span><b>41</b>&nbsp;years</span>
-      <span><b>19</b>&nbsp;properties</span>
+      <span><b>18</b>&nbsp;properties</span>
       <span><b>CC&nbsp;BY</b></span>
       <span>updated&nbsp;annually</span>
     </div>
@@ -362,7 +362,7 @@
 <!-- intro prose -->
 <section class="intro">
   <div class="wrap">
-    <p><strong>An open, frequently-updated, 41+ year GeoTIFF time-series of vegetation, carbon, water, fuels, fire hazard, and disturbance.</strong> California is released now and the contiguous U.S. will follow in mid 2026. The Almanac maps California's wildland landscape at 30-m resolution for each year, allowing analyses at local to CONUS scales of near-current conditions and change over time. Each property is expressed in physical units that are consistent with metrics already in common use across the management and research communities. The properties are all calculated from the ground floor up with a unified pipeline; this maximizes consistency between properties and over time.</p>
+    <p><strong>An open, frequently-updated, 41+ year GeoTIFF time-series of vegetation, carbon, water, fuels, fire hazard, and disturbance.</strong> California (annual, 1985–2025) and the contiguous U.S. (decadal snapshots) are both released now. The Almanac maps California's wildland landscape at 30-m resolution for each year, allowing analyses at local to CONUS scales of near-current conditions and change over time. Each property is expressed in physical units that are consistent with metrics already in common use across the management and research communities. The properties are all calculated from the ground floor up with a unified pipeline; this maximizes consistency between properties and over time.</p>
 
     <p>The dataset is intended for a range of applications, including decision making that benefits from local-scale, near-current information, and research focused on large-scale, long-term trajectories. It was produced by university scientists and is shared freely under CC BY.</p>
 
@@ -385,15 +385,15 @@
       </li>
       <li>
         <h3>A four-dimensional data cube with a broad collection of properties</h3>
-        <p>Nineteen properties at 30 m resolution, fine enough for local planning, and expansive enough for large-scale analyses that are not possible with most other datasets. Built on the Landsat record, it retains a 41-year annual cadence and high temporal precision, including analyzing change over years and decades, or exploring the quantitative tradeoffs between multiple properties.</p>
+        <p>Eighteen properties at 30 m resolution, fine enough for local planning, and expansive enough for large-scale analyses that are not possible with most other datasets. Built on the Landsat record, it retains a 41-year annual cadence and high temporal precision, including analyzing change over years and decades, or exploring the quantitative tradeoffs between multiple properties.</p>
       </li>
       <li>
         <h3>Temporal precision across four decades</h3>
-        <p>The pipeline maximizes consistency through time while maintaining high spatial accuracy within each year. The result is a continuous 41-year annual record of properties such as canopy height that, to our knowledge, no other dataset offers - opening up analyses that are otherwise out of reach, including tracking disturbance intensity and recovery year by year.</p>
+        <p>The pipeline maximizes consistency through time while maintaining high spatial accuracy within each year. The result is a continuous 41-year annual record of properties such as canopy cover and biomass that, to our knowledge, no other dataset offers - opening up analyses that are otherwise out of reach, including tracking disturbance intensity and recovery year by year.</p>
       </li>
       <li>
         <h3>Just the beginning</h3>
-        <p>The California release will expand to selected years for CONUS in mid 2026. The processing pipeline is built for rapid, efficient updates and steady improvements with each release: a release through water year 2026 (Oct-Sep) is expected in early 2027, and your feedback helps shape them. Work is underway to add further properties and forward-looking projections, including how conditions change under disturbance and management scenarios.</p>
+        <p>The California release is now joined by selected snapshot years for CONUS. The processing pipeline is built for rapid, efficient updates and steady improvements with each release: a release through water year 2026 (Oct-Sep) is expected in early 2027, and your feedback helps shape them. Work is underway to add further properties and forward-looking projections, including how conditions change under disturbance and management scenarios.</p>
       </li>
       <li>
         <h3>Cloud-native, and easy to adopt</h3>
@@ -410,7 +410,7 @@
   <div class="wrap">
     <div class="scope-frame">
       <h2>What it covers</h2>
-      <p>The Almanac maps the vegetated, non-irrigated land surface of California - and, in mid&nbsp;2026, the contiguous U.S. - <strong>managed and unmanaged forests, shrublands, and grasslands</strong>, from the backcountry to the wildland&ndash;urban interface. The data are produced wall&#8209;to&#8209;wall and then masked to exclude areas such as open water, urbanized land, and intensively managed cropland.</p>
+      <p>The Almanac maps the vegetated, non-irrigated land surface of California - and the contiguous U.S. - <strong>managed and unmanaged forests, shrublands, and grasslands</strong>, from the backcountry to the wildland&ndash;urban interface. The data are produced wall&#8209;to&#8209;wall and then masked to exclude areas such as open water, urbanized land, and intensively managed cropland.</p>
       <p>The dataset includes wilderness, intermix and interface areas, managed forests and plantations, and stands recently thinned, cut, or burned.</p>
     </div>
   </div>
@@ -419,8 +419,8 @@
 <!-- properties table -->
 <section class="properties">
   <div class="wrap">
-    <h2>Nineteen properties, six themes</h2>
-    <p class="prop-lede">Each property and year is a separate 30 m annual Cloud-Optimized GeoTIFF, which are expressed in physical units and parallel metrics that are already in common use.</p>
+    <h2>Eighteen properties, six themes</h2>
+    <p class="prop-lede">Each property and year is a separate 30 m Cloud-Optimized GeoTIFF, which are expressed in physical units and parallel metrics that are already in common use.</p>
     <table class="prop-table">
       <thead>
         <tr><th>Theme</th><th>Layers</th><th>Coverage</th></tr>
@@ -428,8 +428,8 @@
       <tbody>
         <tr>
           <td class="theme">Vegetation cover &amp; structure</td>
-          <td class="count">5 layers</td>
-          <td>Fractional cover - tree, shrub, herbaceous, and bare - plus canopy height.</td>
+          <td class="count">4 layers</td>
+          <td>Fractional cover - tree, shrub, herbaceous, and bare. Canopy height is now a band of the fire landscape.</td>
         </tr>
         <tr>
           <td class="theme">Hydrology</td>
@@ -439,7 +439,7 @@
         <tr>
           <td class="theme">Fire hazard</td>
           <td class="count">3 layers</td>
-          <td>Landscape fuels (an 8-band LCP) and FlamMap-modeled flame length and rate of spread.</td>
+          <td>Landscape fuels (a FARSITE/FlamMap landscape, delivered as single-band layers) and FlamMap-modeled flame length and rate of spread.</td>
         </tr>
         <tr>
           <td class="theme">Carbon sequestration</td>
@@ -470,7 +470,7 @@
       <a class="card-link" id="data" href="data.html">
         <span class="k">01 · What's in it</span>
         <h3>The Data</h3>
-        <p>The nineteen properties, the six theme groups, spatial and temporal coverage, the California and CONUS tiers, license, and how to cite it.</p>
+        <p>The eighteen properties, the six theme groups, spatial and temporal coverage, the California and CONUS tiers, license, and how to cite it.</p>
         <span class="go">Browse the data →</span>
       </a>
       <a class="card-link" id="use" href="use.html">
@@ -499,7 +499,7 @@
     <div class="cols">
       <div>
         <h4>The Wildland Almanac</h4>
-        <p>An open geospatial record of how California's wildland landscape changes - California released now, the contiguous United States to follow. Developed by M. L. Goulden, Department of Earth System Science, University of California, Irvine, in collaboration with university scientists. Released under CC BY.</p>
+        <p>An open geospatial record of how California's wildland landscape changes - California and the contiguous United States both released. Developed by M. L. Goulden, Department of Earth System Science, University of California, Irvine, in collaboration with university scientists. Released under CC BY.</p>
       </div>
       <div>
         <h4>Links</h4>

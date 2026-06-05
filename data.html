@@ -94,7 +94,7 @@
   "@type": "Dataset",
   "name": "The Wildland Almanac - California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
-  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Eighteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
   "sameAs": "https://source.coop/wildland-almanac/california",
   "version": "v2026.1",
@@ -155,9 +155,9 @@
 <div class="pagehead">
   <div class="wrap">
     <h1>The data</h1>
-    <p class="lede">Nineteen biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30 m. The layers are derived with a single, cross-consistent pipeline to produce an internally consistent data cube. Further details are in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> on Source Cooperative.</p>
+    <p class="lede">Eighteen biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30 m. The layers are derived with a single, cross-consistent pipeline to produce an internally consistent data cube. Further details are in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> on Source Cooperative.</p>
     <div class="specs">
-      <span><b>19</b>&nbsp;properties</span>
+      <span><b>18</b>&nbsp;properties</span>
       <span><b>6</b>&nbsp;themes</span>
       <span><b>41</b>&nbsp;water years</span>
       <span>1985–2025</span>
@@ -172,17 +172,17 @@
 <section class="block">
   <div class="wrap">
     <h2>Coverage</h2>
-    <p class="sec-lede">The Almanac is published in two forms that differ in spatial extent and temporal resolution. California includes all years 1985-2025 and has already been released; CONUS includes 1990, 2000, 2010, 2020 and 2025 and will be released in mid-2026.</p>
+    <p class="sec-lede">The Almanac is published in two forms that differ in spatial extent and temporal resolution. California includes all years 1985-2025 and has already been released; CONUS includes 1990, 2000, 2010, 2020 and 2025 and is now released.</p>
     <div class="tiers">
       <div class="tier">
         <span class="status live">Released · v2026.1</span>
         <h3>Wildland Almanac - California</h3>
-        <p>All 19 properties, water years 1985–2025, statewide at 30&nbsp;m. The full stack, openly available now. <a href="use.html">How to access →</a></p>
+        <p>All 18 properties, water years 1985–2025, statewide at 30&nbsp;m. The full stack, openly available now. <a href="use.html">How to access →</a></p>
       </div>
       <div class="tier">
-        <span class="status">Coming soon · v2026.1</span>
+        <span class="status live">Released · v2026.1</span>
         <h3>Wildland Almanac - CONUS</h3>
-        <p>Conterminous U.S. coverage, applying the same code nationally. In near-final preparation as of May&nbsp;2026; data will be released on Source Cooperative in mid&nbsp;2026 for 1990, 2000, 2010, 2020, and 2025.</p>
+        <p>Conterminous U.S. coverage, applying the same code nationally - all 18 properties for 1990, 2000, 2010, 2020, and 2025, now on Source Cooperative. Disturbance is reported cumulatively between snapshots (rather than annually as in California) and the mask is water-only. <a href="https://source.coop/wildland-almanac/conus">Get the CONUS data →</a></p>
       </div>
     </div>
   </div>
@@ -192,9 +192,9 @@
 <section class="block">
   <div class="wrap">
     <h2>How to read the layer specs</h2>
-    <p class="sec-lede">Units, period (temporal aggregation), and notes on method and intended use are listed for each of the 19 properties below. Most layers are single-band <code>int16</code> with a no-data value of <code>−9999</code>. Water years run October-September.</p>
+    <p class="sec-lede">Units, period (temporal aggregation), and notes on method and intended use are listed for each of the 18 properties below. Most layers are single-band <code>int16</code> with a no-data value of <code>−9999</code>. Water years run October-September.</p>
     <div class="index">
-      <a href="#veg">Vegetation &amp; structure (5)</a>
+      <a href="#veg">Vegetation &amp; structure (4)</a>
       <a href="#hydro">Hydrology (5)</a>
       <a href="#fire">Fire hazard (3)</a>
       <a href="#carbon">Carbon (2)</a>
@@ -207,7 +207,7 @@
 <!-- VEGETATION -->
 <section class="theme" id="veg">
   <div class="wrap">
-    <h2>Vegetation cover &amp; structure <span class="count">5 layers</span></h2>
+    <h2>Vegetation cover &amp; structure <span class="count">4 layers</span></h2>
 
     <div class="layer">
       <div class="head">
@@ -220,16 +220,7 @@
       </div>
     </div>
 
-    <div class="layer">
-      <div class="head">
-        <span class="id">Veg_CanopyHt</span>
-        <span class="units"><b>units</b> cm (÷100 → m) &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
-      </div>
-      <div class="body">
-        Annual tree canopy height. Related canopy-height information is also embedded as a band within Fire_LCP, rescaled to LCP units.
-        <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat, trained on the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS canopy-height data</a> of Allred et al. (2025).</div>
-      </div>
-    </div>
+    <div class="note"><b>Canopy height.</b> Canopy height is no longer a standalone layer - it is delivered as the <code>CH</code> band of <a href="#fire">Fire_LCP</a> (in decimeters, LCP units). The annual 1985–2025 canopy-height record is unchanged; only its packaging moved. Method: XGBoost on synthetic Landsat, trained on the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS canopy-height data</a> of Allred et al. (2025).</div>
   </div>
 </section>
 
@@ -300,10 +291,10 @@
     <div class="layer">
       <div class="head">
         <span class="id">Fire_LCP</span>
-        <span class="units"><b>units</b> 8-band Int32, FARSITE v.4 LCP format &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
+        <span class="units"><b>units</b> 8 single-band Int32 COGs (FARSITE/FlamMap landscape) &nbsp;·&nbsp; <b>period</b> bands 4–8 annual; bands 1–3 static</span>
       </div>
       <div class="body">
-        Multi-band landscape file for fire-behavior models such as <a href="https://research.fs.usda.gov/firelab/projects/flammap">FlamMap</a>. The eight bands follow the FARSITE v.4 LCP specification: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1-3 are reprojected directly from <a href="https://landfire.gov/fuel">LANDFIRE</a>; band 4 is from LightGBM; bands 5-8 from XGBoost/LightGBM predictions drawing on LANDFIRE and on internally processed observations such as the canopy cover described above.
+        The components of a FARSITE/FlamMap landscape for fire-behavior models such as <a href="https://research.fs.usda.gov/firelab/projects/flammap">FlamMap</a>, delivered as eight single-band COGs rather than one multi-band file (five vary per year, three are static). The bands, in LCP order: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1-3 are reprojected directly from <a href="https://landfire.gov/fuel">LANDFIRE</a>; band 4 is from LightGBM; bands 5-8 from XGBoost/LightGBM predictions drawing on LANDFIRE and on internally processed observations such as the canopy cover described above. Clip and stack the bands to assemble a landscape for an area of interest - see the <a href="use.html#lcp">Use page</a> for the recipe.
       </div>
     </div>
 
@@ -416,7 +407,7 @@
   <div class="wrap">
     <h2>Before you analyze</h2>
     <div class="note warn"><b>Use one release end-to-end.</b> Every annual version reprocesses the full 1985-onward series under one code base, so values for a given year may differ between versions. Do not splice years from different versions in a time-series analysis.</div>
-    <div class="note"><b>Masking.</b> Layers are masked by political boundaries, ecoregions, urban land, water, agriculture, and pixels lacking sufficient data. The mask may be imperfect. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
+    <div class="note"><b>Masking.</b> Layers are masked to the California wildland extent - water, areas outside California, urban and agricultural land, barren/unclassified cover, and a set of non-target ecoregions (the Central Valley and specified deserts). The mask may be imperfect. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
     <div class="note"><b>No-data and recent years.</b> No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention). Some recent water years are less constrained - WY2023 reflects extreme California snowpack, and WY2025 is subject to refinement in future releases. For year-specific work, compare against nearby years.</div>
   </div>
 </section>

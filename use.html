@@ -141,7 +141,7 @@
   "@type": "Dataset",
   "name": "The Wildland Almanac - California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
-  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Nineteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Eighteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
   "sameAs": "https://source.coop/wildland-almanac/california",
   "version": "v2026.1",
@@ -212,7 +212,7 @@
     <h2>The cloud-native workflow</h2>
     <p class="eye"><strong>You may not need to download anything.</strong> You still have the option to download the full files onto a drive and work with them the way you're accustomed to - but there are quicker options now. You can stream the files directly into your existing software, work with the data, and save your outputs just as you're used to. The files live in the cloud, and modern GIS tools can read them <em>in place</em> - pulling only the specific areas and pixels you need over the network, without ever copying the whole file.</p>
 
-    <p>For a 19-property, 41-year dataset, that's the difference between downloading and managing hundreds of gigabytes on disk, or pointing your software at a URL and getting started immediately. This is what "cloud-native geospatial" means in practice, and it changes what's worth attempting. Instead of deciding up front which layers and years to download, you can explore the whole record interactively, pull just what a given analysis needs, and keep your work pointed at the single authoritative copy on Source Cooperative. The same approach scales from a quick look at one watershed to a statewide computation.</p>
+    <p>For an 18-property, 41-year dataset, that's the difference between downloading and managing hundreds of gigabytes on disk, or pointing your software at a URL and getting started immediately. This is what "cloud-native geospatial" means in practice, and it changes what's worth attempting. Instead of deciding up front which layers and years to download, you can explore the whole record interactively, pull just what a given analysis needs, and keep your work pointed at the single authoritative copy on Source Cooperative. The same approach scales from a quick look at one watershed to a statewide computation.</p>
 <!-- figure-as-navigation -->
 <section class="figure-section">
   <div class="wrap">
@@ -353,7 +353,7 @@
 <section class="block">
   <div class="wrap">
     <h2>How the data are organized <span class="tag">read this first</span></h2>
-    <p class="sec-lede">The Almanac is published as two datasets at <code>source.coop/wildland-almanac</code> - California and CONUS (initially just California) - each containing versioned releases (initially just <code>v2026.1</code>). A version is a directory level, not part of the filename. The README and documentation live at each dataset root and describe the release. You can browse the directory organization directly on the Source website, and preview any layer in your browser - for example, scroll to the bottom of the <a href="https://source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif">2025 aboveground-biomass file detail page</a> to see it rendered.</p>
+    <p class="sec-lede">The Almanac is published as two datasets at <code>source.coop/wildland-almanac</code> - California and CONUS - each containing versioned releases (initially just <code>v2026.1</code>). A version is a directory level, not part of the filename. The README and documentation live at each dataset root and describe the release. You can browse the directory organization directly on the Source website, and preview any layer in your browser - for example, scroll to the bottom of the <a href="https://source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif">2025 aboveground-biomass file detail page</a> to see it rendered.</p>
     <pre><span class="comment"># Source organization → dataset root → version → property → file</span>
 source.coop/wildland-almanac/
 └── california/        <span class="comment"># dataset root</span>
@@ -365,9 +365,9 @@ source.coop/wildland-almanac/
         │   ├── … (water years 1985–2025)
         │   └── WildlandAlmanac_CA_Carbon_AGB_2025.tif
         ├── Veg_TreeFrac/
-        └── … (19 properties)</pre>
+        └── … (18 properties)</pre>
     <p class="tight">Filenames follow <code>WildlandAlmanac_CA_{Property}_{WaterYear}.tif</code>. Substitute the property name and four-digit water year for any other file. Newer releases (<code>v2027.1</code>, …) add as parallel version directories; the older ones stay put, so published links keep working and you can always return to the exact dataset you used if you need to replicate your work in the future.</p>
-    <div class="note warn"><b>Read the documentation before quantitative work.</b> Several layers use specific scaling conventions - vegetation fractions are ×10,000, canopy height is in cm, the Fire_LCP file is an 8-band FARSITE raster with its own no-data convention. The <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> at the dataset root is the binding reference.</div>
+    <div class="note warn"><b>Read the documentation before quantitative work.</b> Several layers use specific scaling conventions - vegetation fractions are ×10,000, and the Fire_LCP bands are single-band FARSITE landscape layers (Int32, 0-fill) in their own units. The <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> at the dataset root is the binding reference.</div>
   </div>
 </section>
 
@@ -422,7 +422,7 @@ agb <- rast(url)
 agb            <span class="comment"># prints extent, CRS (EPSG:5070), resolution</span>
 plot(agb)</pre>
 
-    <div class="note"><b>Projection.</b> All layers are EPSG:5070 (NAD83 / CONUS Albers), 30 m, co-registered to sub-pixel precision - treat the 19 properties as a single stack. No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention).</div>
+    <div class="note"><b>Projection.</b> All layers are EPSG:5070 (NAD83 / CONUS Albers), 30 m, co-registered to sub-pixel precision - treat the 18 properties as a single stack. No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention).</div>
   </div>
 </section>
 
@@ -453,6 +453,8 @@ gdal_translate \
   /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Carbon_AGB/WildlandAlmanac_CA_Carbon_AGB_2025.tif \
   Carbon_AGB_2025_clip.tif</pre>
     <div class="note"><b>Why this matters at scale.</b> A clip fetches only the tiles overlapping your box, so pulling one county out of a multi-gigabyte CONUS layer transfers only a few megabytes - no full download, no account. The output stays in the source projection (EPSG:5070); add <code>-t_srs EPSG:4326</code> to <code>gdalwarp</code> if you need the clip reprojected to lat/long.</div>
+  </div>
+</section>
 
 <!-- BULK -->
 <section class="block" id="bulk">
@@ -473,7 +475,29 @@ aws s3 sync \
 aws s3 sync \
   s3://us-west-2.opendata.source.coop/wildland-almanac/california/v2026.1/ \
   ./wildland-almanac-ca-v2026.1/ --no-sign-request</pre>
-    <div class="note"><b>A note on scale.</b> The full California release is large (hundreds of GB across all 19 properties × 41 years; CONUS will be multiple TB). For most uses, streaming a windowed read is faster and lighter than bulk download. Reach for the CLI when you genuinely need whole layers offline.</div>
+    <div class="note"><b>A note on scale.</b> The full California release is large (hundreds of GB across all 18 properties × 41 years; CONUS is multiple TB). For most uses, streaming a windowed read is faster and lighter than bulk download. Reach for the CLI when you genuinely need whole layers offline.</div>
+  </div>
+</section>
+
+<!-- FIRE_LCP ASSEMBLY -->
+<section class="block" id="lcp">
+  <div class="wrap">
+    <h2>Working with Fire_LCP <span class="tag">assemble a landscape</span></h2>
+    <p class="sec-lede">The <code>Fire_LCP</code> landscape is delivered as eight single-band COGs - five that vary per year (fuel model, canopy cover, canopy height, canopy base height, canopy bulk density) and three static topographic bands (elevation, slope, aspect). Single-band delivery lets you pull any one band on its own - for example canopy height - or clip and stack all eight to build a landscape for your area of interest.</p>
+    <pre><span class="comment"># 1. virtually stack the 8 bands for one year, in LCP order, straight from the cloud</span>
+gdalbuildvrt -separate Fire_LCP_2020.vrt \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Fire_LCP/WildlandAlmanac_CA_Fire_LCP_Elevation.tif \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Fire_LCP/WildlandAlmanac_CA_Fire_LCP_Slope.tif \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Fire_LCP/WildlandAlmanac_CA_Fire_LCP_Aspect.tif \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Fire_LCP/WildlandAlmanac_CA_Fire_LCP_FBFM40_2020.tif \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Fire_LCP/WildlandAlmanac_CA_Fire_LCP_CC_2020.tif \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Fire_LCP/WildlandAlmanac_CA_Fire_LCP_CH_2020.tif \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Fire_LCP/WildlandAlmanac_CA_Fire_LCP_CBH_2020.tif \
+  /vsicurl/https://data.source.coop/wildland-almanac/california/v2026.1/Fire_LCP/WildlandAlmanac_CA_Fire_LCP_CBD_2020.tif
+
+<span class="comment"># 2. cut your area of interest (EPSG:5070 meters: xmin ymax xmax ymin) to a local 8-band GeoTIFF</span>
+gdal_translate -projwin -2000000 2000000 -1900000 1900000 Fire_LCP_2020.vrt Fire_LCP_2020_aoi.tif</pre>
+    <div class="note"><b>Building the FlamMap landscape.</b> The result is an 8-band GeoTIFF in LCP band order. Fire-behavior models such as <a href="https://research.fs.usda.gov/firelab/projects/flammap">FlamMap</a> build their landscape (<code>.lcp</code>) from rasters like these; GDAL can also write an <code>.lcp</code> directly with <code>gdal_translate -of LCP</code>. The per-band units (canopy height and base height in decimeters, bulk density &times;100, cover in percent, FBFM40 categorical) are listed in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> - set them when you build the landscape. For CONUS, swap <code>california</code> &rarr; <code>conus</code> and use a snapshot year (1990, 2000, 2010, 2020, 2025).</div>
   </div>
 </section>
 
