@@ -125,7 +125,7 @@
     }
   },
   "temporalCoverage": "1985-10-01/2025-09-30",
-  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
+  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","soil moisture fraction","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
   "distribution": {
     "@type": "DataDownload",
     "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
@@ -195,11 +195,11 @@
     <p class="sec-lede">Units, period (temporal aggregation), and notes on method and intended use are listed for each of the 18 properties below. Most layers are single-band <code>int16</code> with a no-data value of <code>−9999</code>. Water years run October-September.</p>
     <div class="index">
       <a href="#veg">Vegetation &amp; structure (4)</a>
-      <a href="#hydro">Hydrology (5)</a>
+      <a href="#hydro">Hydrology (6)</a>
       <a href="#fire">Fire hazard (3)</a>
       <a href="#carbon">Carbon (2)</a>
       <a href="#dieoff">Dieoff risk (1)</a>
-      <a href="#disturb">Disturbance (3)</a>
+      <a href="#disturb">Disturbance (2)</a>
     </div>
   </div>
 </section>
@@ -227,7 +227,7 @@
 <!-- HYDROLOGY -->
 <section class="theme" id="hydro">
   <div class="wrap">
-    <h2>Hydrology <span class="count">5 layers</span></h2>
+    <h2>Hydrology <span class="count">6 layers</span></h2>
 
     <div class="layer">
       <div class="head">
@@ -258,6 +258,15 @@
       </div>
       <div class="body">
         End-of-water-year soil moisture, from the same monthly water balance that produces AETrealized and Runoff. Potentially useful for diagnosing plant-water stress, the controls on water yield, and live fuel moisture.
+      </div>
+    </div>
+    <div class="layer">
+      <div class="head">
+        <span class="id">WaterFlux_SoilmoistureFrac</span>
+        <span class="units"><b>units</b> fraction of max rooting-zone storage ×10,000 (0–10,000) &nbsp;·&nbsp; <b>period</b> end of water year (Sep)</span>
+      </div>
+      <div class="body">
+        End-of-water-year soil moisture as a fraction of the maximum rooting-zone storage: 10,000 is a full soil column at the seasonal low point, lower values are progressively drier. Normalizes for differences in storage capacity between pixels, which the absolute WaterFlux_Soilmoisture layer does not.
       </div>
     </div>
 
@@ -367,7 +376,7 @@
 <!-- DISTURBANCE -->
 <section class="theme" id="disturb">
   <div class="wrap">
-    <h2>Disturbance severity <span class="count">3 layers</span></h2>
+    <h2>Disturbance severity <span class="count">2 layers</span></h2>
     <p class="sec-lede" style="margin-bottom:8px">Observed event-based loss at pixels identified as disturbed by COLD. Pixels with no disturbance in a given year are encoded as <code>0</code>; <code>−9999</code> marks pixels outside the study area, masked, or where the pre/post reference is unavailable. Available for water years 1986–2024 - the first and last years of the series cannot be computed.</p>
 
     <div class="layer">
@@ -377,16 +386,6 @@
       </div>
       <div class="body">
         Annual loss of tree fractional cover at disturbed pixels. A value of 3,000 means an absolute loss of 30% tree cover (e.g. 40% → 10%). Disturbance timing for some pixels may be attributed to a slightly different year than the actual occurrence - more often, but not always, the following year.
-      </div>
-    </div>
-
-    <div class="layer">
-      <div class="head">
-        <span class="id">Disturbance_ShrubFrac</span>
-        <span class="units"><b>units</b> Δ fraction ×10,000 (positive = loss) &nbsp;·&nbsp; <b>period</b> event delta</span>
-      </div>
-      <div class="body">
-        Annual loss of shrub fractional cover at disturbed pixels. Encoding and caveats as for Disturbance_TreeFrac.
       </div>
     </div>
 
