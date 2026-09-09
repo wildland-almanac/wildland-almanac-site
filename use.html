@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -141,7 +141,7 @@
   "@type": "Dataset",
   "name": "The Wildland Almanac - California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
-  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Eighteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Twenty-one layers in six themes: vegetation cover and structure, hydrology, fire hazard and behavior, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
   "sameAs": "https://source.coop/wildland-almanac/california",
   "version": "v2026.1",
@@ -188,6 +188,8 @@
     <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
     <nav class="nav">
       <a href="data.html">The Data</a>
+      <a href="explore.html">Explore</a>
+      <a href="benchmarking.html">Benchmarking</a>
       <a href="#" class="here">Use It</a>
       <a href="about.html">About</a>
       <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
@@ -365,7 +367,7 @@ source.coop/wildland-almanac/
         │   ├── … (water years 1985–2025)
         │   └── WildlandAlmanac_CA_Carbon_AGB_2025.tif
         ├── Veg_TreeFrac/
-        └── … (18 properties)</pre>
+        └── … (21 properties)</pre>
     <p class="tight">Filenames follow <code>WildlandAlmanac_CA_{Property}_{WaterYear}.tif</code>. Substitute the property name and four-digit water year for any other file. Newer releases (<code>v2027.1</code>, …) add as parallel version directories; the older ones stay put, so published links keep working and you can always return to the exact dataset you used if you need to replicate your work in the future.</p>
     <div class="note warn"><b>Read the documentation before quantitative work.</b> Several layers use specific scaling conventions - vegetation fractions are ×10,000, and the Fire_LCP bands are single-band FARSITE landscape layers (Int32, 0-fill) in their own units. The <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> at the dataset root is the binding reference.</div>
   </div>
@@ -422,7 +424,7 @@ agb <- rast(url)
 agb            <span class="comment"># prints extent, CRS (EPSG:5070), resolution</span>
 plot(agb)</pre>
 
-    <div class="note"><b>Projection.</b> All layers are EPSG:5070 (NAD83 / CONUS Albers), 30 m, co-registered to sub-pixel precision - treat the 18 properties as a single stack. No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention).</div>
+    <div class="note"><b>Projection.</b> All layers are EPSG:5070 (NAD83 / CONUS Albers), 30 m, co-registered to sub-pixel precision - treat the 21 properties as a single stack. No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention).</div>
   </div>
 </section>
 
@@ -475,7 +477,7 @@ aws s3 sync \
 aws s3 sync \
   s3://us-west-2.opendata.source.coop/wildland-almanac/california/v2026.1/ \
   ./wildland-almanac-ca-v2026.1/ --no-sign-request</pre>
-    <div class="note"><b>A note on scale.</b> The full California release is large (hundreds of GB across all 18 properties × 41 years; CONUS is multiple TB). For most uses, streaming a windowed read is faster and lighter than bulk download. Reach for the CLI when you genuinely need whole layers offline.</div>
+    <div class="note"><b>A note on scale.</b> The full California release is large (about 700 GB across all 21 properties × 41 years; CONUS is multiple TB). For most uses, streaming a windowed read is faster and lighter than bulk download. Reach for the CLI when you genuinely need whole layers offline.</div>
   </div>
 </section>
 
@@ -520,3 +522,5 @@ gdal_translate -projwin -2000000 2000000 -1900000 1900000 Fire_LCP_2020.vrt Fire
 
 </body>
 </html>
+
+

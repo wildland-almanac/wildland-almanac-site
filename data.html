@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -94,7 +94,7 @@
   "@type": "Dataset",
   "name": "The Wildland Almanac - California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
-  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Eighteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Twenty-one layers in six themes: vegetation cover and structure, hydrology, fire hazard and behavior, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
   "sameAs": "https://source.coop/wildland-almanac/california",
   "version": "v2026.1",
@@ -125,7 +125,7 @@
     }
   },
   "temporalCoverage": "1985-10-01/2025-09-30",
-  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","soil moisture fraction","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
+  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","evapotranspiration under fixed precipitation","evapotranspiration under observed precipitation","soil moisture","soil moisture fraction","runoff","runoff under fixed precipitation","fire behavior fuel model","flame length","rate of spread","relative burn probability","aboveground biomass","gross primary production","tree-dieoff vulnerability under observed precipitation","tree-dieoff vulnerability under fixed precipitation","disturbance severity"],
   "distribution": {
     "@type": "DataDownload",
     "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
@@ -141,6 +141,8 @@
     <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
     <nav class="nav">
       <a href="#" class="here">The Data</a>
+      <a href="explore.html">Explore</a>
+      <a href="benchmarking.html">Benchmarking</a>
       <a href="use.html">Use It</a>
       <a href="about.html">About</a>
       <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
@@ -155,9 +157,9 @@
 <div class="pagehead">
   <div class="wrap">
     <h1>The data</h1>
-    <p class="lede">Eighteen biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30 m. The layers are derived with a single, cross-consistent pipeline to produce an internally consistent data cube. Further details are in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a> on Source Cooperative.</p>
+    <p class="lede">Twenty-one biophysical properties, grouped into six themes, mapped annually from the Landsat record at 30 m. The layers are derived with a single, cross-consistent pipeline to produce an internally consistent data cube. Further details are in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>; for how each layer compares against independent reference data, see the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_QualityBenchmarks.pdf">quality benchmarks PDF</a>. Both are on Source Cooperative.</p>
     <div class="specs">
-      <span><b>18</b>&nbsp;properties</span>
+      <span><b>21</b>&nbsp;properties</span>
       <span><b>6</b>&nbsp;themes</span>
       <span><b>41</b>&nbsp;water years</span>
       <span>1985–2025</span>
@@ -172,19 +174,20 @@
 <section class="block">
   <div class="wrap">
     <h2>Coverage</h2>
-    <p class="sec-lede">The Almanac is published in two forms that differ in spatial extent and temporal resolution. California includes all years 1985-2025 and has already been released; CONUS includes 1990, 2000, 2010, 2020 and 2025 and is now released.</p>
+    <p class="sec-lede">The Almanac is published in two forms that differ in spatial extent and temporal resolution. California includes all years 1985-2025; CONUS includes 1990, 2000, 2010, 2020 and 2024. Both are released.</p>
     <div class="tiers">
       <div class="tier">
         <span class="status live">Released · v2026.1</span>
         <h3>Wildland Almanac - California</h3>
-        <p>All 18 properties, water years 1985–2025, statewide at 30&nbsp;m. The full stack, openly available now. <a href="use.html">How to access →</a></p>
+        <p>All 21 properties, water years 1985–2025, statewide at 30&nbsp;m. The full stack, openly available now. <a href="use.html">How to access →</a></p>
       </div>
       <div class="tier">
         <span class="status live">Released · v2026.1</span>
         <h3>Wildland Almanac - CONUS</h3>
-        <p>Conterminous U.S. coverage, applying the same code nationally - all 18 properties for 1990, 2000, 2010, 2020, and 2025, now on Source Cooperative. Disturbance is reported cumulatively between snapshots (rather than annually as in California) and the mask is water-only. <a href="https://source.coop/wildland-almanac/conus">Get the CONUS data →</a></p>
+        <p>Conterminous U.S. coverage, applying the same code nationally - 17 properties for water years 1990, 2000, 2010, 2020, and 2024, now on Source Cooperative. Disturbance is reported cumulatively between snapshots (rather than annually as in California) and the mask is water-only. <a href="https://source.coop/wildland-almanac/conus">Get the CONUS data →</a></p>
       </div>
     </div>
+    <div class="note warn"><b>California and CONUS are not yet on the same layer roster.</b> The California release was revised in August 2026: five water and dieoff layers were renamed to the <code>FixedPrecip</code> / <code>ObservedPrecip</code> convention, the two FlamMap fire layers were replaced by three ELMFIRE ones, and canopy height became a standalone layer. <b>CONUS still carries the earlier names</b> (<code>WaterFlux_AETmax</code>, <code>WaterFlux_AETrealized</code>, <code>WaterFlux_PminusETmax_SPI0</code>, <code>Fire_FL</code>, <code>Fire_ROS</code>) and does not include the dieoff or canopy-height layers. The layer descriptions on this page describe <b>California</b>. CONUS will be rebuilt onto the California vocabulary in a future release; until then, read the <a href="https://source.coop/wildland-almanac/conus">CONUS README</a> for its own roster.</div>
   </div>
 </section>
 
@@ -192,13 +195,13 @@
 <section class="block">
   <div class="wrap">
     <h2>How to read the layer specs</h2>
-    <p class="sec-lede">Units, period (temporal aggregation), and notes on method and intended use are listed for each of the 18 properties below. Most layers are single-band <code>int16</code> with a no-data value of <code>−9999</code>. Water years run October-September.</p>
+    <p class="sec-lede">Units, period (temporal aggregation), and notes on method and intended use are listed for each of the 21 properties below. Most layers are single-band <code>int16</code> with a no-data value of <code>−9999</code>. Water years run October-September.</p>
     <div class="index">
-      <a href="#veg">Vegetation &amp; structure (4)</a>
+      <a href="#veg">Vegetation &amp; structure (5)</a>
       <a href="#hydro">Hydrology (6)</a>
-      <a href="#fire">Fire hazard (3)</a>
+      <a href="#fire">Fire hazard &amp; behavior (4)</a>
       <a href="#carbon">Carbon (2)</a>
-      <a href="#dieoff">Dieoff risk (1)</a>
+      <a href="#dieoff">Dieoff risk (2)</a>
       <a href="#disturb">Disturbance (2)</a>
     </div>
   </div>
@@ -207,7 +210,7 @@
 <!-- VEGETATION -->
 <section class="theme" id="veg">
   <div class="wrap">
-    <h2>Vegetation cover &amp; structure <span class="count">4 layers</span></h2>
+    <h2>Vegetation cover &amp; structure <span class="count">5 layers</span></h2>
 
     <div class="layer">
       <div class="head">
@@ -220,7 +223,18 @@
       </div>
     </div>
 
-    <div class="note"><b>Canopy height.</b> Canopy height is no longer a standalone layer - it is delivered as the <code>CH</code> band of <a href="#fire">Fire_LCP</a> (in decimeters, LCP units). The annual 1985–2025 canopy-height record is unchanged; only its packaging moved. Method: XGBoost on synthetic Landsat, trained on the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS canopy-height data</a> of Allred et al. (2025).</div>
+    <div class="layer">
+      <div class="head">
+        <span class="id">Veg_CanopyHt</span>
+        <span class="units"><b>units</b> centimeters (areal mean) &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
+      </div>
+      <div class="body">
+        <b>Areal-mean</b> canopy height: the average height over the whole 30 m pixel, with canopy gaps and bare ground included in the average. This is the height to use for vegetation structure, biomass, and change analysis. See the note below - it is not the same quantity as the <code>CH</code> band of Fire_LCP.
+        <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat, trained on the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS canopy-height data</a> of Allred et al. (2025).</div>
+      </div>
+    </div>
+
+    <div class="note"><b>Two canopy heights, and how to choose.</b> Canopy height is published <b>twice, under two different definitions</b>. <code>Veg_CanopyHt</code> is the <b>areal mean</b> - the average over the entire 30 m pixel including gaps and bare ground, in centimeters. The <code>CH</code> band of <a href="#fire">Fire_LCP</a> is a <b>stand height</b> - an estimate of the height of the taller trees in the pixel, in decimeters, which is what a fire model needs: fire models carry canopy openness separately through canopy cover, so a gap-diluted mean would count openness twice and under-shelter the surface fuels. The two differ by roughly <b>2-6×</b> on the same ground, with the largest divergence at low canopy cover. Use <code>Veg_CanopyHt</code> for structure, biomass and change; use the Fire_LCP <code>CH</code> band for fire modeling. They are not interchangeable and should not be compared directly.</div>
   </div>
 </section>
 
@@ -229,25 +243,27 @@
   <div class="wrap">
     <h2>Hydrology <span class="count">6 layers</span></h2>
 
+    <div class="note"><b><code>ObservedPrecip</code> and <code>FixedPrecip</code>, and how to choose.</b> The water and dieoff properties come in two forms. The <b><code>ObservedPrecip</code></b> layers use the precipitation that actually fell, and answer what conditions <i>were</i> in a particular year - these are the ones to compare against independent observations such as stream gauges. The <b><code>FixedPrecip</code></b> layers hold precipitation at a reference so that variation in space and time comes from the <i>vegetation alone</i> - these are the ones for tracking change caused by management, fire or regrowth. The reference differs by layer: <code>WaterFlux_AET_FixedPrecip</code> holds precipitation non-limiting, <code>WaterFlux_Runoff_FixedPrecip</code> holds it at the long-term mean (SPI-48 = 0), and <code>Vulner_TreeDieoff_FixedPrecip</code> holds it at severe drought (SPI-48 = −2).</div>
+
     <div class="layer">
       <div class="head">
-        <span class="id">WaterFlux_AETmax</span>
-        <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, water year</span>
+        <span class="id">WaterFlux_AET_FixedPrecip</span>
+        <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, water year; precipitation held non-limiting</span>
       </div>
       <div class="body">
-        Maximum possible annual evapotranspiration given the observed vegetation structure, assuming no drought limitation. Depends on structure, not year-to-year precipitation, so its series is more stable than AETrealized - useful for isolating the hydrologic effect of vegetation change (management, fire, regrowth).
+        Evapotranspiration if water were never limiting, given the observed vegetation structure. Depends on structure, not year-to-year precipitation, so its series is more stable than the observed-precipitation layer - useful for isolating the hydrologic effect of vegetation change (management, fire, regrowth). <i>Formerly published as <code>WaterFlux_AETmax</code>.</i>
         <div class="meta"><b>Method:</b> regressions on <a href="https://ameriflux.lbl.gov/">AmeriFlux</a> observations, monthly Landsat, and <a href="https://prism.oregonstate.edu/">PRISM</a> meteorology.</div>
       </div>
     </div>
 
     <div class="layer">
       <div class="head">
-        <span class="id">WaterFlux_AETrealized</span>
+        <span class="id">WaterFlux_AET_ObservedPrecip</span>
         <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, water year</span>
       </div>
       <div class="body">
-        Best estimate of evapotranspiration that actually occurred, accounting for both vegetation structure and precipitation availability. Always ≤ AETmax; equal in wet years, lower in dry years. Can be compared to independent observations of gauged runoff.
-        <div class="meta"><b>Method:</b> as AETmax, with precipitation-limited monthly water balance.</div>
+        Best estimate of evapotranspiration that actually occurred, accounting for both vegetation structure and the precipitation that fell. Always ≤ the fixed-precipitation layer; equal in wet years, lower in dry years. Can be compared to independent observations of gauged runoff. <i>Formerly published as <code>WaterFlux_AETrealized</code>.</i>
+        <div class="meta"><b>Method:</b> as above, with a precipitation-limited monthly water balance.</div>
       </div>
     </div>
 
@@ -257,7 +273,7 @@
         <span class="units"><b>units</b> mm water-equivalent, full rooting zone &nbsp;·&nbsp; <b>period</b> end of water year (Sep)</span>
       </div>
       <div class="body">
-        End-of-water-year soil moisture, from the same monthly water balance that produces AETrealized and Runoff. Potentially useful for diagnosing plant-water stress, the controls on water yield, and live fuel moisture.
+        End-of-water-year soil moisture, from the same monthly water balance that produces WaterFlux_AET_ObservedPrecip and WaterFlux_Runoff. Potentially useful for diagnosing plant-water stress, the controls on water yield, and live fuel moisture.
       </div>
     </div>
     <div class="layer">
@@ -276,17 +292,17 @@
         <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, water year</span>
       </div>
       <div class="body">
-        Best estimate of annual discharge (surface runoff plus subsurface percolation) calculated as precipitation minus AETrealized within the monthly water balance.
+        Best estimate of annual discharge (surface runoff plus subsurface percolation) calculated as precipitation minus WaterFlux_AET_ObservedPrecip within the monthly water balance.
       </div>
     </div>
 
     <div class="layer">
       <div class="head">
-        <span class="id">WaterFlux_PminusETmax_SPI0</span>
+        <span class="id">WaterFlux_Runoff_FixedPrecip</span>
         <span class="units"><b>units</b> mm/yr &nbsp;·&nbsp; <b>period</b> annual sum, precip fixed at long-term mean (SPI-48 = 0)</span>
       </div>
       <div class="body">
-        Annual discharge predicted for an average-precipitation year (48-month SPI = 0), computed from AETmax and the long-term-mean precipitation with no net soil-moisture change. Precipitation is held constant, and the layer isolates how vegetation density alone affects water yield.
+        Annual discharge predicted for an average-precipitation year (48-month SPI = 0), computed from the fixed-precipitation AET and the long-term-mean precipitation with no net soil-moisture change. Precipitation is held constant, so the layer isolates how vegetation density alone affects water yield. <i>Formerly published as <code>WaterFlux_PminusETmax_SPI0</code>.</i>
       </div>
     </div>
   </div>
@@ -295,7 +311,7 @@
 <!-- FIRE -->
 <section class="theme" id="fire">
   <div class="wrap">
-    <h2>Fire hazard <span class="count">3 layers</span></h2>
+    <h2>Fire hazard &amp; behavior <span class="count">4 layers</span></h2>
 
     <div class="layer">
       <div class="head">
@@ -309,23 +325,37 @@
 
     <div class="layer">
       <div class="head">
-        <span class="id">Fire_FlamMap_FL</span>
-        <span class="units"><b>units</b> meters ×100 &nbsp;·&nbsp; <b>period</b> annual fuels; weather held constant</span>
+        <span class="id">Fire_ELMFire_FL</span>
+        <span class="units"><b>units</b> meters ×100 &nbsp;·&nbsp; <b>period</b> annual fuels, frequency-weighted across 240 weather scenarios</span>
       </div>
       <div class="body">
-        Predicted flame length from FlamMap using each year's Fire_LCP, with run conditions held fixed (20 mph uphill wind, Scott&amp;Reinhardt crown method, constant, dry fuel moistures). This is a relative indicator of hazard driven by topography and mapped fuel with weather held constant - not an absolute prediction under varying weather conditions.
+        Characteristic flame length, computed with <a href="https://elmfire.io/">ELMFIRE</a> in pixel-local mode over each year's Fire_LCP. Rather than one fixed weather condition, the layer weights 240 weather scenarios by how often each occurs, so it reflects the fire behavior a pixel can be expected to support across the weather it actually experiences.
       </div>
     </div>
 
     <div class="layer">
       <div class="head">
-        <span class="id">Fire_FlamMap_ROS</span>
-        <span class="units"><b>units</b> (m/min) ×100 &nbsp;·&nbsp; <b>period</b> annual fuels; weather held constant</span>
+        <span class="id">Fire_ELMFire_ROS</span>
+        <span class="units"><b>units</b> (m/min) ×100 &nbsp;·&nbsp; <b>period</b> annual fuels, frequency-weighted across 240 weather scenarios</span>
       </div>
       <div class="body">
-        Predicted rate of spread from the same FlamMap runs as Fire_FlamMap_FL; the same relative-hazard interpretation applies.
+        Characteristic rate of spread, from the same ELMFIRE runs as Fire_ELMFire_FL; the same interpretation applies.
       </div>
     </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Fire_ELMFire_BurnProbabilityRelative</span>
+        <span class="units"><b>units</b> relative, unitless &nbsp;·&nbsp; <b>period</b> annual fuels; simulated fire growth</span>
+      </div>
+      <div class="body">
+        The fraction of simulated fires that reached each pixel, from ELMFIRE in level-set (fire-growth) mode. This captures exposure from fire arriving <i>from elsewhere</i>, which the pixel-local flame-length and spread-rate layers cannot. See the caveat below before using it.
+      </div>
+    </div>
+
+    <div class="note warn"><b>Relative burn probability is not an annual probability.</b> The magnitude of <code>Fire_ELMFire_BurnProbabilityRelative</code> is set by the number of simulated ignitions - a modeling choice, not a property of the landscape. It is comparable <b>across space and across years within this dataset</b>, and it is <b>not</b> a probability of burning in a given year: do not read 0.0005 as a 0.05% annual chance. The layer is calibrated so that simulated burned-area shares by fuel class match the FPA-FOD observed record; the absolute rate is not calibrated.</div>
+
+    <div class="note"><b>The FlamMap layers have been withdrawn.</b> Earlier releases carried <code>Fire_FL</code> and <code>Fire_ROS</code>, computed with FlamMap under a single fixed weather condition (20 mph uphill wind, constant dry fuel moistures). They have been replaced by the three ELMFIRE layers above, which weight across the observed weather distribution rather than assuming one scenario. The old layers are no longer published for California; they remain in the CONUS release pending its rebuild.</div>
   </div>
 </section>
 
@@ -359,17 +389,29 @@
 <!-- DIEOFF -->
 <section class="theme" id="dieoff">
   <div class="wrap">
-    <h2>Forest dieoff risk <span class="count">1 layer</span></h2>
+    <h2>Forest dieoff risk <span class="count">2 layers</span></h2>
 
     <div class="layer">
       <div class="head">
-        <span class="id">Vulner_TreeDieoff_SPI-2</span>
-        <span class="units"><b>units</b> unitless index, 0–20,000 &nbsp;·&nbsp; <b>period</b> annual</span>
+        <span class="id">Vulner_TreeDieoff_ObservedPrecip</span>
+        <span class="units"><b>units</b> unitless index &nbsp;·&nbsp; <b>period</b> rolling four-water-year deficit</span>
       </div>
       <div class="body">
-        Vulnerability of tree canopy to severe drought - the product of Veg_TreeFrac and the AETmax/precipitation ratio for a 48-month SPI of −2 (a severe drought). Read as a relative index: below ~1,000 is low risk; above ~5,000 is progressively greater. Units are not interpretable in absolute physical terms.
+        How exposed the tree canopy actually was to the drought that occurred, as a rolling four-water-year water deficit. This is the layer to compare against independent observations such as aerial dieoff mapping. Read as a relative index; the units are not interpretable in absolute physical terms.
       </div>
     </div>
+
+    <div class="layer">
+      <div class="head">
+        <span class="id">Vulner_TreeDieoff_FixedPrecip</span>
+        <span class="units"><b>units</b> unitless index &nbsp;·&nbsp; <b>period</b> annual, precip fixed at severe drought (SPI-48 = −2)</span>
+      </div>
+      <div class="body">
+        How exposed the tree canopy <i>would be</i> if a severe drought arrived, with the 48-month SPI held fixed at −2. Because the drought is held constant, the layer varies with vegetation rather than with weather - the one to use for tracking how management or regrowth changes standing vulnerability. <i>Replaces the earlier <code>Vulner_TreeDieoff_SPI-2</code>.</i>
+      </div>
+    </div>
+
+    <div class="note warn"><b>Dieoff spin-up years.</b> <code>Vulner_TreeDieoff_ObservedPrecip</code> uses a rolling four-water-year window that cannot be filled at the start of the record. Water years <b>1985-1988</b> sum the available years and scale to a four-year equivalent (1985 is a single year scaled ×4). They are retained rather than nulled, but they are not comparable with 1989 onward and should be treated as questionable.</div>
   </div>
 </section>
 
@@ -405,6 +447,8 @@
 <section class="block">
   <div class="wrap">
     <h2>Before you analyze</h2>
+    <div class="note"><b>Check the benchmarks first.</b> The <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_QualityBenchmarks.pdf">quality benchmarks PDF</a> sets out, layer by layer, what each was compared against and how well it agreed - the independent reference data, the comparison method, and the result. It is the right place to judge whether a given layer is good enough for what you intend to do with it. Some layers are better constrained than others, and the differences matter.</div>
+    <div class="note warn"><b>v2026.1 stabilized on 29 August 2026 - re-sync if you pulled it earlier.</b> This is the first complete and stable release. Reaching it took several in-place revisions through June and August 2026, the last of which corrected the fire-behavior layers (<code>Fire_ELMFire_FL</code>, <code>Fire_ELMFire_ROS</code>, <code>Fire_ELMFire_BurnProbabilityRelative</code>) and changed their values materially. A copy pulled before 29 August 2026 is not the same data as v2026.1 today; copies pulled on or after that date are current. From here, any change that alters a quantitative result will be published as v2026.2 alongside it.</div>
     <div class="note warn"><b>Use one release end-to-end.</b> Every annual version reprocesses the full 1985-onward series under one code base, so values for a given year may differ between versions. Do not splice years from different versions in a time-series analysis.</div>
     <div class="note"><b>Masking.</b> Layers are masked to the California wildland extent - water, areas outside California, urban and agricultural land, barren/unclassified cover, and a set of non-target ecoregions (the Central Valley and specified deserts). The mask may be imperfect. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
     <div class="note"><b>No-data and recent years.</b> No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention). Some recent water years are less constrained - WY2023 reflects extreme California snowpack, and WY2025 is subject to refinement in future releases. For year-specific work, compare against nearby years.</div>
@@ -432,3 +476,5 @@
 
 </body>
 </html>
+
+

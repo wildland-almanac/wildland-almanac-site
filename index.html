@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -287,7 +287,7 @@
   "@type": "Dataset",
   "name": "The Wildland Almanac - California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
-  "description": "A 30 m Landsat-derived data cube of managed and unmanaged forests, shrublands, and grasslands across California, water years 1985-2025. Covers the vegetated, non-irrigated land surface from backcountry to wildland-urban interface, including managed forests, plantations, and recently disturbed stands; does not cover open water, urbanized land, or intensively managed cropland. Eighteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "description": "A 30 m Landsat-derived data cube of managed and unmanaged forests, shrublands, and grasslands across California, water years 1985-2025. Covers the vegetated, non-irrigated land surface from backcountry to wildland-urban interface, including managed forests, plantations, and recently disturbed stands; does not cover open water, urbanized land, or intensively managed cropland. Twenty-one layers in six themes: vegetation cover and structure, hydrology, fire hazard and behavior, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
   "sameAs": "https://source.coop/wildland-almanac/california",
   "version": "v2026.1",
@@ -318,7 +318,7 @@
     }
   },
   "temporalCoverage": "1985-10-01/2025-09-30",
-  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","soil moisture fraction","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
+  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","evapotranspiration under fixed precipitation","evapotranspiration under observed precipitation","soil moisture","soil moisture fraction","runoff","runoff under fixed precipitation","fire behavior fuel model","flame length","rate of spread","relative burn probability","aboveground biomass","gross primary production","tree-dieoff vulnerability under observed precipitation","tree-dieoff vulnerability under fixed precipitation","disturbance severity"],
   "distribution": {
     "@type": "DataDownload",
     "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
@@ -336,6 +336,8 @@
     <div class="brandmark"><span class="the">The</span>Wildland Almanac</div>
     <nav class="nav">
       <a href="data.html">The Data</a>
+      <a href="explore.html">Explore</a>
+      <a href="benchmarking.html">Benchmarking</a>
       <a href="use.html">Use It</a>
       <a href="about.html">About</a>
       <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
@@ -352,7 +354,7 @@
       <span><b>CA + CONUS</b>&nbsp;released</span>
       <span><b>30&nbsp;m</b></span>
       <span><b>41</b>&nbsp;years</span>
-      <span><b>18</b>&nbsp;properties</span>
+      <span><b>21</b>&nbsp;properties</span>
       <span><b>CC&nbsp;BY</b></span>
       <span>updated&nbsp;annually</span>
     </div>
@@ -366,9 +368,12 @@
 
     <p>The dataset is intended for a range of applications, including decision making that benefits from local-scale, near-current information, and research focused on large-scale, long-term trajectories. It was produced by university scientists and is shared freely under CC BY.</p>
 
+    <p><strong>How good is it?</strong> Each layer is checked against independent reference data - field plots, flux towers, stream gauges, aerial survey - and the comparisons are published in full, layer by layer, including where agreement is weaker. Some layers are better constrained than others, and the differences matter for what you can ask of them.</p>
+
     <div class="cta-row">
       <a class="btn primary" href="https://source.coop/wildland-almanac/california">Get the data <span class="arrow">↗</span></a>
       <a class="btn ghost" href="use.html">Bring it into your tools <span class="arrow">→</span></a>
+      <a class="btn ghost" href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_QualityBenchmarks.pdf">See how it checks out <span class="arrow">↗</span></a>
     </div>
   </div>
 </section>
@@ -385,7 +390,7 @@
       </li>
       <li>
         <h3>A four-dimensional data cube with a broad collection of properties</h3>
-        <p>Eighteen properties at 30 m resolution, fine enough for local planning, and expansive enough for large-scale analyses that are not possible with most other datasets. Built on the Landsat record, it retains a 41-year annual cadence and high temporal precision, including analyzing change over years and decades, or exploring the quantitative tradeoffs between multiple properties.</p>
+        <p>Twenty-one properties at 30 m resolution, fine enough for local planning, and expansive enough for large-scale analyses that are not possible with most other datasets. Because vegetation, water, carbon, fuels and disturbance are all derived on one grid by one pipeline, you can ask questions that span themes - how evapotranspiration responds to canopy loss after a fire, say - without first reconciling three products' grids, masks and epochs. Built on the Landsat record, it retains a 41-year annual cadence and high temporal precision.</p>
       </li>
       <li>
         <h3>Temporal precision across four decades</h3>
@@ -419,7 +424,7 @@
 <!-- properties table -->
 <section class="properties">
   <div class="wrap">
-    <h2>Eighteen properties, six themes</h2>
+    <h2>Twenty-one properties, six themes</h2>
     <p class="prop-lede">Each property and year is a separate 30 m Cloud-Optimized GeoTIFF, which are expressed in physical units and parallel metrics that are already in common use.</p>
     <table class="prop-table">
       <thead>
@@ -428,18 +433,18 @@
       <tbody>
         <tr>
           <td class="theme">Vegetation cover &amp; structure</td>
-          <td class="count">4 layers</td>
-          <td>Fractional cover - tree, shrub, herbaceous, and bare. Canopy height is now a band of the fire landscape.</td>
+          <td class="count">5 layers</td>
+          <td>Fractional cover - tree, shrub, herbaceous, and bare - plus areal-mean canopy height.</td>
         </tr>
         <tr>
           <td class="theme">Hydrology</td>
-          <td class="count">5 layers</td>
-          <td>Actual and maximum evapotranspiration, soil moisture, runoff, and vegetation-driven water yield.</td>
+          <td class="count">6 layers</td>
+          <td>Evapotranspiration and runoff, each under both observed and fixed precipitation, plus soil moisture in absolute and fractional form.</td>
         </tr>
         <tr>
-          <td class="theme">Fire hazard</td>
-          <td class="count">3 layers</td>
-          <td>Landscape fuels (a FARSITE/FlamMap landscape, delivered as single-band layers) and FlamMap-modeled flame length and rate of spread.</td>
+          <td class="theme">Fire hazard &amp; behavior</td>
+          <td class="count">4 layers</td>
+          <td>Landscape fuels (a FARSITE/FlamMap landscape, delivered as single-band layers), plus ELMFIRE-modeled flame length, rate of spread, and relative burn probability.</td>
         </tr>
         <tr>
           <td class="theme">Carbon sequestration</td>
@@ -448,13 +453,13 @@
         </tr>
         <tr>
           <td class="theme">Forest dieoff risk</td>
-          <td class="count">1 layer</td>
-          <td>Tree-canopy vulnerability under severe long-term drought (48-month SPI&nbsp;=&nbsp;&minus;2).</td>
+          <td class="count">2 layers</td>
+          <td>Tree-canopy drought exposure, both as it actually occurred and under a fixed severe drought (48-month SPI&nbsp;=&nbsp;&minus;2).</td>
         </tr>
         <tr>
           <td class="theme">Disturbance severity</td>
-          <td class="count">3 layers</td>
-          <td>Observed pixel-level loss of tree cover, shrub cover, and aboveground biomass.</td>
+          <td class="count">2 layers</td>
+          <td>Observed pixel-level annual loss of tree cover and aboveground biomass.</td>
         </tr>
       </tbody>
     </table>
@@ -470,7 +475,7 @@
       <a class="card-link" id="data" href="data.html">
         <span class="k">01 · What's in it</span>
         <h3>The Data</h3>
-        <p>The eighteen properties, the six theme groups, spatial and temporal coverage, the California and CONUS tiers, license, and how to cite it.</p>
+        <p>The twenty-one properties, the six theme groups, spatial and temporal coverage, the California and CONUS tiers, license, and how to cite it.</p>
         <span class="go">Browse the data →</span>
       </a>
       <a class="card-link" id="use" href="use.html">
@@ -519,3 +524,5 @@
 
 </body>
 </html>
+
+

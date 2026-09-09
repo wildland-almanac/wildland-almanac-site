@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore the layers - The Wildland Almanac</title>
+<style>
+  :root{
+    --ink:#1b1b1b; --ink-soft:#3a3a3a; --muted:#6a6a6a;
+    --line:#d8d6d0; --line-strong:#bdbab2;
+    --paper:#fbfaf7; --panel:#ffffff;
+    --accent:#2f5d3a; --accent-soft:#eef2ec;
+    --link:#1a4f78; --code-bg:#f4f2ec;
+    --maxw:980px;
+    --mono: ui-monospace,"SFMono-Regular","Menlo","Consolas",monospace;
+    --serif: Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+  a{color:var(--link);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .topbar{border-bottom:1px solid var(--line);background:var(--panel)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brandmark{font-family:var(--serif);font-size:18px;color:var(--ink)}
+  .brandmark a{color:inherit}
+  .brandmark .the{color:var(--muted);font-style:italic;margin-right:4px}
+  .nav a{color:var(--ink-soft);font-size:14px;margin-left:22px}
+  .nav a:hover{color:var(--accent)} .nav a.here{color:var(--accent);font-weight:600}
+  @media(max-width:640px){.nav a{margin-left:14px;font-size:13px}.topbar .wrap{height:52px}}
+  .crumb{font-size:13px;color:var(--muted);margin:14px 0 0}
+  .pagehead{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--paper));padding:30px 0 26px;margin-top:12px}
+  h1{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.12;margin:0 0 10px;letter-spacing:-.2px}
+  .lede{font-size:17px;color:var(--ink-soft);margin:0;max-width:74ch}
+  @media(max-width:640px){h1{font-size:27px}}
+  section.block{padding:26px 0 6px}
+  h2{font-family:var(--serif);font-size:22px;font-weight:600;margin:0 0 6px;letter-spacing:-.15px}
+  p{margin:0 0 14px;max-width:76ch;color:var(--ink-soft)}
+  p strong{color:var(--ink)}
+  .sec-lede{margin:0 0 16px;max-width:76ch;color:var(--ink-soft)}
+  code{font-family:var(--mono);font-size:.87em;background:var(--code-bg);padding:1px 5px;border-radius:3px;color:var(--ink-soft)}
+  .note{margin:16px 0 22px;padding:14px 18px;max-width:80ch;background:var(--accent-soft);border-radius:5px;
+    font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+  .note b{color:var(--ink)}
+
+  /* global year control */
+  .yearbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:0 0 22px;padding:14px 18px;
+    background:var(--panel);border:1px solid var(--line-strong);border-radius:5px}
+  .yearbar label{font-size:14px;color:var(--ink);font-weight:600}
+  .yearbar input[type=range]{flex:1 1 260px;min-width:180px;accent-color:var(--accent)}
+  .yearbar .yr{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--accent);min-width:4.5ch;
+    font-variant-numeric:tabular-nums}
+  .yearbar .hint{font-size:13px;color:var(--muted);flex-basis:100%;margin:0}
+
+  /* theme groups */
+  .theme{margin:0 0 26px}
+  .theme > h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:0 0 4px;color:var(--ink)}
+  .theme > .tdesc{font-size:14px;color:var(--muted);margin:0 0 12px;max-width:76ch}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+  .lyr{border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:14px 16px 13px;
+    display:flex;flex-direction:column;gap:7px}
+  .lyr .id{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.02em;word-break:break-all}
+  .lyr .nm{font-size:15.5px;font-weight:600;color:var(--ink);line-height:1.3}
+  .lyr .ds{font-size:13.5px;color:var(--ink-soft);line-height:1.45;margin:0;flex:1}
+  .lyr .units{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .lyr .acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:3px}
+  .btnv{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:4px;font-size:13.5px;
+    font-weight:600;background:var(--accent);color:#fff;border:1px solid var(--accent)}
+  .btnv:hover{background:#264c30;text-decoration:none;color:#fff}
+  .btns{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:4px;font-size:13.5px;
+    background:var(--panel);color:var(--ink);border:1px solid var(--line-strong)}
+  .btns:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+  .lyr .na{font-size:12.5px;color:var(--muted);font-style:italic}
+  .bandsel{font-family:var(--mono);font-size:12.5px;padding:5px 7px;border:1px solid var(--line-strong);
+    border-radius:4px;background:var(--panel);color:var(--ink)}
+  footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 34px;margin-top:34px;font-size:13.5px;color:var(--muted)}
+  footer p{max-width:80ch;margin:0 0 6px;font-size:13.5px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
+    <nav class="nav">
+      <a href="data.html">The Data</a>
+      <a href="explore.html" class="here">Explore</a>
+      <a href="benchmarking.html">Benchmarking</a>
+      <a href="use.html">Use It</a>
+      <a href="about.html">About</a>
+      <a href="https://source.coop/wildland-almanac">Source&nbsp;&#8599;</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap"><p class="crumb"><a href="index.html">Home</a> / Explore</p></div>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>Explore the layers</h1>
+    <p class="lede">Open any layer, any year, straight in your browser - no download, no account, no
+    software. Each link streams the Cloud-Optimized GeoTIFF directly into a map viewer with the
+    right no-data value and a sensible colour stretch already applied.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <div class="yearbar">
+      <label for="yr">Water year</label>
+      <input type="range" id="yr" min="1985" max="2025" value="2025" step="1">
+      <span class="yr" id="yrOut">2025</span>
+      <p class="hint">Sets the year for every link below. Disturbance covers 1986&ndash;2024 only; the
+      three topographic bands of the fire landscape are static and carry no year.</p>
+    </div>
+    <div id="layers"></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Reading what you see</h2>
+    <div class="note">
+      <b>Values are stored as scaled integers.</b> The viewer shows the raw stored number, not the
+      physical quantity. Cover fractions are &times;10,000, so 6,500 means 65% cover. Flame length is
+      metres &times;100. Biomass is tonnes per hectare. Canopy height comes in two incompatible
+      forms - <code>Veg_CanopyHt</code> is an areal mean in centimetres, the Fire_LCP <code>CH</code>
+      band is a stand height in decimetres, and they differ by 2&ndash;6&times; on the same ground.
+      Each card below states its own units. Full conventions are in
+      <a href="data.html">The Data</a> and the
+      <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>.
+    </div>
+    <p><strong>No-data is &minus;9999 for every layer except the fire landscape</strong>, where it is
+    0 by FARSITE convention. The links below already set this, so masked ground renders as blank
+    rather than as an extreme value.</p>
+    <p>The colour stretches are chosen to show structure across California as a whole, not to be
+    optimal for any one place. Once the viewer is open you can change the stretch, the colour map and
+    the basemap; the whole view lives in the URL, so any view you arrive at is shareable.</p>
+    <p><strong>How good is each layer?</strong> That question has its own answer - see
+    <a href="benchmarking.html">Benchmarking</a>, which reports what each layer was tested against
+    and where it is weaker than the alternatives.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Rasters stream from <a href="https://source.coop/wildland-almanac/california">Source Cooperative</a>
+    and render in the open-source
+    <a href="https://github.com/source-cooperative/cog-viewer">Source Cooperative COG viewer</a>
+    (Apache-2.0), which runs entirely in your browser - nothing is uploaded anywhere.</p>
+    <p>The Wildland Almanac &middot; v2026.1 &middot; released under CC&nbsp;BY 4.0.</p>
+  </div>
+</footer>
+
+<script>
+// ---------------------------------------------------------------------------
+// Viewer base. The COG viewer is Apache-2.0 and browser-only, so this can be
+// swapped for a self-hosted fork served from this same site by changing this
+// one line (e.g. "cog-viewer/" for a copy in this repo).
+const VIEWER = "https://source-cooperative.github.io/cog-viewer/";
+const DATA   = "https://data.source.coop/wildland-almanac/california/v2026.1/";
+const BROWSE = "https://source.coop/wildland-almanac/california/v2026.1/";
+
+// Layers. rescale ranges are display choices over the stored integer values,
+// picked to show statewide structure rather than to suit any one location.
+const THEMES = [
+ { name:"Vegetation cover &amp; structure", desc:"Fractional cover sums to 10,000 across the four classes at every valid pixel.", layers:[
+   {id:"Veg_TreeFrac",   nm:"Tree cover",        u:"fraction &times;10,000", cm:"Greens",  rs:"0,10000", ds:"Fractional tree canopy cover, viewed from above."},
+   {id:"Veg_ShrubFrac",  nm:"Shrub cover",       u:"fraction &times;10,000", cm:"YlGn",    rs:"0,10000", ds:"Fractional shrub cover."},
+   {id:"Veg_HerbFrac",   nm:"Herbaceous cover",  u:"fraction &times;10,000", cm:"YlGnBu",  rs:"0,10000", ds:"Fractional herbaceous cover."},
+   {id:"Veg_BareFrac",   nm:"Bare ground",       u:"fraction &times;10,000", cm:"YlOrBr",  rs:"0,10000", ds:"Fractional bare or non-vegetated ground."},
+   {id:"Veg_CanopyHt",   nm:"Canopy height",     u:"centimetres, areal mean",cm:"viridis", rs:"0,3000",  ds:"Areal-mean height over the whole pixel, gaps included. Not the fire-model stand height."}
+ ]},
+ { name:"Hydrology", desc:"Paired layers hold precipitation either as observed or fixed at a reference, isolating the effect of vegetation.", layers:[
+   {id:"WaterFlux_AET_ObservedPrecip", nm:"Evapotranspiration, observed precip", u:"mm/yr", cm:"Blues", rs:"0,1200", ds:"What actually evaporated and transpired, given the precipitation that fell."},
+   {id:"WaterFlux_AET_FixedPrecip",    nm:"Evapotranspiration, fixed precip",    u:"mm/yr", cm:"Blues", rs:"0,1200", ds:"What would evaporate if water were never limiting - varies with vegetation, not weather."},
+   {id:"WaterFlux_Runoff",             nm:"Runoff, observed precip",             u:"mm/yr", cm:"PuBu",  rs:"0,1500", ds:"Runoff plus deep percolation under observed precipitation."},
+   {id:"WaterFlux_Runoff_FixedPrecip", nm:"Runoff, fixed precip",                u:"mm/yr", cm:"PuBu",  rs:"0,1500", ds:"Runoff in an average-precipitation year, isolating vegetation's effect on water yield."},
+   {id:"WaterFlux_Soilmoisture",       nm:"Soil moisture",                       u:"mm, rooting zone", cm:"BrBG", rs:"0,1200", ds:"Rooting-zone water at the end of the water year."},
+   {id:"WaterFlux_SoilmoistureFrac",   nm:"Soil moisture fraction",              u:"fraction &times;10,000", cm:"BrBG", rs:"0,10000", ds:"The same, as a fraction of maximum storage - normalises for soil capacity."}
+ ]},
+ { name:"Fire hazard &amp; behavior", desc:"Conditional climatologies - what would burn under typical local weather, not a forecast for any particular fire.", layers:[
+   {id:"Fire_ELMFire_FL",  nm:"Flame length",  u:"metres &times;100",   cm:"inferno", rs:"0,400",  ds:"Characteristic flame length, weighted across 240 weather scenarios."},
+   {id:"Fire_ELMFire_ROS", nm:"Rate of spread",u:"(m/min) &times;100",  cm:"inferno", rs:"0,1500", ds:"Characteristic rate of spread, from the same runs."},
+   {id:"Fire_ELMFire_BurnProbabilityRelative", nm:"Relative burn probability", u:"relative, unitless", cm:"magma", rs:"0,100", ds:"Share of simulated fires reaching each pixel. Comparable across space and years; not an annual probability."}
+ ]},
+ { name:"Fire landscape (Fire_LCP)", desc:"The eight bands of a FARSITE/FlamMap landscape, delivered as separate single-band files. No-data is 0 here, not &minus;9999.", lcp:true, layers:[
+   {b:"FBFM40",    nm:"Fuel model",        u:"Scott &amp; Burgan FBFM40, categorical", cm:"tab20",   rs:"0,204", ds:"Surface fuel model.", dyn:true},
+   {b:"CC",        nm:"Canopy cover",      u:"percent",             cm:"Greens",  rs:"0,100",  ds:"Canopy cover as the fire model uses it.", dyn:true},
+   {b:"CH",        nm:"Stand height",      u:"decimetres",          cm:"viridis", rs:"0,500",  ds:"Height of the taller trees in the pixel - not the areal mean.", dyn:true},
+   {b:"CBH",       nm:"Canopy base height",u:"decimetres",          cm:"cividis", rs:"0,100",  ds:"Height to the base of the live crown.", dyn:true},
+   {b:"CBD",       nm:"Canopy bulk density",u:"kg/m&sup3; &times;100",cm:"plasma", rs:"0,35",   ds:"Density of available crown fuel.", dyn:true},
+   {b:"Elevation", nm:"Elevation",         u:"metres",              cm:"terrain", rs:"0,4500", ds:"Static topography from LANDFIRE.", dyn:false},
+   {b:"Slope",     nm:"Slope",             u:"degrees",             cm:"magma",   rs:"0,70",   ds:"Static topography from LANDFIRE.", dyn:false},
+   {b:"Aspect",    nm:"Aspect",            u:"degrees",             cm:"twilight",rs:"0,360",  ds:"Static topography from LANDFIRE.", dyn:false}
+ ]},
+ { name:"Carbon", desc:"", layers:[
+   {id:"Carbon_AGB", nm:"Aboveground biomass",   u:"tonnes/hectare",   cm:"viridis", rs:"0,400",  ds:"Live aboveground biomass, mainly tree. Saturates above about 200 t/ha - see Benchmarking."},
+   {id:"Carbon_GPP", nm:"Gross primary production", u:"g C/m&sup2;/yr", cm:"YlGn",   rs:"0,2500", ds:"Annual carbon uptake."}
+ ]},
+ { name:"Drought dieoff risk", desc:"", layers:[
+   {id:"Vulner_TreeDieoff_ObservedPrecip", nm:"Dieoff exposure, observed drought", u:"index", cm:"OrRd", rs:"0,1500", ds:"How exposed the canopy actually was, as a rolling four-year deficit. 1985&ndash;88 are spin-up years and are questionable."},
+   {id:"Vulner_TreeDieoff_FixedPrecip",    nm:"Dieoff susceptibility, fixed drought", u:"index", cm:"OrRd", rs:"0,3000", ds:"How exposed the canopy would be under a fixed severe drought - varies with vegetation, not weather."}
+ ]},
+ { name:"Disturbance severity", desc:"Annual loss at pixels flagged as disturbed. Available 1986&ndash;2024; the first and last years of the record cannot be computed.", dist:true, layers:[
+   {id:"Disturbance_TreeFrac", nm:"Tree-cover loss", u:"&Delta; fraction &times;10,000", cm:"OrRd", rs:"0,5000", ds:"Loss of tree cover at disturbed pixels. 3,000 means a 30-point absolute drop."},
+   {id:"Disturbance_AGB",      nm:"Biomass loss",    u:"&Delta; t/ha &times;10",         cm:"OrRd", rs:"0,1000", ds:"Loss of aboveground biomass at disturbed pixels."}
+ ]}
+];
+
+function viewerUrl(cogUrl, cm, rs, nodata){
+  const p = new URLSearchParams();
+  p.set("url", cogUrl);
+  p.set("mode", "single");
+  p.set("rescale", rs);
+  p.set("colormap", cm);
+  p.set("nodata", nodata);
+  return VIEWER + "?" + p.toString();
+}
+
+function render(year){
+  const host = document.getElementById("layers");
+  host.innerHTML = "";
+  for(const th of THEMES){
+    const sec = document.createElement("div");
+    sec.className = "theme";
+    let h = `<h3>${th.name}</h3>`;
+    if(th.desc) h += `<p class="tdesc">${th.desc}</p>`;
+    h += `<div class="grid">`;
+
+    for(const L of th.layers){
+      const nodata = th.lcp ? "0" : "-9999";
+      let file, dir, label, avail = true;
+
+      if(th.lcp){
+        dir = "Fire_LCP";
+        if(L.dyn){ file = `WildlandAlmanac_CA_Fire_LCP_${L.b}_${year}.tif`; label = `${year}`; }
+        else     { file = `WildlandAlmanac_CA_Fire_LCP_${L.b}.tif`;        label = "static"; }
+      } else {
+        dir = L.id;
+        if(th.dist && (year < 1986 || year > 2024)) avail = false;
+        file = `WildlandAlmanac_CA_${L.id}_${year}.tif`;
+        label = `${year}`;
+      }
+
+      const cog = DATA + dir + "/" + file;
+      const id  = th.lcp ? `Fire_LCP_${L.b}` : L.id;
+
+      h += `<div class="lyr">
+        <span class="id">${id}</span>
+        <span class="nm">${L.nm}</span>
+        <p class="ds">${L.ds}</p>
+        <span class="units">${L.u}</span>
+        <div class="acts">`;
+      if(avail){
+        h += `<a class="btnv" target="_blank" rel="noopener" href="${viewerUrl(cog, L.cm, L.rs, nodata)}">View ${label} &#8599;</a>
+              <a class="btns" target="_blank" rel="noopener" href="${BROWSE + dir + "/" + file}">File &#8599;</a>`;
+      } else {
+        h += `<span class="na">Not produced for ${year} &mdash; disturbance covers 1986&ndash;2024</span>`;
+      }
+      h += `</div></div>`;
+    }
+    h += `</div>`;
+    sec.innerHTML = h;
+    host.appendChild(sec);
+  }
+}
+
+const slider = document.getElementById("yr");
+const out    = document.getElementById("yrOut");
+function sync(){ out.textContent = slider.value; render(parseInt(slider.value,10)); }
+slider.addEventListener("input", () => { out.textContent = slider.value; });
+slider.addEventListener("change", sync);
+sync();
+</script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmarking - The Wildland Almanac</title>
+<style>
+  :root{
+    --ink:#1b1b1b; --ink-soft:#3a3a3a; --muted:#6a6a6a;
+    --line:#d8d6d0; --line-strong:#bdbab2;
+    --paper:#fbfaf7; --panel:#ffffff;
+    --accent:#2f5d3a; --accent-soft:#eef2ec;
+    --link:#1a4f78; --code-bg:#f4f2ec;
+    --good:#2f6b45; --good-bg:#e8f0e9;
+    --warn:#8a6212; --warn-bg:#f5efdd;
+    --maxw:980px;
+    --mono: ui-monospace,"SFMono-Regular","Menlo","Consolas",monospace;
+    --serif: Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+  a{color:var(--link);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .topbar{border-bottom:1px solid var(--line);background:var(--panel)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brandmark{font-family:var(--serif);font-size:18px;color:var(--ink)}
+  .brandmark a{color:inherit}
+  .brandmark .the{color:var(--muted);font-style:italic;margin-right:4px}
+  .nav a{color:var(--ink-soft);font-size:14px;margin-left:22px}
+  .nav a:hover{color:var(--accent)} .nav a.here{color:var(--accent);font-weight:600}
+  @media(max-width:640px){.nav a{margin-left:14px;font-size:13px}.topbar .wrap{height:52px}}
+  .crumb{font-size:13px;color:var(--muted);margin:14px 0 0}
+  .pagehead{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--paper));padding:30px 0 26px;margin-top:12px}
+  h1{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.12;margin:0 0 10px;letter-spacing:-.2px}
+  .lede{font-size:17px;color:var(--ink-soft);margin:0;max-width:74ch}
+  .specs{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;
+    background:var(--panel);font-family:var(--mono);font-size:13px;width:max-content;max-width:100%;margin-top:18px}
+  .specs span{padding:7px 14px;border-right:1px solid var(--line);color:var(--ink-soft);white-space:nowrap}
+  .specs span:last-child{border-right:none} .specs b{color:var(--ink);font-weight:600}
+  @media(max-width:640px){h1{font-size:27px}.specs{width:100%}.specs span{flex:1 1 auto;text-align:center}}
+  section.block{padding:26px 0 6px}
+  h2{font-family:var(--serif);font-size:22px;font-weight:600;margin:0 0 6px;letter-spacing:-.15px}
+  h3{font-size:16px;font-weight:600;margin:24px 0 6px}
+  p{margin:0 0 14px;max-width:76ch;color:var(--ink-soft)}
+  p strong,li strong{color:var(--ink)}
+  .sec-lede{margin:0 0 16px;max-width:76ch;color:var(--ink-soft)}
+  code{font-family:var(--mono);font-size:.87em;background:var(--code-bg);padding:1px 5px;border-radius:3px;color:var(--ink-soft)}
+  .tw{overflow-x:auto;margin:16px 0 22px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.5}
+  th{text-align:left;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--muted);font-weight:600;padding:0 14px 8px 0;border-bottom:1px solid var(--line-strong);vertical-align:bottom}
+  td{padding:13px 14px 13px 0;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.axis{color:var(--ink);font-weight:600;white-space:nowrap;width:150px}
+  .pill{display:inline-block;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;
+    padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap}
+  .pill.hi{background:var(--good-bg);color:var(--good)} .pill.lo{background:var(--warn-bg);color:var(--warn)}
+  .note{margin:16px 0;padding:14px 18px;max-width:80ch;background:var(--accent-soft);border-radius:5px;
+    font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+  .note.warn{background:var(--warn-bg)}
+  .note b{color:var(--ink)}
+  .axes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 8px}
+  @media(max-width:760px){.axes{grid-template-columns:1fr}}
+  .axcard{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:5px;background:var(--panel);padding:16px 18px}
+  .axcard h3{margin:0 0 6px;font-size:15.5px;color:var(--ink)}
+  .axcard p{margin:0;font-size:14px;line-height:1.5}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .card-link{display:block;border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:16px 18px;color:inherit}
+  .card-link:hover{border-color:var(--accent);text-decoration:none}
+  .card-link .k{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
+  .card-link h3{font-size:16.5px;margin:5px 0 5px;color:var(--ink)}
+  .card-link p{margin:0;font-size:14px}
+  .card-link .verdict{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
+  .panels{font-size:14.5px;color:var(--ink-soft);margin:0 0 8px}
+  .panels b{color:var(--ink);font-family:var(--mono);font-size:12.5px}
+  ul{margin:0 0 14px;padding-left:20px} li{margin-bottom:7px;color:var(--ink-soft);max-width:76ch}
+  footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 34px;margin-top:34px;font-size:13.5px;color:var(--muted)}
+  footer p{max-width:80ch;margin:0 0 6px;font-size:13.5px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
+    <nav class="nav">
+      <a href="data.html">The Data</a>
+      <a href="explore.html">Explore</a>
+      <a href="benchmarking.html" class="here">Benchmarking</a>
+      <a href="use.html">Use It</a>
+      <a href="about.html">About</a>
+      <a href="https://source.coop/wildland-almanac">Source&nbsp;&#8599;</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap"><p class="crumb"><a href="index.html">Home</a> / Benchmarking</p></div>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>Benchmarking</h1>
+    <p class="lede">How well each layer performs, measured on three axes - and stated plainly,
+    including where the Almanac is weaker than the alternatives.</p>
+    <div class="specs">
+      <span><b>7</b>&nbsp;property areas</span>
+      <span><b>3</b>&nbsp;evidence axes</span>
+      <span><b>41</b>&nbsp;years tested</span>
+      <span>v2026.1</span>
+    </div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <h2>The niche this is built for</h2>
+    <p>There are already many single-epoch geospatial datasets, usually covering one or a few recent
+    years and one or a few properties - biomass (GEDI), water (Forests-to-Faucets), disturbance
+    (Hansen), fuels and wildfire (LANDFIRE), vegetation type (RAP). Many offer high spatial accuracy
+    and rest on foundational work that gave the Almanac excellent starting points.</p>
+    <p><strong>Improving on their spatial accuracy is not the aim.</strong> The field already knows a
+    great deal about mapping near-current biomass, water balance, fuel and wildfire, and highly
+    capable groups are working on it. The aim is to extend those records across the full Landsat
+    archive with enough <strong>temporal precision</strong> to say reliably how conditions changed
+    over four decades at 30 m, from single pixels to CONUS, and to difference years to show where and
+    when. Confirming that recent-year patterns agree with established products is a necessary
+    baseline for that - but it is not sufficient, and it is not the interesting part.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Three axes</h2>
+    <div class="axes">
+      <div class="axcard">
+        <h3>External skill</h3>
+        <p>Spatial and temporal accuracy against real observations - river gauges, fire perimeters,
+        field plots. Direct comparison with high-priority real-world conditions.</p>
+      </div>
+      <div class="axcard">
+        <h3>Internal coherence</h3>
+        <p>Stability within a constant cohort of never-disturbed pixels. Ensures multi-year
+        observations see real change rather than dataset artefacts, noise or drift.</p>
+      </div>
+      <div class="axcard">
+        <h3>Cross-dataset consistency</h3>
+        <p>Agreement with established datasets such as LANDFIRE, GEDI and RCMAP. A minimum quality
+        threshold - these products are widely used and accepted.</p>
+      </div>
+    </div>
+    <div class="note">
+      <b>The first two axes are the ones that matter most here, and the ones most often skipped.</b>
+      Both speak directly to temporal precision. The never-disturbed-cohort test asks a question few
+      products ask of themselves: across 41 years and four Landsat sensor changeovers, does an
+      undisturbed pixel stay put? A seam at a satellite transition is invisible in any single-epoch
+      comparison, and fatal to measuring change. Together the three axes establish whether the Almanac
+      reaches spatial accuracy within the top tier of established datasets <i>while</i> offering
+      temporal precision they do not.
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Results at a glance</h2>
+    <p class="sec-lede">Every property carries both a high-confidence and a lower-confidence verdict.
+    Follow a row for the measurements behind it.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Property</th><th>High confidence</th><th>Lower confidence</th></tr></thead>
+        <tbody>
+          <tr><td class="axis"><a href="bench-agb.html">Aboveground biomass</a></td><td>Magnitude of AGB; rate of growth in young stands; abrupt disturbance loss</td><td>Diffuse mortality and closed-canopy growth</td></tr>
+          <tr><td class="axis"><a href="bench-cover.html">Cover and structure</a></td><td>Tree-cover level and pattern; loss scales with severity; precise in time</td><td>No independent change accuracy; non-tree fractions and diffuse change</td></tr>
+          <tr><td class="axis"><a href="bench-disturbance.html">Disturbance</a></td><td>Fire location, timing and severity</td><td>Non-fire-agent magnitude and small-event detection</td></tr>
+          <tr><td class="axis"><a href="bench-dieoff.html">Drought dieoff</a></td><td>Height x multi-year deficit interaction locates dieoff</td><td>Per-pixel severity and absolute totals</td></tr>
+          <tr><td class="axis"><a href="bench-water.html">Water</a></td><td>Runoff in space and time; AET magnitude; long-term precision and stability</td><td>Water response to disturbance; possible saturation at high AET</td></tr>
+          <tr><td class="axis"><a href="bench-fire-flamelength.html">Fire: flame length</a></td><td>Identifies pixels at elevated risk of high-severity fire, and tracks them precisely for four decades</td><td>Weaker within shrub and timber-understory fuel classes</td></tr>
+          <tr><td class="axis"><a href="bench-fire-burnprobability.html">Fire: burn probability</a></td><td>Maps burn probability across the landscape and tracks elevated risk for four decades</td><td>Moran and Pyrologix predict subsequent burning better; WA is not calibrated to absolute probability</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Where the Almanac wins, and where it loses</h2>
+    <p class="sec-lede">Head-to-head results against named alternatives, in both directions.</p>
+    <h3>Ahead</h3>
+    <ul>
+      <li><strong>Flame length beats Pyrologix at predicting severe fire</strong> - on the identical
+      matched test, 0.645 against 0.575 (2021) and 0.789 against 0.677 (2022), the only two years a
+      matched comparison is possible.</li>
+      <li><strong>Four decades of consistent fire skill.</strong> Flame-length cap20 averages 0.605
+      across 39 years, above chance in every one, with little degradation back to the 1980s. No
+      alternative product exists over that span to compare against.</li>
+      <li><strong>Runoff against 122 gauged basins</strong> - R&sup2; 0.87 in space, 0.83 in time,
+      slope 1.01. The strongest external test in the dataset, and independent of Landsat entirely.</li>
+      <li><strong>Seam-free across four Landsat changeovers</strong> in every property tested. This is
+      the axis the Almanac is built for, and it is not routinely reported elsewhere.</li>
+    </ul>
+    <h3>Behind</h3>
+    <ul>
+      <li><strong>Moran's annually-updated FSim burn probability beats WA on all four overlapping
+      years</strong>, with a large gap in the high-fire year 2020 (-0.100). WA is also not calibrated
+      to absolute burn probability, so level comparisons are not possible.</li>
+      <li><strong>Biomass saturates above ~200 Mg/ha</strong>, underestimating growth in mid to older
+      stands by up to 80%. The close agreement with GEDI suggests an allometric rather than optical
+      cause.</li>
+      <li><strong>Diffuse mortality is under-registered</strong> - capture 0.15 against FIA, and
+      harvest 0.28. The disturbance layer targets abrupt loss by design.</li>
+      <li><strong>No independent evidence for tree-cover change accuracy.</strong> Temporal precision
+      is demonstrated; change accuracy against field observation is not, and cannot be from the
+      available data.</li>
+    </ul>
+    <div class="note warn">
+      <b>On circularity.</b> Several comparisons here are not independent, and are labelled as such
+      rather than presented as validation. All gridded cover products are Landsat-derived; USFS TCC
+      trains the Almanac's tree fraction and RAP trains shrub, herb and bare, so only RCMAP is
+      independent for all four. MTBS and Hansen share Landsat lineage with the disturbance layer.
+      Runoff comparisons are driven on both axes by precipitation of common origin - which is why the
+      AET comparisons, which subtract that out, are the stronger evidence. Agreement under circularity
+      is a consistency check, not proof.
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>By property</h2>
+    <div class="cards">
+      <a class="card-link" href="bench-agb.html">
+        <span class="k">Carbon_AGB</span>
+        <h3>Aboveground biomass</h3>
+        <p>Tracks FIA to about 200 Mg/ha then saturates; agrees closely with GEDI lidar; misses diffuse mortality.</p>
+        <div class="verdict"><span class="pill hi">High</span> <span class="pill lo">Lower</span></div>
+      </a>
+      <a class="card-link" href="bench-cover.html">
+        <span class="k">Veg_TreeFrac</span>
+        <h3>Cover and structure</h3>
+        <p>Tree cover matches NLCD closely and tracks burn severity; independent evidence for change accuracy is the weak point.</p>
+        <div class="verdict"><span class="pill hi">High</span> <span class="pill lo">Lower</span></div>
+      </a>
+      <a class="card-link" href="bench-disturbance.html">
+        <span class="k">Disturbance_TreeFrac / Disturbance_AGB</span>
+        <h3>Disturbance</h3>
+        <p>Finds and dates fire very well - 92% of high-severity area, 92% within a year - but under-registers diffuse and partial disturbance.</p>
+        <div class="verdict"><span class="pill hi">High</span> <span class="pill lo">Lower</span></div>
+      </a>
+      <a class="card-link" href="bench-dieoff.html">
+        <span class="k">Vulner_TreeDieoff_*</span>
+        <h3>Drought dieoff</h3>
+        <p>Locates dieoff through a super-additive height x deficit interaction, and leads aerial survey by about a year - but it is a screening layer, not a per-pixel count.</p>
+        <div class="verdict"><span class="pill hi">High</span> <span class="pill lo">Lower</span></div>
+      </a>
+      <a class="card-link" href="bench-water.html">
+        <span class="k">WaterFlux_*</span>
+        <h3>Water</h3>
+        <p>The strongest external test in the dataset: runoff matches 122 gauged basins in both space and time, and AET holds steady beneath a five-fold runoff swing.</p>
+        <div class="verdict"><span class="pill hi">High</span> <span class="pill lo">Lower</span></div>
+      </a>
+      <a class="card-link" href="bench-fire-flamelength.html">
+        <span class="k">Fire_ELMFire_FL</span>
+        <h3>Fire: flame length</h3>
+        <p>Beats a published commercial model at predicting where severe fire later occurred, in both years where a matched comparison is possible.</p>
+        <div class="verdict"><span class="pill hi">High</span> <span class="pill lo">Lower</span></div>
+      </a>
+      <a class="card-link" href="bench-fire-burnprobability.html">
+        <span class="k">Fire_ELMFire_BurnProbabilityRelative</span>
+        <h3>Fire: burn probability</h3>
+        <p>Ranks where fire occurs well above chance across four decades - but an annually-updated FSim product beats it on every overlapping year.</p>
+        <div class="verdict"><span class="pill hi">High</span> <span class="pill lo">Lower</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>A work in progress</h2>
+    <p>The pipeline reprocesses every year and every property at once, producing a complete new
+    version while previous versions are archived. Full reprocessing combined with rigorous
+    benchmarking creates a continuous improvement cycle: it allows updates with minimal latency; it
+    ties the properties to one another so tradeoffs can be quantified in a way that independently
+    assembled datasets cannot support; testing one property informs the others; and it removes any
+    hesitancy to make improvements that might otherwise break the time series.</p>
+    <p>These results should be read as one turn of that cycle. They document the state of the dataset
+    now, and they identify where the next round of development is aimed.</p>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <p><b>Source.</b> These pages are generated from <i>WildlandAlmanac_CA_QualityBenchmarks.pdf</i>
+    (v2026.1, 7 September 2026), which is the authoritative document and contains the figures each
+    panel reference points at. <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_QualityBenchmarks.pdf">Download the full PDF &#8599;</a></p>
+    <p>Released under CC BY 4.0. Findings are stated as measured, including where the Almanac is
+    weaker than an alternative.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fire: burn probability - The Wildland Almanac</title>
+<style>
+  :root{
+    --ink:#1b1b1b; --ink-soft:#3a3a3a; --muted:#6a6a6a;
+    --line:#d8d6d0; --line-strong:#bdbab2;
+    --paper:#fbfaf7; --panel:#ffffff;
+    --accent:#2f5d3a; --accent-soft:#eef2ec;
+    --link:#1a4f78; --code-bg:#f4f2ec;
+    --good:#2f6b45; --good-bg:#e8f0e9;
+    --warn:#8a6212; --warn-bg:#f5efdd;
+    --maxw:980px;
+    --mono: ui-monospace,"SFMono-Regular","Menlo","Consolas",monospace;
+    --serif: Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+  a{color:var(--link);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .topbar{border-bottom:1px solid var(--line);background:var(--panel)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brandmark{font-family:var(--serif);font-size:18px;color:var(--ink)}
+  .brandmark a{color:inherit}
+  .brandmark .the{color:var(--muted);font-style:italic;margin-right:4px}
+  .nav a{color:var(--ink-soft);font-size:14px;margin-left:22px}
+  .nav a:hover{color:var(--accent)} .nav a.here{color:var(--accent);font-weight:600}
+  @media(max-width:640px){.nav a{margin-left:14px;font-size:13px}.topbar .wrap{height:52px}}
+  .crumb{font-size:13px;color:var(--muted);margin:14px 0 0}
+  .pagehead{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--paper));padding:30px 0 26px;margin-top:12px}
+  h1{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.12;margin:0 0 10px;letter-spacing:-.2px}
+  .lede{font-size:17px;color:var(--ink-soft);margin:0;max-width:74ch}
+  .specs{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;
+    background:var(--panel);font-family:var(--mono);font-size:13px;width:max-content;max-width:100%;margin-top:18px}
+  .specs span{padding:7px 14px;border-right:1px solid var(--line);color:var(--ink-soft);white-space:nowrap}
+  .specs span:last-child{border-right:none} .specs b{color:var(--ink);font-weight:600}
+  @media(max-width:640px){h1{font-size:27px}.specs{width:100%}.specs span{flex:1 1 auto;text-align:center}}
+  section.block{padding:26px 0 6px}
+  h2{font-family:var(--serif);font-size:22px;font-weight:600;margin:0 0 6px;letter-spacing:-.15px}
+  h3{font-size:16px;font-weight:600;margin:24px 0 6px}
+  p{margin:0 0 14px;max-width:76ch;color:var(--ink-soft)}
+  p strong,li strong{color:var(--ink)}
+  .sec-lede{margin:0 0 16px;max-width:76ch;color:var(--ink-soft)}
+  code{font-family:var(--mono);font-size:.87em;background:var(--code-bg);padding:1px 5px;border-radius:3px;color:var(--ink-soft)}
+  .tw{overflow-x:auto;margin:16px 0 22px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.5}
+  th{text-align:left;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--muted);font-weight:600;padding:0 14px 8px 0;border-bottom:1px solid var(--line-strong);vertical-align:bottom}
+  td{padding:13px 14px 13px 0;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.axis{color:var(--ink);font-weight:600;white-space:nowrap;width:150px}
+  .pill{display:inline-block;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;
+    padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap}
+  .pill.hi{background:var(--good-bg);color:var(--good)} .pill.lo{background:var(--warn-bg);color:var(--warn)}
+  .note{margin:16px 0;padding:14px 18px;max-width:80ch;background:var(--accent-soft);border-radius:5px;
+    font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+  .note.warn{background:var(--warn-bg)}
+  .note b{color:var(--ink)}
+  .axes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 8px}
+  @media(max-width:760px){.axes{grid-template-columns:1fr}}
+  .axcard{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:5px;background:var(--panel);padding:16px 18px}
+  .axcard h3{margin:0 0 6px;font-size:15.5px;color:var(--ink)}
+  .axcard p{margin:0;font-size:14px;line-height:1.5}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .card-link{display:block;border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:16px 18px;color:inherit}
+  .card-link:hover{border-color:var(--accent);text-decoration:none}
+  .card-link .k{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
+  .card-link h3{font-size:16.5px;margin:5px 0 5px;color:var(--ink)}
+  .card-link p{margin:0;font-size:14px}
+  .card-link .verdict{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
+  .panels{font-size:14.5px;color:var(--ink-soft);margin:0 0 8px}
+  .panels b{color:var(--ink);font-family:var(--mono);font-size:12.5px}
+  ul{margin:0 0 14px;padding-left:20px} li{margin-bottom:7px;color:var(--ink-soft);max-width:76ch}
+  footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 34px;margin-top:34px;font-size:13.5px;color:var(--muted)}
+  footer p{max-width:80ch;margin:0 0 6px;font-size:13.5px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
+    <nav class="nav">
+      <a href="data.html">The Data</a>
+      <a href="explore.html">Explore</a>
+      <a href="benchmarking.html" class="here">Benchmarking</a>
+      <a href="use.html">Use It</a>
+      <a href="about.html">About</a>
+      <a href="https://source.coop/wildland-almanac">Source&nbsp;&#8599;</a>
+    </nav>
+  </div>
+</header>
+<div class="wrap"><p class="crumb"><a href="index.html">Home</a> / <a href="benchmarking.html">Benchmarking</a> / Fire: burn probability</p></div>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>Fire: burn probability</h1>
+    <p class="lede">Ranks where fire occurs well above chance across four decades - but an annually-updated FSim product beats it on every overlapping year.</p>
+    <div class="specs">
+      <span><b>Layer</b>&nbsp;Fire_ELMFire_BurnProbabilityRelative</span>
+      <span><b>3</b>&nbsp;evidence axes</span>
+      <span>v2026.1</span>
+    </div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <h2>What was compared</h2>
+    <p class="sec-lede">Panel references match the figures in the benchmarking PDF.</p>
+      <p class="panels"><b>a</b> &nbsp;WA against the published Moran burn probability, cell by cell across California.</p>
+      <p class="panels"><b>b</b> &nbsp;Year by year against Moran and Pyrologix on the same test, so the three are scored identically.</p>
+      <p class="panels"><b>c</b> &nbsp;Forty years: the share of burned area falling in the top 20% of predicted burn probability. Above chance (0.20) in nearly every year.</p>
+      <p class="panels"><b>d</b> &nbsp;What that score means - the cumulative capture curve, showing how much fire is caught as more of the landscape is included.</p>
+      <p class="panels"><b>e</b> &nbsp;Two never-disturbed cohorts from 1995: all such pixels and only those with no fire within 10 km. The isolated set rises as fuel accumulates; the other falls because neighbouring fire removes fuel.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Evidence</h2>
+    <p class="sec-lede">Strengths and weaknesses on each axis, as measured. Weaknesses are stated at
+    the same level of detail as strengths.</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Axis</th><th>Strengths</th><th>Weaknesses</th></tr></thead>
+        <tbody>
+          <tr><td class="axis">External skill</td><td>A clear relationship between predicted burn probability and subsequent fire, with cap20 of 0.52 [d]. BP ranks where fire occurs well above chance in the recent, fully independent years (0.582 across five, all above the 0.20 floor), and holds across the 40-year record with only modest degradation back to the 1980s [c] - likely driven by consistently lower burn occurrence, since fewer fires make prediction noisier.</td><td>&mdash;</td></tr>
+          <tr><td class="axis">Internal coherence</td><td>Undisturbed-cohort BP rises systematically for pixels with no fire within a 10 km buffer, reflecting fuel build-up [e]. Landsat transitions are clean. Pixels <i>with</i> nearby fire show no such rise, then an abrupt decrease coincident with the large statewide increase in burning - BP is tracking neighbourhood fire, as it should.</td><td>&mdash;</td></tr>
+          <tr><td class="axis">Cross-dataset consistency</td><td>General agreement with Moran and Pyrologix on relative BP within identical cells [a]; the two maps agree cell by cell (Spearman 0.61 against Moran). Scores against subsequent burn occurrence are broadly consistent with both in most years [b].</td><td><b>Moran's annually-updated FSim BP beats WA on all four overlapping years</b>, with an especially large gap in the high-fire year 2020 (-0.100). Panel a is rank-only: WA is not calibrated to absolute BP the way Moran and Pyrologix are, so comparisons of level or slope are not possible.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>Synthesis.</b><br>
+      <span class="pill hi">High confidence</span> &nbsp;Maps burn probability across the landscape and tracks elevated risk for four decades<br><br>
+      <span class="pill lo">Lower confidence</span> &nbsp;Moran and Pyrologix predict subsequent burning better; WA is not calibrated to absolute probability
+    </div>
+    <h3>Specifics</h3>
+    <p>WA burn probability is a <b>conditional climatology, not a forecast</b>. References: Moran et al. 2025 annual burn probability (OSF z6gnt, 2020-2023); Pyrologix; observed burned area from MTBS and FRAP perimeters.</p>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <p><b>Source.</b> These pages are generated from <i>WildlandAlmanac_CA_QualityBenchmarks.pdf</i>
+    (v2026.1, 7 September 2026), which is the authoritative document and contains the figures each
+    panel reference points at. <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_QualityBenchmarks.pdf">Download the full PDF &#8599;</a></p>
+    <p>Released under CC BY 4.0. Findings are stated as measured, including where the Almanac is
+    weaker than an alternative.</p>
+  </div>
+</footer>
+</body>
+</html>

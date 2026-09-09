@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -86,7 +86,7 @@
   "@type": "Dataset",
   "name": "The Wildland Almanac - California",
   "alternateName": "Wildland Almanac CA (v2026.1)",
-  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Eighteen layers in six themes: vegetation cover and structure, hydrology, fire hazard, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
+  "description": "A 30 m Landsat-derived data cube of California wildland ecosystem properties across forests, shrublands, and grasslands, water years 1985–2025. Twenty-one layers in six themes: vegetation cover and structure, hydrology, fire hazard and behavior, carbon, drought-driven tree-dieoff risk, and disturbance severity. Reconciled through a single consistent pipeline; distributed as Cloud-Optimized GeoTIFFs with a STAC catalog.",
   "url": "https://wildlandalmanac.org/",
   "sameAs": "https://source.coop/wildland-almanac/california",
   "version": "v2026.1",
@@ -117,7 +117,7 @@
     }
   },
   "temporalCoverage": "1985-10-01/2025-09-30",
-  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","maximum evapotranspiration","realized evapotranspiration","soil moisture","soil moisture fraction","runoff","fire behavior fuel model","flame length","rate of spread","aboveground biomass","gross primary production","tree-dieoff vulnerability","disturbance severity"],
+  "variableMeasured": ["tree cover fraction","shrub cover fraction","herbaceous cover fraction","bare ground fraction","canopy height","evapotranspiration under fixed precipitation","evapotranspiration under observed precipitation","soil moisture","soil moisture fraction","runoff","runoff under fixed precipitation","fire behavior fuel model","flame length","rate of spread","relative burn probability","aboveground biomass","gross primary production","tree-dieoff vulnerability under observed precipitation","tree-dieoff vulnerability under fixed precipitation","disturbance severity"],
   "distribution": {
     "@type": "DataDownload",
     "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
@@ -133,6 +133,8 @@
     <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
     <nav class="nav">
       <a href="data.html">The Data</a>
+      <a href="explore.html">Explore</a>
+      <a href="benchmarking.html">Benchmarking</a>
       <a href="use.html">Use It</a>
       <a href="#" class="here">About</a>
       <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a>
@@ -155,7 +157,7 @@
   <div class="wrap">
     <h2>How the data are produced</h2>
     <p>The Wildland Almanac is built from the full Landsat archive through a unified pipeline of roughly thirty programs - written mostly in MATLAB and R - that run sequentially under one code base. The pipeline is built to be re-run end-to-end for each annual update, which is what makes it possible to reprocess the entire 1985-onward time series consistently with every release rather than splicing new years onto old. Production runs on UCI&rsquo;s <a href="https://rcic.uci.edu/hpc3/hpc3.html">HPC3 cluster</a> and consumes approximately one million core-hours annually and 800&nbsp;TB of storage.</p>
-    <p>The methodological backbone is straightforward: Landsat observations are processed through the <a href="https://github.com/GERSL">COLD</a> change-detection package to identify disturbances and to synthesize gap-free imagery for each pixel and year; those synthetic images are combined with top-tier training data (the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS-derived canopy-height model</a> of Allred et al. for height; FIA plots for biomass; AmeriFlux towers for water and carbon fluxes; and so on); and the resulting properties are estimated with gradient-boosted machine learning (XGBoost and LightGBM) or regressions. Additional information on training data and methods for each property is in <a href="data.html">The Data</a> and in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>.</p>
+    <p>The methodological backbone is straightforward: Landsat observations are processed through the <a href="https://github.com/GERSL">COLD</a> change-detection package to identify disturbances and to synthesize gap-free imagery for each pixel and year; those synthetic images are combined with top-tier training data (the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS-derived canopy-height model</a> of Allred et al. for height; FIA plots for biomass; AmeriFlux towers for water and carbon fluxes; and so on); and the resulting properties are estimated with gradient-boosted machine learning (XGBoost and LightGBM) or regressions. Additional information on training data and methods for each property is in <a href="data.html">The Data</a>, how well each one performs is in <a href="benchmarking.html">Benchmarking</a>, and the full specifications are in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>.</p>
   </div>
 </section>
 
@@ -181,10 +183,12 @@
   <div class="wrap">
     <div class="row">
       <div>The Wildland Almanac · open under CC&nbsp;BY · developed from UC&nbsp;Irvine Earth System Science research</div>
-      <div><a href="data.html">The Data</a> · <a href="use.html">Use It</a> · <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a> · <a href="index.html">Home</a></div>
+      <div><a href="data.html">The Data</a> · <a href="benchmarking.html">Benchmarking</a> · <a href="use.html">Use It</a> · <a href="https://source.coop/wildland-almanac">Source&nbsp;↗</a> · <a href="index.html">Home</a></div>
     </div>
   </div>
 </footer>
 
 </body>
 </html>
+
+
