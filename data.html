@@ -229,7 +229,7 @@
         <span class="units"><b>units</b> centimeters (areal mean) &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
       </div>
       <div class="body">
-        <b>Areal-mean</b> canopy height: the average height over the whole 30 m pixel, with canopy gaps and bare ground included in the average. This is the height to use for vegetation structure, biomass, and change analysis. See the note below - it is not the same quantity as the <code>CH</code> band of Fire_LCP.
+        <b>Areal-mean</b> canopy height: a straight arithmetic mean across the 900 one-metre sub-pixels of an airborne-lidar canopy height model, gaps and bare ground included. <b>A pixel that is half closed canopy at 20&nbsp;m and half bare ground has an areal-mean height near 10&nbsp;m.</b> This is the height to use for vegetation structure, biomass allometry and change analysis, and it is the height the Carbon_AGB calibration and the dieoff layers are built on. See the note below — it is not the same quantity as the <code>CH</code> band of Fire_LCP.
         <div class="meta"><b>Method:</b> XGBoost on synthetic Landsat, trained on the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS canopy-height data</a> of Allred et al. (2025).</div>
       </div>
     </div>
@@ -313,13 +313,15 @@
   <div class="wrap">
     <h2>Fire hazard &amp; behavior <span class="count">4 layers</span></h2>
 
+    <div class="note"><b>The fire layers are the fuels equivalent of <code>FixedPrecip</code>.</b> Flame length and rate of spread use the <i>same</i> ensemble of 240 weather scenarios in every year; burn probability uses that same ensemble <i>and</i> the same ignition locations, seeding and threading, so nothing random varies between years. The fire models are not tuned over time or space. <b>These layers therefore change from year to year for one reason only: the fuels changed.</b> That is what makes them usable for tracking the effect of management, fire and regrowth — and it is also why they are not forecasts for any particular fire season.</div>
+
     <div class="layer">
       <div class="head">
         <span class="id">Fire_LCP</span>
         <span class="units"><b>units</b> 8 single-band Int32 COGs (FARSITE/FlamMap landscape) &nbsp;·&nbsp; <b>period</b> bands 4–8 annual; bands 1–3 static</span>
       </div>
       <div class="body">
-        The components of a FARSITE/FlamMap landscape for fire-behavior models such as <a href="https://research.fs.usda.gov/firelab/projects/flammap">FlamMap</a>, delivered as eight single-band COGs rather than one multi-band file (five vary per year, three are static). The bands, in LCP order: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1-3 are reprojected directly from <a href="https://landfire.gov/fuel">LANDFIRE</a>; band 4 is from LightGBM; bands 5-8 from XGBoost/LightGBM predictions drawing on LANDFIRE and on internally processed observations such as the canopy cover described above. Clip and stack the bands to assemble a landscape for an area of interest - see the <a href="use.html#lcp">Use page</a> for the recipe.
+        The components of a FARSITE/FlamMap landscape for fire-behavior models such as <a href="https://research.fs.usda.gov/firelab/projects/flammap">FlamMap</a>, delivered as eight single-band COGs rather than one multi-band file (five vary per year, three are static). The bands, in LCP order: <b>(1)</b> elevation m, <b>(2)</b> slope deg, <b>(3)</b> aspect deg, <b>(4)</b> fuel model (Scott &amp; Burgan FBFM40, categorical), <b>(5)</b> canopy cover %, <b>(6)</b> canopy height dm, <b>(7)</b> canopy base height dm, <b>(8)</b> canopy bulk density kg/m³×100. Bands 1-3 are reprojected directly from <a href="https://landfire.gov/fuel">LANDFIRE</a>; band 4 is from LightGBM; bands 5-8 from XGBoost/LightGBM predictions drawing on LANDFIRE and on internally processed observations such as the canopy cover described above. Clip and stack the bands to assemble a landscape for an area of interest - see the <a href="use.html#lcp">Use page</a> for the recipe. <b>To convert to SI:</b> divide <code>CH</code> and <code>CBH</code> by 10 for metres, and <code>CBD</code> by 100 for kg/m&sup3;; elevation, slope, aspect and canopy cover are already in their stated units. Band 6 is a <b>stand height</b>, not an areal mean.
       </div>
     </div>
 
@@ -346,10 +348,10 @@
     <div class="layer">
       <div class="head">
         <span class="id">Fire_ELMFire_BurnProbabilityRelative</span>
-        <span class="units"><b>units</b> relative, unitless &nbsp;·&nbsp; <b>period</b> annual fuels; simulated fire growth</span>
+        <span class="units"><b>units</b> relative BP × 1,000,000 (int16) &nbsp;·&nbsp; <b>period</b> annual fuels; simulated fire growth &nbsp;·&nbsp; <b>native</b> 120 m, delivered on the 30 m grid</span>
       </div>
       <div class="body">
-        The fraction of simulated fires that reached each pixel, from ELMFIRE in level-set (fire-growth) mode. This captures exposure from fire arriving <i>from elsewhere</i>, which the pixel-local flame-length and spread-rate layers cannot. See the caveat below before using it.
+        The fraction of simulated fires that reached each pixel, from ELMFIRE in level-set (fire-growth) mode. Roughly 500,000 ignitions are drawn uniformly over each simulation domain (30&nbsp;km-buffered USGS ARD tiles) and grown under a weather scenario drawn and weighted from the local climate distribution, with initial and extended suppression. This captures exposure from fire arriving <i>from elsewhere</i>, which the pixel-local flame-length and spread-rate layers cannot. The int16 ceiling of 32,767 corresponds to a relative burn probability of 0.032767. See the caveat below before using it.
       </div>
     </div>
 
@@ -370,7 +372,7 @@
         <span class="units"><b>units</b> metric tons / hectare (total mass, not C) &nbsp;·&nbsp; <b>period</b> annual, summer-weighted</span>
       </div>
       <div class="body">
-        Aboveground live biomass, mainly tree. Calculated from internally processed observations such as the canopy height and <a href="https://research.fs.usda.gov/products/dataandtools/fia-datamart">FIA plot observations</a>. Useful for nature-based-solutions accounting and biomass-dynamics tracking.
+        Aboveground live biomass, mainly tree; total mass, not carbon. A hybrid product combining <a href="https://research.fs.usda.gov/products/dataandtools/fia-datamart">FIA plot observations</a> with internally processed remote sensing such as the canopy height, co-registered into the Almanac stack. Useful for nature-based-solutions accounting and biomass-dynamics tracking. <b>Caveat:</b> comparison against plot inventories shows Carbon_AGB may underestimate both absolute biomass and year-to-year increments in <b>high-AGB stands</b> — see <a href="bench-agb.html">the AGB benchmarks</a> before using it for regional accumulation accounting.
       </div>
     </div>
 
@@ -394,20 +396,20 @@
     <div class="layer">
       <div class="head">
         <span class="id">Vulner_TreeDieoff_ObservedPrecip</span>
-        <span class="units"><b>units</b> unitless index &nbsp;·&nbsp; <b>period</b> rolling four-water-year deficit</span>
+        <span class="units"><b>units</b> unitless index, 0&ndash;32,767 (int16) &nbsp;·&nbsp; <b>period</b> rolling four-water-year deficit</span>
       </div>
       <div class="body">
-        How exposed the tree canopy actually was to the drought that occurred, as a rolling four-water-year water deficit. This is the layer to compare against independent observations such as aerial dieoff mapping. Read as a relative index; the units are not interpretable in absolute physical terms.
+        <b>&ldquo;Is dieoff likely here, now?&rdquo;</b> Canopy height multiplied by the rectified four-water-year cumulative water deficit, using the precipitation that actually fell. Varies with both vegetation and recent drought, which makes it the layer for predicting which pixels are most at risk <i>in a given year</i>, and the one to compare against independent observations such as aerial dieoff mapping. It is correspondingly poor at isolating the effect of vegetation density, or at showing the benefit of management. Read as a relative index; the units are not interpretable in absolute physical terms.
       </div>
     </div>
 
     <div class="layer">
       <div class="head">
         <span class="id">Vulner_TreeDieoff_FixedPrecip</span>
-        <span class="units"><b>units</b> unitless index &nbsp;·&nbsp; <b>period</b> annual, precip fixed at severe drought (SPI-48 = −2)</span>
+        <span class="units"><b>units</b> unitless index, 0&ndash;32,767 (int16) &nbsp;·&nbsp; <b>period</b> annual, precip fixed at severe drought (SPI-48 = −2)</span>
       </div>
       <div class="body">
-        How exposed the tree canopy <i>would be</i> if a severe drought arrived, with the 48-month SPI held fixed at −2. Because the drought is held constant, the layer varies with vegetation rather than with weather - the one to use for tracking how management or regrowth changes standing vulnerability. <i>Replaces the earlier <code>Vulner_TreeDieoff_SPI-2</code>.</i>
+        <b>&ldquo;How exposed is this stand if a severe drought arrives?&rdquo; &mdash; the planning layer.</b> The same canopy-height × deficit calculation, but with precipitation held at the SPI-48 = −2 climatology rather than what fell. Because the drought is held constant, all variation comes from the vegetation, which makes this the layer for isolating the effect of density and for showing the benefit of management. It is correspondingly poor at predicting which pixels will die off in a particular year. Note this is <i>a</i> specified severe drought, not the worst possible one. <i>Replaces the earlier <code>Vulner_TreeDieoff_SPI-2</code>.</i>
       </div>
     </div>
 
@@ -437,7 +439,7 @@
         <span class="units"><b>units</b> Δ tons/ha ×10 (positive = loss) &nbsp;·&nbsp; <b>period</b> event delta</span>
       </div>
       <div class="body">
-        Annual loss of aboveground biomass at disturbed pixels, as the change in Carbon_AGB across pre- and post-disturbance years. Caveats as for Disturbance_TreeFrac.
+        Annual loss of aboveground biomass at disturbed pixels, as the change in Carbon_AGB across pre- and post-disturbance years. Caveats as for Disturbance_TreeFrac. <b>Watch the scaling:</b> Carbon_AGB is stored in tons/ha with no scaling, but Disturbance_AGB is stored at <b>ten times</b> that — divide by 10 before comparing it against a difference you computed yourself from Carbon_AGB.
       </div>
     </div>
   </div>
@@ -450,7 +452,8 @@
     <div class="note"><b>Check the benchmarks first.</b> The <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_QualityBenchmarks.pdf">quality benchmarks PDF</a> sets out, layer by layer, what each was compared against and how well it agreed - the independent reference data, the comparison method, and the result. It is the right place to judge whether a given layer is good enough for what you intend to do with it. Some layers are better constrained than others, and the differences matter.</div>
     <div class="note warn"><b>v2026.1 stabilized on 29 August 2026 - re-sync if you pulled it earlier.</b> This is the first complete and stable release. Reaching it took several in-place revisions through June and August 2026, the last of which corrected the fire-behavior layers (<code>Fire_ELMFire_FL</code>, <code>Fire_ELMFire_ROS</code>, <code>Fire_ELMFire_BurnProbabilityRelative</code>) and changed their values materially. A copy pulled before 29 August 2026 is not the same data as v2026.1 today; copies pulled on or after that date are current. From here, any change that alters a quantitative result will be published as v2026.2 alongside it.</div>
     <div class="note warn"><b>Use one release end-to-end.</b> Every annual version reprocesses the full 1985-onward series under one code base, so values for a given year may differ between versions. Do not splice years from different versions in a time-series analysis.</div>
-    <div class="note"><b>Masking.</b> Layers are masked to the California wildland extent - water, areas outside California, urban and agricultural land, barren/unclassified cover, and a set of non-target ecoregions (the Central Valley and specified deserts). The mask may be imperfect. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
+    <div class="note"><b>Masking.</b> Layers are masked to the California wildland extent. Excluded and set to no-data: open water, ocean and inland, from the LANDFIRE Existing Vegetation Type layer; everything outside California; urban, agricultural, water, barren and unclassified land (CALFIRE FVEG WHR types 0 and 46&ndash;49); and a set of non-target EPA Level-IV ecoregions (the Central Valley and specified deserts). This release drops a vegetation-richness threshold used in earlier CECS products, so slightly more pixels are retained. The mask is not necessarily complete. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
+    <div class="note"><b>Grid.</b> EPSG:5070 (NAD83 / CONUS Albers) at 30&nbsp;m, on the same continental grid as the CONUS release. California is <b>45,000 rows × 30,000 columns</b>, extent &minus;2,415,585, 1,214,805 to &minus;1,515,585, 2,564,805. All layers are co-registered to sub-pixel precision, so the 21 properties can be treated as a single stack. Files are LZW-compressed BigTIFF COGs with overviews — mode resampling for the categorical fuel-model band, nearest for aspect, average for everything else.</div>
     <div class="note"><b>No-data and recent years.</b> No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention). Some recent water years are less constrained - WY2023 reflects extreme California snowpack, and WY2025 is subject to refinement in future releases. For year-specific work, compare against nearby years.</div>
   </div>
 </section>
@@ -476,6 +479,7 @@
 
 </body>
 </html>
+
 
 
 
