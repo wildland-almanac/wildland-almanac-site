@@ -244,18 +244,6 @@
     font-family:var(--mono);font-size:13px;color:var(--link);margin-top:10px;
     display:inline-block;
   }
-  /* full-width feedback / report tile - retained class, used inside grid now */
-  .feedback-card{
-    background:var(--accent-soft);
-    border-color:var(--line-strong);
-  }
-  .feedback-card:hover{border-color:var(--accent)}
-
-  /* in-use tile accent - same shape as others, slight visual lift */
-  .inuse-card{
-    border-color:var(--line-strong);
-  }
-  .inuse-card:hover{border-color:var(--accent)}
 
   /* ---------- footer ---------- */
   footer{
@@ -345,7 +333,7 @@
 <section class="masthead">
   <div class="wrap">
     <h1 class="title">The Wildland Almanac</h1>
-    <p class="tagline">An open, up-to-date set of 30&nbsp;m rasters for managed and unmanaged forests, shrublands, and grasslands - 41+&nbsp;years of annual vegetation, carbon, water, fuels, fire hazard, and disturbance. It maps both near-current (2025) conditions and change over time (1985–2025). California is released as annual layers (1985–2025); the contiguous U.S. is now released as decadal snapshots (1990–2025).</p>
+    <p class="tagline">An open, up-to-date set of 30&nbsp;m rasters for managed and unmanaged forests, shrublands, and grasslands - 41+&nbsp;years of annual vegetation, carbon, water, fuels, fire hazard, and disturbance. It maps both near-current (2025) conditions and change over time (1985–2025). California is released as annual layers (1985–2025); the contiguous U.S. is now released as decadal snapshots (1990–2024).</p>
     <div class="specs">
       <span><b>CA + CONUS</b>&nbsp;released</span>
       <span><b>30&nbsp;m</b></span>
@@ -360,7 +348,7 @@
 <!-- intro prose -->
 <section class="intro">
   <div class="wrap">
-    <p><strong>An open, frequently-updated, 41+ year GeoTIFF time-series of vegetation, carbon, water, fuels, fire hazard, and disturbance.</strong> California (annual, 1985–2025) and the contiguous U.S. (decadal snapshots) are both released now. The Almanac maps California's wildland landscape at 30-m resolution for each year, allowing analyses at local to CONUS scales of near-current conditions and change over time. Each property is expressed in physical units that are consistent with metrics already in common use across the management and research communities. The properties are all calculated from the ground floor up with a unified pipeline; this maximizes consistency between properties and over time.</p>
+    <p>Every property is expressed in physical units already in common use across the management and research communities, and all of them are calculated from the ground floor up by a single pipeline — which is what makes them consistent with one another, and over four decades.</p>
 
     <p>Because vegetation, water, carbon, fuels and disturbance are all derived on one grid by one pipeline, questions that span themes — how evapotranspiration responds to canopy loss after a fire, say — can be asked directly, without first reconciling three products' grids, masks and epochs.</p>
 
@@ -506,18 +494,6 @@
         <p>Why the emerging cloud-native geospatial ecosystem can accelerate your work - plus step-by-step guides for streaming the data into ArcGIS&nbsp;Pro, QGIS, and Python. Start here if you want to get to work.</p>
         <span class="go">See the how-to guides →</span>
       </a>
-      <a class="card-link" id="about" href="about.html">
-        <span class="k">05 · Who &amp; how it's made</span>
-        <h3>About</h3>
-        <p>How the data are produced - pipeline, methods, scale - how the project got started from the CECS prototype, and who's behind it.</p>
-        <span class="go">About the project →</span>
-      </a>
-      <a class="card-link feedback-card" href="https://github.com/wildland-almanac/wildland-almanac-site/issues">
-        <span class="k">06 · Help improve the next revision</span>
-        <h3>Report a Data Issue</h3>
-        <p>Spot something wrong - a misclassified stand, a value that looks off, coverage that seems incomplete? Have ideas for what should come next? Report it on GitHub. Reports are reviewed and folded into the next scheduled revision, released every 6–12&nbsp;months.</p>
-        <span class="go">Report an issue on GitHub ↗</span>
-      </a>
     </div>
   </div>
 </section>
@@ -568,6 +544,8 @@
 </script>
 </body>
 </html>
+
+
 
 
 
