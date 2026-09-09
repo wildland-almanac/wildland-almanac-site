@@ -76,6 +76,11 @@
   .card-link .verdict{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
   .panels{font-size:14.5px;color:var(--ink-soft);margin:0 0 8px}
   .panels b{color:var(--ink);font-family:var(--mono);font-size:12.5px}
+  figure.bench{margin:0 0 22px;padding:0}
+  figure.bench img{display:block;width:100%;height:auto;border:1px solid var(--line-strong);
+    border-radius:5px;background:var(--panel)}
+  figure.bench figcaption{font-size:13px;color:var(--muted);margin-top:9px;line-height:1.5;max-width:80ch}
+  figure.bench figcaption a{color:var(--link)}
   ul{margin:0 0 14px;padding-left:20px} li{margin-bottom:7px;color:var(--ink-soft);max-width:76ch}
   footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 34px;margin-top:34px;font-size:13.5px;color:var(--muted)}
   footer p{max-width:80ch;margin:0 0 6px;font-size:13.5px}
@@ -112,7 +117,12 @@
 <section class="block">
   <div class="wrap">
     <h2>What was compared</h2>
-    <p class="sec-lede">Panel references match the figures in the benchmarking PDF.</p>
+    <figure class="bench">
+      <img src="img/bench/fire-flamelength.png" alt="Fire: flame length benchmarking figure: multi-panel comparison of Wildland Almanac against reference data.">
+      <figcaption>Benchmarking panels for fire: flame length, from
+      <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_QualityBenchmarks.pdf">WildlandAlmanac_CA_QualityBenchmarks.pdf</a>
+      (v2026.1). Panel letters below correspond to the panels above.</figcaption>
+    </figure>
       <p class="panels"><b>a</b> &nbsp;WA flame length against Pyrologix, a published commercial model, for the same places. Same pattern (R&sup2; 0.62); WA reads lower because it uses a different crown-fire model.</p>
       <p class="panels"><b>b</b> &nbsp;How severely fires actually burned, grouped by WA's predicted flame length. Severe area climbs steeply from the lowest tenth to the highest.</p>
       <p class="panels"><b>c</b> &nbsp;Each year 1986-2024: the share of severely burned area falling in the top 20% of predicted flame length. Above chance (0.20) in all 39 years, and always better than predicting from burned area alone.</p>

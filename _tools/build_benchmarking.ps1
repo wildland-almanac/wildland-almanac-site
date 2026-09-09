@@ -86,6 +86,11 @@ $CSS = @'
   .card-link .verdict{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
   .panels{font-size:14.5px;color:var(--ink-soft);margin:0 0 8px}
   .panels b{color:var(--ink);font-family:var(--mono);font-size:12.5px}
+  figure.bench{margin:0 0 22px;padding:0}
+  figure.bench img{display:block;width:100%;height:auto;border:1px solid var(--line-strong);
+    border-radius:5px;background:var(--panel)}
+  figure.bench figcaption{font-size:13px;color:var(--muted);margin-top:9px;line-height:1.5;max-width:80ch}
+  figure.bench figcaption a{color:var(--link)}
   ul{margin:0 0 14px;padding-left:20px} li{margin-bottom:7px;color:var(--ink-soft);max-width:76ch}
   footer{border-top:1px solid var(--line);background:var(--panel);padding:26px 0 34px;margin-top:34px;font-size:13.5px;color:var(--muted)}
   footer p{max-width:80ch;margin:0 0 6px;font-size:13.5px}
@@ -294,7 +299,12 @@ $(Head $x.name 'bench')
 <section class="block">
   <div class="wrap">
     <h2>What was compared</h2>
-    <p class="sec-lede">Panel references match the figures in the benchmarking PDF.</p>
+    <figure class="bench">
+      <img src="img/bench/$($x.slug).png" alt="$($x.name) benchmarking figure: multi-panel comparison of Wildland Almanac against reference data.">
+      <figcaption>Benchmarking panels for $($x.name.ToLower()), from
+      <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_QualityBenchmarks.pdf">WildlandAlmanac_CA_QualityBenchmarks.pdf</a>
+      (v2026.1). Panel letters below correspond to the panels above.</figcaption>
+    </figure>
 $panelHtml
   </div>
 </section>
