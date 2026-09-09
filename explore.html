@@ -130,9 +130,14 @@
       <a href="data.html">The Data</a> and the
       <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>.
     </div>
-    <p><strong>No-data is &minus;9999 for every layer except the fire landscape</strong>, where it is
-    0 by FARSITE convention. The links below already set this, so masked ground renders as blank
-    rather than as an extreme value.</p>
+    <p><strong>No-data is &minus;9999 for most layers, but 0 for all seven fire layers</strong> &mdash; the
+    eight Fire_LCP bands by FARSITE convention, and flame length, rate of spread and burn probability
+    because masked ground in those is stored as zero rather than as a fill value. The links above set the
+    right value per layer, so ocean and masked ground render blank rather than as data.</p>
+    <p>One consequence worth knowing on the three fire-behaviour layers: <strong>genuinely non-burnable
+    ground inside the wildland mask is stored as 0 as well</strong>, so it renders blank too. Blank there
+    means &ldquo;nothing would burn&rdquo; as often as it means &ldquo;no data&rdquo; &mdash; the two cannot
+    be told apart from the raster alone.</p>
     <p>The colour stretches are chosen to show structure across California as a whole, not to be
     optimal for any one place. Once the viewer is open you can change the stretch, the colour map and
     the basemap; the whole view lives in the URL, so any view you arrive at is shareable.</p>
@@ -180,9 +185,9 @@ const THEMES = [
    {id:"WaterFlux_SoilmoistureFrac",   nm:"Soil moisture fraction",              u:"fraction &times;10,000", cm:"BrBG", rs:"0,10000", ds:"The same, as a fraction of maximum storage - normalises for soil capacity."}
  ]},
  { name:"Fire hazard &amp; behavior", desc:"Conditional climatologies - what would burn under typical local weather, not a forecast for any particular fire.", layers:[
-   {id:"Fire_ELMFire_FL",  nm:"Flame length",  u:"metres &times;100",   cm:"inferno", rs:"0,400",  ds:"Characteristic flame length, weighted across 240 weather scenarios."},
-   {id:"Fire_ELMFire_ROS", nm:"Rate of spread",u:"(m/min) &times;100",  cm:"inferno", rs:"0,1500", ds:"Characteristic rate of spread, from the same runs."},
-   {id:"Fire_ELMFire_BurnProbabilityRelative", nm:"Relative burn probability", u:"relative, unitless", cm:"magma", rs:"0,100", ds:"Share of simulated fires reaching each pixel. Comparable across space and years; not an annual probability."}
+   {id:"Fire_ELMFire_FL",  nm:"Flame length",  u:"metres &times;100",   cm:"inferno", rs:"0,400",  nd:"0", ds:"Characteristic flame length, weighted across 240 weather scenarios."},
+   {id:"Fire_ELMFire_ROS", nm:"Rate of spread",u:"(m/min) &times;100",  cm:"inferno", rs:"0,1500", nd:"0", ds:"Characteristic rate of spread, from the same runs."},
+   {id:"Fire_ELMFire_BurnProbabilityRelative", nm:"Relative burn probability", u:"relative BP &times; 1,000,000", cm:"magma", rs:"0,100", nd:"0", ds:"Share of simulated fires reaching each pixel. Comparable across space and years; not an annual probability."}
  ]},
  { name:"Fire landscape (Fire_LCP)", desc:"The eight bands of a FARSITE/FlamMap landscape, delivered as separate single-band files. No-data is 0 here, not &minus;9999.", lcp:true, layers:[
    {b:"FBFM40",    nm:"Fuel model",        u:"Scott &amp; Burgan FBFM40, categorical", cm:"tab20",   rs:"0,204", ds:"Surface fuel model.", dyn:true},
@@ -229,7 +234,7 @@ function render(year){
     h += `<div class="grid">`;
 
     for(const L of th.layers){
-      const nodata = th.lcp ? "0" : "-9999";
+      const nodata = L.nd ? L.nd : (th.lcp ? "0" : "-9999");
       let file, dir, label, avail = true;
 
       if(th.lcp){
@@ -275,5 +280,7 @@ sync();
 </script>
 </body>
 </html>
+
+
 
 

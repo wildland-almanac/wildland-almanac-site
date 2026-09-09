@@ -424,7 +424,7 @@ agb <- rast(url)
 agb            <span class="comment"># prints extent, CRS (EPSG:5070), resolution</span>
 plot(agb)</pre>
 
-    <div class="note"><b>Projection.</b> All layers are EPSG:5070 (NAD83 / CONUS Albers), 30 m, co-registered to sub-pixel precision - treat the 21 properties as a single stack. No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention).</div>
+    <div class="note"><b>Projection.</b> All layers are EPSG:5070 (NAD83 / CONUS Albers), 30 m, co-registered to sub-pixel precision - treat the 21 properties as a single stack. No-data is <code>&minus;9999</code> for most layers, but <code>0</code> for all seven fire layers &mdash; the eight Fire_LCP bands by FARSITE convention, and <code>Fire_ELMFire_FL</code>, <code>_ROS</code> and <code>_BurnProbabilityRelative</code>, in which masked ground is stored as zero.</div>
   </div>
 </section>
 
@@ -522,6 +522,7 @@ gdal_translate -projwin -2000000 2000000 -1900000 1900000 Fire_LCP_2020.vrt Fire
 
 </body>
 </html>
+
 
 
 

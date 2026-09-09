@@ -238,20 +238,20 @@ $P = @(
     spec='WA runoff is precipitation minus WA AET. References: 122 gauged basins (USGS NWIS and CDEC full natural flow); USFS Forests-to-Faucets 2.0 water yield; AmeriFlux eddy-covariance towers. A variety of alternative water-balance products were also tested; most compared poorly against <i>each other</i>, and it was difficult to identify strong datasets for intercomparison.' },
 
  @{ slug='fire-flamelength'; name='Fire: flame length'; layer='Fire_ELMFire_FL'
-    one='Beats a published commercial model at predicting where severe fire later occurred, in both years where a matched comparison is possible.'
+    one='Identifies where severe fire later occurred with consistent skill across the whole 39-year record, and shows an ecologically plausible fuel build-up in undisturbed forest.'
     hi='Identifies pixels at elevated risk of high-severity fire, and tracks them precisely for four decades'
     lo='Weaker within shrub and timber-understory fuel classes'
     panels=@(
       'a  WA flame length against Pyrologix, a published commercial model, for the same places. Same pattern (R&sup2; 0.62); WA reads lower because it uses a different crown-fire model.'
       'b  How severely fires actually burned, grouped by WA''s predicted flame length. Severe area climbs steeply from the lowest tenth to the highest.'
       'c  Each year 1986-2024: the share of severely burned area falling in the top 20% of predicted flame length. Above chance (0.20) in all 39 years, and always better than predicting from burned area alone.'
-      'd  WA against Pyrologix on the identical test, for the two years Pyrologix covers. WA scores higher in both.'
+      'd  The same test applied to WA and to Pyrologix, for the two years Pyrologix covers, so the two are scored identically.'
       'e  Average WA flame length 1995-2024 for forest never disturbed. Gradual, ecologically plausible fuel build-up with no jumps at the Landsat changeovers.')
     ext_s='A clear relationship between predicted flame length and subsequent high-severity fire, with cap20 of 0.61 - that is, 61% of severe fire occurs in pixels that were in the top 20% of predicted flame length the previous year [c]. Skill is consistent across the whole 40-year record: cap20 averages <b>0.605</b>, exceeding random by more than 200%, with little or no degradation back to the 1980s.'
     ext_w='Not all fuel classes behave alike. GR, GS and TL match or beat the pooled 0.61 within class, but SH and TU fall to 0.28-0.42. The layers use weighted weather reflecting local climatology and do not consider local ignition probability; they are not predictions of severity for any specific fire, where weather variation is a strong driver.'
     int_s='Undisturbed-cohort flame length rises 3.2% across the record, 1.93 to 1.99 m (+0.0024 m/yr), reflecting gradual and ecologically plausible fuel build-up [e]. Landsat transitions are clean, with no step changes or inflections.'
     int_w='&mdash;'
-    crx_s='Good agreement with contemporaneous Pyrologix flame length (R&sup2; 0.62) [a]. <b>On the matched predictive test WA scores higher in both available years: 0.645 against 0.575 (2021) and 0.789 against 0.677 (2022)</b> [c, d].'
+    crx_s='Good agreement with contemporaneous Pyrologix flame length (R&sup2; 0.62) [a]. Both are also scored against subsequent severe fire on the identical test, for the two years Pyrologix covers [c, d] — the figure shows the result.'
     crx_w='The magnitude difference against Pyrologix likely reflects contrasting crown-fire models - WA uses ELMFIRE''s Cruz algorithm, which yields lower flame lengths than the Scott parameterisation Pyrologix uses. So the level is not directly comparable even though the pattern and the skill are.'
     spec='WA flame length is a <b>conditional climatology</b> - what would burn if a fire arrived under typical local weather, not a forecast for any particular fire. References: Pyrologix (2021-2022) and MTBS thematic severity 1984-2024.' },
 
@@ -439,13 +439,10 @@ $summaryRows
 
 <section class="block">
   <div class="wrap">
-    <h2>Where the Almanac wins, and where it loses</h2>
-    <p class="sec-lede">Head-to-head results against named alternatives, in both directions.</p>
-    <h3>Ahead</h3>
+    <h2>Where the Almanac is strong, and where it falls short</h2>
+    <p class="sec-lede">What the measurements support, and where they do not. Where another product does better, it is named.</p>
+    <h3>Well supported</h3>
     <ul>
-      <li><strong>Flame length beats Pyrologix at predicting severe fire</strong> - on the identical
-      matched test, 0.645 against 0.575 (2021) and 0.789 against 0.677 (2022), the only two years a
-      matched comparison is possible.</li>
       <li><strong>Four decades of consistent fire skill.</strong> Flame-length cap20 averages 0.605
       across 39 years, above chance in every one, with little degradation back to the 1980s. No
       alternative product exists over that span to compare against.</li>
@@ -454,7 +451,7 @@ $summaryRows
       <li><strong>Seam-free across four Landsat changeovers</strong> in every property tested. This is
       the axis the Almanac is built for, and it is not routinely reported elsewhere.</li>
     </ul>
-    <h3>Behind</h3>
+    <h3>Weaker, and by how much</h3>
     <ul>
       <li><strong>Moran's annually-updated FSim burn probability beats WA on all four overlapping
       years</strong>, with a large gap in the high-fire year 2020 (-0.100). WA is also not calibrated
@@ -507,5 +504,6 @@ $FOOT
 Set-Content -Path (Join-Path $root 'benchmarking.html') -Value $hub -Encoding utf8
 Write-Host "  wrote benchmarking.html"
 Write-Host "done - $($P.Count) property pages + hub"
+
 
 

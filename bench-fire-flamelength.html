@@ -105,7 +105,7 @@
 <div class="pagehead">
   <div class="wrap">
     <h1>Fire: flame length</h1>
-    <p class="lede">Beats a published commercial model at predicting where severe fire later occurred, in both years where a matched comparison is possible.</p>
+    <p class="lede">Identifies where severe fire later occurred with consistent skill across the whole 39-year record, and shows an ecologically plausible fuel build-up in undisturbed forest.</p>
     <div class="specs">
       <span><b>Layer</b>&nbsp;Fire_ELMFire_FL</span>
       <span><b>3</b>&nbsp;evidence axes</span>
@@ -126,7 +126,7 @@
       <p class="panels"><b>a</b> &nbsp;WA flame length against Pyrologix, a published commercial model, for the same places. Same pattern (R&sup2; 0.62); WA reads lower because it uses a different crown-fire model.</p>
       <p class="panels"><b>b</b> &nbsp;How severely fires actually burned, grouped by WA's predicted flame length. Severe area climbs steeply from the lowest tenth to the highest.</p>
       <p class="panels"><b>c</b> &nbsp;Each year 1986-2024: the share of severely burned area falling in the top 20% of predicted flame length. Above chance (0.20) in all 39 years, and always better than predicting from burned area alone.</p>
-      <p class="panels"><b>d</b> &nbsp;WA against Pyrologix on the identical test, for the two years Pyrologix covers. WA scores higher in both.</p>
+      <p class="panels"><b>d</b> &nbsp;The same test applied to WA and to Pyrologix, for the two years Pyrologix covers, so the two are scored identically.</p>
       <p class="panels"><b>e</b> &nbsp;Average WA flame length 1995-2024 for forest never disturbed. Gradual, ecologically plausible fuel build-up with no jumps at the Landsat changeovers.</p>
   </div>
 </section>
@@ -142,7 +142,7 @@
         <tbody>
           <tr><td class="axis">External skill</td><td>A clear relationship between predicted flame length and subsequent high-severity fire, with cap20 of 0.61 - that is, 61% of severe fire occurs in pixels that were in the top 20% of predicted flame length the previous year [c]. Skill is consistent across the whole 40-year record: cap20 averages <b>0.605</b>, exceeding random by more than 200%, with little or no degradation back to the 1980s.</td><td>Not all fuel classes behave alike. GR, GS and TL match or beat the pooled 0.61 within class, but SH and TU fall to 0.28-0.42. The layers use weighted weather reflecting local climatology and do not consider local ignition probability; they are not predictions of severity for any specific fire, where weather variation is a strong driver.</td></tr>
           <tr><td class="axis">Internal coherence</td><td>Undisturbed-cohort flame length rises 3.2% across the record, 1.93 to 1.99 m (+0.0024 m/yr), reflecting gradual and ecologically plausible fuel build-up [e]. Landsat transitions are clean, with no step changes or inflections.</td><td>&mdash;</td></tr>
-          <tr><td class="axis">Cross-dataset consistency</td><td>Good agreement with contemporaneous Pyrologix flame length (R&sup2; 0.62) [a]. <b>On the matched predictive test WA scores higher in both available years: 0.645 against 0.575 (2021) and 0.789 against 0.677 (2022)</b> [c, d].</td><td>The magnitude difference against Pyrologix likely reflects contrasting crown-fire models - WA uses ELMFIRE's Cruz algorithm, which yields lower flame lengths than the Scott parameterisation Pyrologix uses. So the level is not directly comparable even though the pattern and the skill are.</td></tr>
+          <tr><td class="axis">Cross-dataset consistency</td><td>Good agreement with contemporaneous Pyrologix flame length (R&sup2; 0.62) [a]. Both are also scored against subsequent severe fire on the identical test, for the two years Pyrologix covers [c, d] — the figure shows the result.</td><td>The magnitude difference against Pyrologix likely reflects contrasting crown-fire models - WA uses ELMFIRE's Cruz algorithm, which yields lower flame lengths than the Scott parameterisation Pyrologix uses. So the level is not directly comparable even though the pattern and the skill are.</td></tr>
         </tbody>
       </table>
     </div>
@@ -166,4 +166,3 @@
 </footer>
 </body>
 </html>
-

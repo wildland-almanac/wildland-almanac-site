@@ -454,7 +454,7 @@
     <div class="note warn"><b>Use one release end-to-end.</b> Every annual version reprocesses the full 1985-onward series under one code base, so values for a given year may differ between versions. Do not splice years from different versions in a time-series analysis.</div>
     <div class="note"><b>Masking.</b> Layers are masked to the California wildland extent. Excluded and set to no-data: open water, ocean and inland, from the LANDFIRE Existing Vegetation Type layer; everything outside California; urban, agricultural, water, barren and unclassified land (CALFIRE FVEG WHR types 0 and 46&ndash;49); and a set of non-target EPA Level-IV ecoregions (the Central Valley and specified deserts). This release drops a vegetation-richness threshold used in earlier CECS products, so slightly more pixels are retained. The mask is not necessarily complete. For landscape-scale statistics (e.g. total biomass over a watershed), treat masked pixels as missing, not zero.</div>
     <div class="note"><b>Grid.</b> EPSG:5070 (NAD83 / CONUS Albers) at 30&nbsp;m, on the same continental grid as the CONUS release. California is <b>45,000 rows × 30,000 columns</b>, extent &minus;2,415,585, 1,214,805 to &minus;1,515,585, 2,564,805. All layers are co-registered to sub-pixel precision, so the 21 properties can be treated as a single stack. Files are LZW-compressed BigTIFF COGs with overviews — mode resampling for the categorical fuel-model band, nearest for aspect, average for everything else.</div>
-    <div class="note"><b>No-data and recent years.</b> No-data is <code>−9999</code> for all layers except Fire_LCP, where it is <code>0</code> (FARSITE convention). Some recent water years are less constrained - WY2023 reflects extreme California snowpack, and WY2025 is subject to refinement in future releases. For year-specific work, compare against nearby years.</div>
+    <div class="note"><b>No-data and recent years.</b> No-data is <code>&minus;9999</code> for most layers, but <code>0</code> for all seven fire layers &mdash; the eight Fire_LCP bands by FARSITE convention, and <code>Fire_ELMFire_FL</code>, <code>_ROS</code> and <code>_BurnProbabilityRelative</code>, in which masked ground is stored as zero rather than as a fill value. On those three, genuinely non-burnable ground inside the mask is also 0, so a zero cannot be distinguished from no-data on the raster alone. Some recent water years are less constrained - WY2023 reflects extreme California snowpack, and WY2025 is subject to refinement in future releases. For year-specific work, compare against nearby years.</div>
   </div>
 </section>
 
@@ -464,7 +464,7 @@
     <h2>License &amp; citation</h2>
     <p class="sec-lede">Released under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 (CC BY)</a>. Free to use, share, and adapt with attribution. Offered as is, with no promise of technical support; please file feedback and reports of errors on the <a href="https://github.com/wildland-almanac/wildland-almanac-site/issues">GitHub issue tracker</a>.</p>
     <div class="note warn"><b>University of California disclaimer.</b> The University of California ("UC") makes these materials available pursuant to the following disclaimers: the materials are offered "as is"; user assumes any and all risks, of any kind or amount, of using these materials; user shall use the materials only in accordance with law; user releases, waives, discharges and promises not to sue UC, its directors, officers, employees or agents, from liability from any and all claims, including the negligence of UC, resulting in personal injury (including death), accidents or illnesses, property loss, as well as any and all loss of business and/or profit in connection with user's use of the materials; and user shall indemnify and hold UC harmless from any and all claims, actions, suits, procedures, costs, expenses, damages, and liabilities, including attorney's fees, arising out of user's use of the materials and shall reimburse UC for any such incurred expenses, fees or costs. Use of these materials implies user consent to these terms.</div>
-    <div class="cite">Goulden, M.L. (2026). The Wildland Almanac - California (Version v2026.1). Source&nbsp;Cooperative. DOI:&nbsp;[to be assigned]. Released under CC&nbsp;BY.</div>
+    <div class="cite">Goulden, M.L. (2026). The Wildland Almanac - California (Version v2026.1). Source&nbsp;Cooperative. DOI:&nbsp;[pending &ndash; EZID]. Released under CC&nbsp;BY.</div>
   </div>
 </section>
 
@@ -479,6 +479,8 @@
 
 </body>
 </html>
+
+
 
 
 
