@@ -114,7 +114,7 @@ $CSS
     <div class="brandmark"><a href="index.html"><span class="the">The</span>Wildland Almanac</a></div>
     <nav class="nav">
       <a href="data.html">The Data</a>
-      <a href="explore.html">Explore</a>
+      <a href="explore.html">Every Layer</a>
       <a href="benchmarking.html"$(if($here -eq 'bench'){' class="here"'})>Benchmarking</a>
       <a href="use.html">Use It</a>
       <a href="about.html">About</a>
@@ -507,4 +507,5 @@ $FOOT
 Set-Content -Path (Join-Path $root 'benchmarking.html') -Value $hub -Encoding utf8
 Write-Host "  wrote benchmarking.html"
 Write-Host "done - $($P.Count) property pages + hub"
+
 

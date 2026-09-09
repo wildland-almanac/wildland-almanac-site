@@ -364,7 +364,7 @@
     <div class="brandmark"><span class="the">The</span>Wildland Almanac</div>
     <nav class="nav">
       <a href="data.html">The Data</a>
-      <a href="explore.html">Explore</a>
+      <a href="explore.html">Every Layer</a>
       <a href="benchmarking.html">Benchmarking</a>
       <a href="use.html">Use It</a>
       <a href="about.html">About</a>
@@ -385,49 +385,6 @@
       <span><b>21</b>&nbsp;properties</span>
       <span><b>CC&nbsp;BY</b></span>
       <span>updated&nbsp;annually</span>
-    </div>
-  </div>
-</section>
-
-<!-- showcase: a real layer, opened in the real viewer -->
-<section class="showcase">
-  <div class="wrap">
-    <div class="show-grid">
-      <div class="chrome">
-        <div class="chrome-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span class="chrome-url">cog-viewer &nbsp;·&nbsp; Fire_ELMFire_FL &nbsp;·&nbsp; 2025</span>
-        </div>
-        <div class="chrome-body">
-          <img src="img/fl_2025_ca.png" width="560" height="840"
-               alt="Modelled flame length across California for water year 2025, 30 m resolution. The Sierra Nevada crest and the Coast Ranges read bright; the Central Valley is masked out.">
-        </div>
-        <div class="chrome-legend">
-          <span>0&nbsp;m</span><span class="ramp"></span><span>4&nbsp;m+</span>
-        </div>
-      </div>
-
-      <div class="show-text">
-        <h2>See it before you download it</h2>
-        <p><strong>Flame length, water year 2025.</strong> What would burn if a fire arrived under
-        typical local weather &mdash; the Sierra crest and the Coast Ranges bright, the Central
-        Valley masked out because it is not wildland.</p>
-        <p>Every one of the 21 properties opens the same way: pick a layer and a year and it streams
-        straight into your browser from cloud storage, with the colour range and no-data value
-        already set. Nothing to install, nothing to download, no account.</p>
-
-        <div class="yearpick">
-          <label for="heroYr">Water year</label>
-          <input type="range" id="heroYr" min="1985" max="2025" value="2025" step="1">
-          <span class="yrnum" id="heroYrOut">2025</span>
-        </div>
-        <div class="cta-row">
-          <a class="btn primary" id="heroOpen" target="_blank" rel="noopener" href="#">Open 2025 in the viewer <span class="arrow">&#8599;</span></a>
-          <a class="btn ghost" href="explore.html">All 21 layers <span class="arrow">&rarr;</span></a>
-        </div>
-        <p class="show-note">The image above is a fixed 2025 preview. Move the slider and the button
-        opens that year live, at full 30&nbsp;m resolution.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -539,16 +496,59 @@
   </div>
 </section>
 
+<!-- showcase: a real layer, opened in the real viewer -->
+<section class="showcase">
+  <div class="wrap">
+    <div class="show-grid">
+      <div class="chrome">
+        <div class="chrome-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="chrome-url">cog-viewer &nbsp;·&nbsp; Fire_ELMFire_FL &nbsp;·&nbsp; 2025</span>
+        </div>
+        <div class="chrome-body">
+          <img src="img/fl_2025_ca.png" width="560" height="840"
+               alt="Modelled flame length across California for water year 2025, 30 m resolution. The Sierra Nevada crest and the Coast Ranges read bright; the Central Valley is masked out.">
+        </div>
+        <div class="chrome-legend">
+          <span>0&nbsp;m</span><span class="ramp"></span><span>4&nbsp;m+</span>
+        </div>
+      </div>
+
+      <div class="show-text">
+        <h2>See it before you download it</h2>
+        <p><strong>Flame length, water year 2025.</strong> What would burn if a fire arrived under
+        typical local weather &mdash; the Sierra crest and the Coast Ranges bright, the Central
+        Valley masked out because it is not wildland.</p>
+        <p>Every one of the 21 properties opens the same way: pick a layer and a year and it streams
+        straight into your browser from cloud storage, with the colour range and no-data value
+        already set. Nothing to install, nothing to download, no account.</p>
+
+        <div class="yearpick">
+          <label for="heroYr">Water year</label>
+          <input type="range" id="heroYr" min="1985" max="2025" value="2025" step="1">
+          <span class="yrnum" id="heroYrOut">2025</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" id="heroOpen" target="_blank" rel="noopener" href="#">Open 2025 in the viewer <span class="arrow">&#8599;</span></a>
+          <a class="btn ghost" href="explore.html">Every layer, every year <span class="arrow">&rarr;</span></a>
+        </div>
+        <p class="show-note">The image above is a fixed 2025 preview. Move the slider and the button
+        opens that year live, at full 30&nbsp;m resolution.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- explore: 6 inner pages -->
 <section class="explore">
   <div class="wrap">
-    <h2>Explore</h2>
+    <h2>Where to go next</h2>
     <div class="cards">
       <a class="card-link" id="explore" href="explore.html">
-        <span class="k">01 · See it</span>
-        <h3>Explore the Layers</h3>
-        <p>Open any layer, any year, straight in your browser — no download, no account, no software. Twenty-eight layers, one year slider, colour and no-data already set.</p>
-        <span class="go">Open the viewer →</span>
+        <span class="k">01 · Dive in</span>
+        <h3>Every Layer, Every Year</h3>
+        <p>The whole record, openable: 21 properties across 41 water years, 28 individual layers including all eight bands of the fire landscape. One year slider drives the lot, with colour range and no-data already set on every link.</p>
+        <span class="go">Open any layer →</span>
       </a>
       <a class="card-link" id="data" href="data.html">
         <span class="k">02 · What's in it</span>
@@ -630,6 +630,9 @@
 </script>
 </body>
 </html>
+
+
+
 
 
 
