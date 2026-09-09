@@ -183,7 +183,7 @@ $P = @(
     spec='WA = <code>Veg_TreeFrac</code>. References: FIA field plots (FIADB California, 2024 release); NLCD tree canopy cover 2019 (v2023-5); RCMAP 2020; RAP v3 2020; MTBS thematic severity 1984-2024.' },
 
  @{ slug='disturbance'; name='Disturbance'; layer='Disturbance_TreeFrac / Disturbance_AGB'
-    one='Finds and dates fire very well - 92% of high-severity area, 92% within a year - but under-registers diffuse and partial disturbance.'
+    one='Finds and dates fire - 92% of high-severity area, 92% within a year - but under-registers diffuse and partial disturbance.'
     hi='Fire location, timing and severity'
     lo='Non-fire-agent magnitude and small-event detection'
     panels=@(
@@ -226,14 +226,14 @@ $P = @(
       'a  WA runoff against 122 gauged basins, basin by basin. Close match across the state (R&sup2; 0.87, slope 1.01).'
       'b  The same with each basin''s own average removed, so only wet-year against dry-year differences remain. WA still tracks the gauges (R&sup2; 0.83).'
       'c  WA evapotranspiration against what the water balance requires - precipitation minus streamflow and storage change. Right level and slope; scatter is wide because AET itself varies little.'
-      'd  WA runoff against the USFS Forests-to-Faucets water-yield product. Excellent agreement (slope 1.02, R&sup2; 0.91).'
+      'd  WA runoff against the USFS Forests-to-Faucets water-yield product. Close agreement (slope 1.02, R&sup2; 0.91).'
       'e  Change in evapotranspiration after disturbance at paired eddy-covariance flux towers, observed against WA. Direction right, about two-thirds of the size.'
       'f  Year by year across 46 basins: observed and WA runoff (solid) and two estimates of AET (dashed). Runoff tracks almost exactly, while AET stays flat beneath a five-fold swing in runoff.')
     ext_s='Runoff matches gauges in space (R&sup2; 0.87, slope 1.01) [a] and in time (interannual deviation R&sup2; 0.83) [b], and reproduces the observed wet/dry sequence year by year (r 0.99, bias -29 mm) [f]. WA AET is consistent with independent water-balance AET from precipitation minus gauged runoff [c]. Across disturbed flux-tower pairs, WA AET tracks the measured change [e]: 46 contrast-years, 8 paired stands, bias 7 mm, RMSE 90 mm, NDVI elasticity 0.40 against 0.41 observed.'
     ext_w='The disturbance test rests on a sparse and noisy dataset [e], and WA may underestimate the AET change with disturbance (gain 0.69). No basin-scale disturbance-response test exists. Panel c hints at saturation at higher AET and possible underestimation in the wettest basins. Fine spatial detail and AET interannual amplitude remain buffered. These analyses are butting up against the limits of what benchmarking data exist.'
     int_s='WA AET holds steady beneath a runoff signal that swings five-fold [f] - interannual variance in runoff is driven mainly by precipitation, not AET. The never-disturbed cohort agrees: AET buffered to about 0.05x the precipitation amplitude, seam-free over 40 years.'
     int_w='The never-disturbed cohort shows interannual variability with drought that is likely real, which precludes the full stability analysis done for the other properties.'
-    crx_s='Excellent agreement between WA runoff and USFS Forests-to-Faucets: slope 1.02, R&sup2; 0.91 [d].'
+    crx_s='Close agreement between WA runoff and USFS Forests-to-Faucets: slope 1.02, R&sup2; 0.91 [d].'
     crx_w='Both axes of that comparison are strongly driven by precipitation, traceable to a common lineage, and F2F is coarse-resolution. The runoff comparisons generally (a, b, d, and runoff in f) are weaker evidence than they superficially appear for the same reason; the <b>AET</b> comparisons (c, e, AET in f) subtract that effect out and are the stronger evaluation.'
     spec='WA runoff is precipitation minus WA AET. References: 122 gauged basins (USGS NWIS and CDEC full natural flow); USFS Forests-to-Faucets 2.0 water yield; AmeriFlux eddy-covariance towers. A variety of alternative water-balance products were also tested; most compared poorly against <i>each other</i>, and it was difficult to identify strong datasets for intercomparison.' },
 
@@ -385,7 +385,7 @@ $(Head 'Benchmarking' 'bench')
     archive with enough <strong>temporal precision</strong> to say reliably how conditions changed
     over four decades at 30 m, from single pixels to CONUS, and to difference years to show where and
     when. Confirming that recent-year patterns agree with established products is a necessary
-    baseline for that - but it is not sufficient, and it is not the interesting part.</p>
+    baseline for that - but it is not sufficient on its own, and it is not what this record is for.</p>
   </div>
 </section>
 
@@ -410,13 +410,12 @@ $(Head 'Benchmarking' 'bench')
       </div>
     </div>
     <div class="note">
-      <b>The first two axes are the ones that matter most here, and the ones most often skipped.</b>
-      Both speak directly to temporal precision. The never-disturbed-cohort test asks a question few
-      products ask of themselves: across 41 years and four Landsat sensor changeovers, does an
-      undisturbed pixel stay put? A seam at a satellite transition is invisible in any single-epoch
-      comparison, and fatal to measuring change. Together the three axes establish whether the Almanac
-      reaches spatial accuracy within the top tier of established datasets <i>while</i> offering
-      temporal precision they do not.
+      <b>The first two axes are the ones that matter most here.</b>
+      Both speak directly to temporal precision. The never-disturbed-cohort test asks one specific question: across 41 years
+      and four Landsat sensor changeovers, does an undisturbed pixel stay put? A seam at a satellite transition is invisible in any single-epoch
+      comparison, and fatal to measuring change. Together the three axes ask whether the Almanac is
+      spatially accurate enough to sit alongside established datasets, and whether it holds together
+      across four decades.
     </div>
   </div>
 </section>
@@ -444,12 +443,13 @@ $summaryRows
     <h3>Well supported</h3>
     <ul>
       <li><strong>Four decades of consistent fire skill.</strong> Flame-length cap20 averages 0.605
-      across 39 years, above chance in every one, with little degradation back to the 1980s. No
-      alternative product exists over that span to compare against.</li>
+      across 39 years, above chance in every one, with little degradation back to the 1980s. There is no product covering
+      the same span to compare it against.</li>
       <li><strong>Runoff against 122 gauged basins</strong> - R&sup2; 0.87 in space, 0.83 in time,
       slope 1.01. The strongest external test in the dataset, and independent of Landsat entirely.</li>
       <li><strong>Seam-free across four Landsat changeovers</strong> in every property tested. This is
-      the axis the Almanac is built for, and it is not routinely reported elsewhere.</li>
+      the axis the record is built for. There is no product spanning the same period to check it against,
+      which is a limitation of the test as much as a result.</li>
     </ul>
     <h3>Weaker, and by how much</h3>
     <ul>
@@ -490,10 +490,9 @@ $cards
   <div class="wrap">
     <h2>A work in progress</h2>
     <p>The pipeline reprocesses every year and every property at once, producing a complete new
-    version while previous versions are archived. Full reprocessing combined with rigorous
+    version while previous versions are archived. Full reprocessing combined with
     benchmarking creates a continuous improvement cycle: it allows updates with minimal latency; it
-    ties the properties to one another so tradeoffs can be quantified in a way that independently
-    assembled datasets cannot support; testing one property informs the others; and it removes any
+    ties the properties to one another, which is what makes cross-theme tradeoffs quantifiable; testing one property informs the others; and it removes any
     hesitancy to make improvements that might otherwise break the time series.</p>
     <p>These results should be read as one turn of that cycle. They document the state of the dataset
     now, and they identify where the next round of development is aimed.</p>
@@ -504,6 +503,8 @@ $FOOT
 Set-Content -Path (Join-Path $root 'benchmarking.html') -Value $hub -Encoding utf8
 Write-Host "  wrote benchmarking.html"
 Write-Host "done - $($P.Count) property pages + hub"
+
+
 
 
 

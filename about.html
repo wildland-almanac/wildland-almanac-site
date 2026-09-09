@@ -158,7 +158,7 @@
     <h2>How the data are produced</h2>
     <p>The Wildland Almanac is built from the full Landsat archive through a unified pipeline of roughly thirty programs - written mostly in MATLAB and R - that run sequentially under one code base. The pipeline is built to be re-run end-to-end for each annual update, which is what makes it possible to reprocess the entire 1985-onward time series consistently with every release rather than splicing new years onto old. Production runs on UCI&rsquo;s <a href="https://rcic.uci.edu/hpc3/hpc3.html">HPC3 cluster</a> and consumes approximately one million core-hours annually and 800&nbsp;TB of storage.</p>
     <p>The methodological backbone is straightforward: Landsat observations are processed through the <a href="https://github.com/GERSL">COLD</a> change-detection package to identify disturbances and to synthesize gap-free imagery for each pixel and year; those synthetic images are combined with top-tier training data (the <a href="https://rangeland.ntsg.umt.edu/data/rap/chm-naip/chm/">ALS-derived canopy-height model</a> of Allred et al. for height; FIA plots for biomass; AmeriFlux towers for water and carbon fluxes; and so on); and the resulting properties are estimated with gradient-boosted machine learning (XGBoost and LightGBM) or regressions. Additional information on training data and methods for each property is in <a href="data.html">The Data</a>, how well each one performs is in <a href="benchmarking.html">Benchmarking</a>, and the full specifications are in the <a href="https://data.source.coop/wildland-almanac/california/WildlandAlmanac_CA_Documentation.pdf">documentation PDF</a>.</p>
-    <p>The fire-behaviour layers are computed with <a href="https://elmfire.io/">ELMFIRE</a>, the open-source fire spread model developed by <strong>Chris Lautenberger</strong> at Reax Engineering. Being able to run a capable, well-documented, openly licensed fire model at statewide scale for forty-one years is the reason those layers exist at all, and it saved this project years. We are glad to say so.</p>
+    <p>The fire-behaviour layers are computed with <a href="https://elmfire.io/">ELMFIRE</a>, the open-source fire spread model developed by <strong>Chris Lautenberger</strong> at Reax Engineering. Being able to run a capable, well-documented, openly licensed fire model at statewide scale for forty-one years is the reason those layers exist at all, and it saved this project years.</p>
   </div>
 </section>
 
@@ -211,6 +211,7 @@
 
 </body>
 </html>
+
 
 
 

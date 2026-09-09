@@ -129,7 +129,7 @@
     archive with enough <strong>temporal precision</strong> to say reliably how conditions changed
     over four decades at 30 m, from single pixels to CONUS, and to difference years to show where and
     when. Confirming that recent-year patterns agree with established products is a necessary
-    baseline for that - but it is not sufficient, and it is not the interesting part.</p>
+    baseline for that - but it is not sufficient on its own, and it is not what this record is for.</p>
   </div>
 </section>
 
@@ -154,13 +154,12 @@
       </div>
     </div>
     <div class="note">
-      <b>The first two axes are the ones that matter most here, and the ones most often skipped.</b>
-      Both speak directly to temporal precision. The never-disturbed-cohort test asks a question few
-      products ask of themselves: across 41 years and four Landsat sensor changeovers, does an
-      undisturbed pixel stay put? A seam at a satellite transition is invisible in any single-epoch
-      comparison, and fatal to measuring change. Together the three axes establish whether the Almanac
-      reaches spatial accuracy within the top tier of established datasets <i>while</i> offering
-      temporal precision they do not.
+      <b>The first two axes are the ones that matter most here.</b>
+      Both speak directly to temporal precision. The never-disturbed-cohort test asks one specific question: across 41 years
+      and four Landsat sensor changeovers, does an undisturbed pixel stay put? A seam at a satellite transition is invisible in any single-epoch
+      comparison, and fatal to measuring change. Together the three axes ask whether the Almanac is
+      spatially accurate enough to sit alongside established datasets, and whether it holds together
+      across four decades.
     </div>
   </div>
 </section>
@@ -194,12 +193,13 @@
     <h3>Well supported</h3>
     <ul>
       <li><strong>Four decades of consistent fire skill.</strong> Flame-length cap20 averages 0.605
-      across 39 years, above chance in every one, with little degradation back to the 1980s. No
-      alternative product exists over that span to compare against.</li>
+      across 39 years, above chance in every one, with little degradation back to the 1980s. There is no product covering
+      the same span to compare it against.</li>
       <li><strong>Runoff against 122 gauged basins</strong> - R&sup2; 0.87 in space, 0.83 in time,
       slope 1.01. The strongest external test in the dataset, and independent of Landsat entirely.</li>
       <li><strong>Seam-free across four Landsat changeovers</strong> in every property tested. This is
-      the axis the Almanac is built for, and it is not routinely reported elsewhere.</li>
+      the axis the record is built for. There is no product spanning the same period to check it against,
+      which is a limitation of the test as much as a result.</li>
     </ul>
     <h3>Weaker, and by how much</h3>
     <ul>
@@ -246,7 +246,7 @@
       <a class="card-link" href="bench-disturbance.html">
         <span class="k">Disturbance_TreeFrac / Disturbance_AGB</span>
         <h3>Disturbance</h3>
-        <p>Finds and dates fire very well - 92% of high-severity area, 92% within a year - but under-registers diffuse and partial disturbance.</p>
+        <p>Finds and dates fire - 92% of high-severity area, 92% within a year - but under-registers diffuse and partial disturbance.</p>
         <div class="verdict"><span class="pill hi">High</span> <span class="pill lo">Lower</span></div>
       </a>
       <a class="card-link" href="bench-dieoff.html">
@@ -281,10 +281,9 @@
   <div class="wrap">
     <h2>A work in progress</h2>
     <p>The pipeline reprocesses every year and every property at once, producing a complete new
-    version while previous versions are archived. Full reprocessing combined with rigorous
+    version while previous versions are archived. Full reprocessing combined with
     benchmarking creates a continuous improvement cycle: it allows updates with minimal latency; it
-    ties the properties to one another so tradeoffs can be quantified in a way that independently
-    assembled datasets cannot support; testing one property informs the others; and it removes any
+    ties the properties to one another, which is what makes cross-theme tradeoffs quantifiable; testing one property informs the others; and it removes any
     hesitancy to make improvements that might otherwise break the time series.</p>
     <p>These results should be read as one turn of that cycle. They document the state of the dataset
     now, and they identify where the next round of development is aimed.</p>
