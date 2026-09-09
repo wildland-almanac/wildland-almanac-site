@@ -157,38 +157,6 @@
     min-width:4.4ch;text-align:right;font-variant-numeric:tabular-nums}
   .show-note{font-size:12.5px;color:var(--muted);margin:12px 0 0;max-width:60ch}
 
-  /* ---------- what's special: 5 advantages ---------- */
-  .advantages{padding:8px 0 18px}
-  .advantages h2{
-    font-family:var(--serif);font-size:22px;font-weight:600;
-    margin:0 0 4px;color:var(--ink);letter-spacing:-.15px;
-  }
-  .advantages .adv-lede{margin:0 0 18px;max-width:760px;color:var(--ink-soft)}
-  .adv-list{list-style:none;margin:0;padding:0;counter-reset:adv}
-  .adv-list li{
-    position:relative;padding:0 0 16px 44px;max-width:780px;counter-increment:adv;
-  }
-  .adv-list li:last-child{padding-bottom:0}
-  .adv-list li::before{
-    content:counter(adv);
-    position:absolute;left:0;top:1px;
-    width:28px;height:28px;border-radius:50%;
-    background:var(--accent-soft);color:var(--accent);
-    font-family:var(--mono);font-size:13px;font-weight:700;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .adv-list li h3{
-    font-size:15.5px;font-weight:600;color:var(--ink);
-    margin:2px 0 4px;font-family:var(--sans);
-  }
-  .adv-list li p{margin:0;font-size:14.5px;color:var(--ink-soft);line-height:1.55;max-width:none}
-  .provenance-note{
-    margin:22px 0 0;padding:14px 18px;max-width:780px;
-    background:var(--accent-soft);border-radius:5px;
-    font-size:14px;color:var(--ink-soft);line-height:1.55;
-  }
-  .provenance-note strong{color:var(--ink)}
-
   /* ---------- scope / what it covers ---------- */
   .scope{padding:8px 0 14px}
   .scope-frame{
@@ -394,7 +362,9 @@
   <div class="wrap">
     <p><strong>An open, frequently-updated, 41+ year GeoTIFF time-series of vegetation, carbon, water, fuels, fire hazard, and disturbance.</strong> California (annual, 1985–2025) and the contiguous U.S. (decadal snapshots) are both released now. The Almanac maps California's wildland landscape at 30-m resolution for each year, allowing analyses at local to CONUS scales of near-current conditions and change over time. Each property is expressed in physical units that are consistent with metrics already in common use across the management and research communities. The properties are all calculated from the ground floor up with a unified pipeline; this maximizes consistency between properties and over time.</p>
 
-    <p>The dataset is intended for a range of applications, including decision making that benefits from local-scale, near-current information, and research focused on large-scale, long-term trajectories. It was produced by university scientists and is shared freely under CC BY.</p>
+    <p>Because vegetation, water, carbon, fuels and disturbance are all derived on one grid by one pipeline, questions that span themes — how evapotranspiration responds to canopy loss after a fire, say — can be asked directly, without first reconciling three products' grids, masks and epochs.</p>
+
+    <p>Produced by university scientists and shared freely under CC BY. Every release reprocesses the full record rather than appending new years: <strong>v2027, covering 1985 through water year 2026, is expected in November 2026.</strong></p>
 
     <p><strong>How good is it?</strong> Each layer is checked against independent reference data - field plots, flux towers, stream gauges, aerial survey - and the comparisons are published in full, layer by layer, including where the Almanac is weaker than the alternatives. Some layers are better constrained than others, and the differences matter for what you can ask of them.</p>
 
@@ -404,38 +374,6 @@
       <a class="btn ghost" href="use.html">Bring it into your tools <span class="arrow">→</span></a>
       <a class="btn ghost" href="https://source.coop/wildland-almanac/california">Get the data <span class="arrow">↗</span></a>
     </div>
-  </div>
-</section>
-
-<!-- what's special: 5 advantages -->
-<section class="advantages">
-  <div class="wrap">
-    <h2>What's special here</h2>
-    <p class="adv-lede">The Almanac offers five advantages that make it easy to explore and put to use.</p>
-    <ol class="adv-list">
-      <li>
-        <h3>Free and open, with nothing in the way</h3>
-        <p>Available under a CC&nbsp;BY license with no registration required. You can begin exploring and using the data immediately.</p>
-      </li>
-      <li>
-        <h3>A four-dimensional data cube with a broad collection of properties</h3>
-        <p>Twenty-one properties at 30 m resolution, fine enough for local planning, and expansive enough for large-scale analyses that are not possible with most other datasets. Because vegetation, water, carbon, fuels and disturbance are all derived on one grid by one pipeline, you can ask questions that span themes - how evapotranspiration responds to canopy loss after a fire, say - without first reconciling three products' grids, masks and epochs. Built on the Landsat record, it retains a 41-year annual cadence and high temporal precision.</p>
-      </li>
-      <li>
-        <h3>Temporal precision across four decades</h3>
-        <p>The pipeline maximizes consistency through time while maintaining high spatial accuracy within each year. The result is a continuous 41-year annual record of properties such as canopy cover and biomass that, to our knowledge, no other dataset offers - opening up analyses that are otherwise out of reach, including tracking disturbance intensity and recovery year by year.</p>
-      </li>
-      <li>
-        <h3>Just the beginning</h3>
-        <p>The California release is now joined by selected snapshot years for CONUS. The processing pipeline is built for rapid, efficient updates and steady improvements with each release: v2027, covering 1985 through the end of water year 2026 (Oct-Sep), is expected on Source Cooperative in November 2026, and your feedback helps shape it. Work is underway to add further properties and forward-looking projections, including how conditions change under disturbance and management scenarios.</p>
-      </li>
-      <li>
-        <h3>Cloud-native, and easy to adopt</h3>
-        <p>Built for the modern cloud-native geospatial ecosystem and easy to fold into existing ArcGIS, QGIS, or Python workflows. The data are served from Source Cooperative as Cloud-Optimized GeoTIFFs. You don't need to download anything. Stream the files directly into the software you already use. The goal is to make adoption and use as efficient as possible.</p>
-      </li>
-    </ol>
-
-    <p class="provenance-note">The Almanac grows out of the <strong>Center for Ecosystem Climate Solutions (CECS)</strong>, a four-year, ~$5M California program involving more than twenty university scientists, which led to dozens of peer-reviewed publications and whose datasets have been used by dozens of land-management entities. <a href="about.html">More about the project and its history →</a></p>
   </div>
 </section>
 
@@ -630,6 +568,7 @@
 </script>
 </body>
 </html>
+
 
 
 
