@@ -59,4 +59,10 @@ GitHub Pages builds from `main`. Commit and push; the site updates in about a mi
 URL is a single constant near the top of the page script, so serving a fork from this repo instead is
 a one-line change.
 
+`explore.html` is a link farm, not a viewer — it hands off to Source's hosted build, so anything
+in-app (year slider, layer picker, click-a-pixel readout, year-to-year compare swipe) needs us to
+host our own fork. That was investigated on 2026-09-09 and **tabled**; findings, effort estimates,
+prerequisites and a verdict on the upstream codebase are in
+[`VIEWER_ROADMAP.md`](VIEWER_ROADMAP.md).
+
 Contact: mgoulden@uci.edu
